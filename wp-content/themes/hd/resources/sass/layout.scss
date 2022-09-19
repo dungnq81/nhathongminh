@@ -440,6 +440,7 @@ button[type="submit"], button[type="reset"], button[type="button"] {
 /** */
 figure.wp-caption, figure.caption {
     max-width: 100% !important;
+
     img {
         display: inline-block;
     }
@@ -1992,14 +1993,17 @@ figure.wp-caption, figure.caption {
         /** */
         &.grid-menu {
             position: static !important;
+
             & > ul.menu {
                 overflow: hidden;
                 padding: 0;
                 @include grid-x;
+
                 & > li {
                     @include grid-self(3, 1, 0, false);
                     padding: 0;
                     bottom: none;
+
                     &::after {
                         content: '';
                         position: absolute;
@@ -2009,7 +2013,9 @@ figure.wp-caption, figure.caption {
                         width: 1px;
                         background-color: rgba(0, 0, 0, 0.05);
                     }
-                    & > a {}
+
+                    & > a {
+                    }
                 }
             }
 
