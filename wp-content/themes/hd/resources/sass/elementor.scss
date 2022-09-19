@@ -1,0 +1,460 @@
+@import "mixins";
+
+/** */
+.elementor-element {
+
+    /** */
+    &.grid-container {
+        @include position-screen(padding-left, 0, 0, false);
+        @include position-screen(padding-right, 0, 0, false);
+
+        &.w-grid {
+            @include position-screen(padding-left, 0, 0, true);
+            @include position-screen(padding-right, 0, 0, true);
+        }
+
+        & > .elementor-element {
+            @include media-pl(15, false, 10);
+            @include media-pr(15, false, 10);
+        }
+    }
+
+    /** */
+    &.e-grid {
+        @include position-screen(padding-left, 0, 0, false);
+        @include position-screen(padding-right, 0, 0, false);
+
+        &.no-padding {
+            @include position-screen(padding-left, 15, 10, false);
+            @include position-screen(padding-right, 15, 10, false);
+
+            & > .elementor-element {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+
+        &.w-grid {
+            @include position-screen(padding-left, 0, 0, true);
+            @include position-screen(padding-right, 0, 0, true);
+
+            &.no-padding {
+                @include position-screen(padding-left, 15, 10, true);
+                @include position-screen(padding-right, 15, 10, true);
+            }
+        }
+
+        & > .elementor-element {
+            @include media-pl(15, false, 10);
+            @include media-pr(15, false, 10);
+        }
+    }
+
+    /** */
+    &.e-grid-left {
+        @include position-screen(padding-right, 0, 0, false);
+
+        &.no-padding {
+            @include position-screen(padding-right, 15, 10, false);
+
+            & > .elementor-element {
+                padding-right: 0;
+            }
+        }
+
+        &.w-grid {
+            @include position-screen(padding-right, 0, 0, true);
+
+            &.no-padding {
+                @include position-screen(padding-right, 15, 10, true);
+            }
+        }
+
+        & > .elementor-element {
+            @include media-pr(15, false, 10);
+        }
+    }
+
+    /** */
+    &.e-grid-right {
+        @include position-screen(padding-left, 0, 0, false);
+
+        &.no-padding {
+            @include position-screen(padding-left, 15, 10, false);
+
+            & > .elementor-element {
+                padding-left: 0;
+            }
+        }
+
+        &.w-grid {
+            @include position-screen(padding-left, 0, 0, true);
+
+            &.no-padding {
+                @include position-screen(padding-left, 15, 10, true);
+            }
+        }
+
+        & > .elementor-element {
+            @include media-pl(15, false, 10);
+        }
+    }
+
+    /** */
+    &.section-padding {
+        @include media-pt(50, 40, 30);
+        @include media-pb(50, 40, 30);
+    }
+
+    /** */
+    &.heading-title {
+        .elementor-heading-title {
+            font-weight: 600;
+            @include fs-heading(h3);
+            letter-spacing: 0.5px;
+            line-height: 1.35;
+        }
+    }
+
+    /** */
+    @for $i from 1 through 6 {
+        &._h#{$i} {
+            margin-bottom: 0;
+
+            .elementor-heading-title {
+                @include fs-heading(h#{$i});
+                line-height: $header-line-height;
+            }
+        }
+    }
+
+    /** */
+    &._button, &.e-button {
+        .elementor-button-wrapper {
+            .elementor-button-link {
+                background-color: $color1;
+                transition: 0.3s;
+                padding: 0;
+                border-radius: fs(50);
+                @include _effect2(50);
+
+                &:hover {
+                    background-color: $color2;
+                }
+
+                .elementor-button-content-wrapper {
+                    @include flex-align-center;
+                    flex-flow: row-reverse nowrap;
+
+                    .elementor-button-text {
+                        display: block;
+                        padding-left: 20px;
+                        padding-right: 10px;
+                        font-weight: 300;
+                        @include mobile {
+                            padding-left: 10px;
+                            padding-right: 5px;
+                        }
+                    }
+
+                    &::after {
+                        content: '\f061';
+                        font-family: $font-awesome;
+                        @include box(38);
+                        @include flex-center;
+                        border-radius: 50%;
+                        background-color: #fff;
+                        z-index: 10;
+                        color: $color1;
+                        font-weight: 900;
+                        transition: 0.3s;
+                        margin: 4px;
+                        font-size: fs(16);
+                        @include mobile {
+                            @include box(32);
+                        }
+                    }
+
+                    &:hover {
+                        &::after {
+                            color: $color2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /** */
+    &.e-rating {
+        .glsr-summary-wrap {
+            margin-bottom: 0;
+
+            .glsr-summary {
+                max-width: 100%;
+                gap: 0;
+
+                .glsr-summary-stars {
+                    flex: 0 0 auto;
+                    width: auto;
+                }
+
+                .glsr-summary-text {
+                    flex: 1 1 0;
+                    min-width: 0;
+                    font-style: italic;
+                    font-weight: 300;
+                    color: var(--medium-black);
+                    font-size: 15px;
+                    padding-left: 10px;
+                }
+            }
+        }
+    }
+
+    /** */
+    &.e-home-form {
+        position: relative;
+
+        &::before {
+            content: "";
+            background-image: url(../img/as1-1-2.png);
+            @include box(300);
+            aspect-ratio: 1/1;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            top: -130px;
+            left: 30px;
+            position: absolute;
+        }
+
+        .home-form-wrapper {
+            background: linear-gradient(90deg, #FF413D 0%, #FF7F1C 51.63%);
+            box-shadow: 0 15px 15px rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            margin-top: -80px;
+
+            .e-countdown {
+                background-color: #fff;
+                border-radius: 20px;
+                margin-top: 25px;
+                margin-bottom: 25px;
+
+                .elementor-countdown-item {
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+
+                    .elementor-countdown-digits {
+                    }
+
+                    .elementor-countdown-label {
+                        margin-top: 5px;
+                    }
+                }
+            }
+
+            .e-form-inner {
+                .contact-form-inner {
+                    .item {
+                        .form-text {
+                            margin-bottom: 5px;
+                            color: #fff;
+                            font-weight: 400;
+                            text-transform: uppercase;
+                            text-align: center;
+                        }
+
+                        input, select {
+                            border: none;
+                            background-color: #fff;
+                            border-radius: 20px;
+                            padding-left: 15px;
+                            font-size: 14px;
+                            height: 42px;
+                            font-weight: 300;
+                            line-height: normal;
+                            margin-bottom: 20px;
+                        }
+
+                        select {
+                            padding-right: 30px;
+                        }
+
+                        &.btn {
+                            button[type="submit"] {
+                                margin-top: 10px;
+                                background-color: #fff;
+                                transition: 0.3s;
+                                padding: 0;
+                                border-radius: fs(50);
+                                @include _effect2(50);
+                                display: inline-flex;
+                                position: relative;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                align-items: center;
+
+                                &:hover {
+                                    background-color: $color1;
+                                }
+
+                                & > span {
+                                    display: block;
+                                    padding-left: 20px;
+                                    padding-right: 10px;
+                                    font-weight: 300;
+                                    color: $color1;
+                                    @include mobile {
+                                        padding-left: 10px;
+                                        padding-right: 5px;
+                                    }
+                                }
+
+                                &::after {
+                                    content: '\f061';
+                                    font-family: $font-awesome;
+                                    @include box(34);
+                                    @include flex-center;
+                                    border-radius: 50%;
+                                    background-color: $color1;
+                                    z-index: 10;
+                                    color: #fff;
+                                    font-weight: 900;
+                                    transition: 0.3s;
+                                    margin: 4px;
+                                    font-size: fs(16);
+                                    @include mobile {
+                                        @include box(30);
+                                    }
+                                }
+
+                                &:hover {
+                                    & > span {
+                                        color: #fff;
+                                    }
+
+                                    &::after {
+                                        background-color: #fff;
+                                        color: $color1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.left-bg {
+        &::before {
+            content: '';
+            background-image: url(../img/subtract-1.png);
+            background-repeat: no-repeat;
+            position: absolute;
+            left: 0;
+            aspect-ratio: 1/1;
+            top: 0;
+            height: auto;
+
+            @supports not (aspect-ratio: 1/1) {
+                height: 0;
+                padding-bottom: 100%;
+            }
+        }
+    }
+}
+
+/** */
+/** */
+
+.section.single-elementor {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+/** */
+.elementor-element {
+    &.elementor-faq {
+        .elementor-widget-container {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        .elementor-toggle-item {
+            .elementor-tab-title {
+                border-bottom: none;
+                box-shadow: 0 0 40px transparentize($gray, 0.9);
+                padding: 10px 20px 10px 25px;
+                position: relative;
+                cursor: pointer;
+                background: transparentize($white, 0.2);
+                backdrop-filter: blur(5px);
+                border-radius: 44px;
+
+                .elementor-toggle-icon {
+                    svg {
+                        fill: $medium-black;
+                        width: auto;
+                        height: 24px;
+                    }
+                }
+
+                .elementor-toggle-title {
+                    padding-right: 60px;
+                    font-weight: 400;
+                    line-height: 1.5;
+                }
+
+                &.elementor-active {
+                    box-shadow: 0 0 40px rgb(16 95 47 / 10%);
+                    @include linear-gradient(135deg, $color1);
+
+                    .elementor-toggle-icon {
+                        svg {
+                            fill: $white;
+                        }
+                    }
+
+                    .elementor-toggle-title {
+                        color: $white;
+                    }
+                }
+            }
+
+            .elementor-tab-content {
+                border-bottom: none;
+                padding: 15px 40px 30px 25px;
+                font-size: $medium-font-size;
+                background-color: rgb(255 255 255 / 80%);
+                border-radius: 15px;
+                backdrop-filter: blur(5px);
+                margin-top: 15px;
+            }
+        }
+    }
+
+    &.elementor_form {
+        border-radius: 30px;
+
+        .elementor-widget-form {
+            input {
+                @include placeholder(#fff);
+                margin-bottom: 0;
+            }
+
+            select {
+                background-position: right -4px center;
+                filter: brightness(0) invert(1);
+                margin-bottom: 0;
+
+                option {
+                    color: $medium-black;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "name": "webhd/hd",
+    "description": "WEBHD Wordpress Theme",
+    "authors": [
+        {
+            "name": "NTH",
+            "email": "info@webhd.vn"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "inc/ajax.php",
+            "inc/helpers.php",
+            "inc/image_sizes.php",
+            "inc/menus.php",
+            "inc/plugins.php",
+            "inc/post-types.php",
+            "inc/sidebars.php",
+            "inc/template-functions.php",
+            "inc/template-hooks.php",
+            "inc/widgets.php"
+        ],
+        "psr-4": {
+            "Webhd\\Helpers\\": "inc/Helpers",
+            "Webhd\\Walkers\\": "inc/Walkers",
+            "Webhd\\Themes\\": "inc/Themes",
+            "Webhd\\PostTypes\\": "inc/PostTypes",
+            "Webhd\\Plugins\\": "inc/Plugins",
+            "Webhd\\Widgets\\": "inc/Widgets"
+        },
+        "exclude-from-classmap": [
+            "**/Plugins/ACF/Json/**",
+            "**/Widgets/Json/**"
+        ]
+    },
+    "require": {
+        "symfony/var-dumper": "^v5.4.9",
+        "vectorface/whip": "^v0.4.0"
+    }
+}
