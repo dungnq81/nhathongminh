@@ -134,6 +134,10 @@
                     @include media-mb(20, false, false);
                 }
             }
+
+            @include not-desktop {
+                display: none;
+            }
         }
     }
 

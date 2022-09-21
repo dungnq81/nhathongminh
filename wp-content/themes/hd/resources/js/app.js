@@ -34,6 +34,17 @@ Fancybox.bind(".fcy-popup, .fcy-video", {});
 /** jquery */
 $(() => {
 
+    /**review custom*/
+    let glsr_review_author = $('.glsr-review-author');
+    glsr_review_author.each(function (index, value) {
+        let $this = $(this);
+        let tmp = $this.find('span').text().split(/[\-]/);
+        if (  Array.isArray(tmp) && typeof tmp[1] !== 'undefined' ) {
+            let html = '<span>' + tmp[0] + '<span>' + tmp[1] + '</span></span>';
+            $this.html(html);
+        }
+    });
+
     /** */
     $(document).on('click','ul.tabs-heading a',function(e) {
         $(this).closest('.tabs-wrapper').find('.desc-inner').removeAttr("style");

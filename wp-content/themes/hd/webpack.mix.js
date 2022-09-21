@@ -43,9 +43,9 @@ mix.disableNotifications()
 mix.setPublicPath('assets')
     .sourceMaps()
 
-    //.sass('resources/sass/fonts.scss', 'css')
-    //.sass('resources/sass/admin.scss', 'css')
-    //.sass('resources/sass/editor-style.scss', 'css')
+    // .sass('resources/sass/fonts.scss', 'css')
+    // .sass('resources/sass/admin.scss', 'css')
+    // .sass('resources/sass/editor-style.scss', 'css')
 
     .sass('resources/sass/plugins.scss', 'css')
     .sass('resources/sass/layout.scss', 'css')
@@ -54,12 +54,11 @@ mix.setPublicPath('assets')
     .sass('resources/sass/elementor.scss', 'css')
     .sass('resources/sass/app.scss', 'css')
 
-    //.js('resources/js/login.js', 'js')
-    //.js('resources/js/admin.js', 'js')
-
-    //.js('resources/js/plugins-dev/draggable.js', 'js/plugins')
-    //.js('resources/js/plugins-dev/skip-link-focus-fix.js', 'js/plugins')
-    //.js('resources/js/plugins-dev/flex-gap.js', 'js/plugins')
-    //.js('resources/js/plugins-dev/social-share.js', 'js/plugins')
+    // .js('resources/js/login.js', 'js')
+    // .js('resources/js/admin.js', 'js')
+    //
+    // .js('resources/js/plugins-dev/draggable.js', 'js/plugins')
+    // .js('resources/js/plugins-dev/skip-link-focus-fix.js', 'js/plugins')
+    // .js('resources/js/plugins-dev/flex-gap.js', 'js/plugins')
 
     .js('resources/js/app.js', 'js');

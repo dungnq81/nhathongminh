@@ -22,7 +22,7 @@
 const WP_MEMORY_LIMIT     = '512';
 const WP_MAX_MEMORY_LIMIT = '512';
 
-const DISALLOW_FILE_EDIT = false;
+const DISALLOW_FILE_EDIT = true;
 const DISALLOW_FILE_MODS = false;
 
 /* SSL */
@@ -39,9 +39,9 @@ const WP_AUTO_UPDATE_CORE = false;
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 
-const DB_NAME = 'nhathongminh';
-const DB_USER = 'root';
-const DB_PASSWORD = 'root';
+const DB_NAME = 'kt6hdweb24h_nhathongminh';
+const DB_USER = 'kt6hdweb24h_nhathongminh';
+const DB_PASSWORD = 'ejh2WYjD!QIGd';
 
 const DB_HOST = 'localhost';
 const DB_CHARSET = 'utf8mb4';

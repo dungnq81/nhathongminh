@@ -938,6 +938,10 @@
             flex: 0 0 350px;
             max-width: 350px;
 
+            @include not-desktop {
+                display: none;
+            }
+
             .sidebar--wrap {
                 margin-top: 20px;
                 position: sticky;
@@ -1270,10 +1274,11 @@
             @include grid-flex(2, 2, 1, 30, 20);
 
             & > .cell:nth-child(5n-2), & > .cell:nth-child(5n-1), & > .cell:nth-child(5n) {
-                @include grid-self(3, 1, 30);
-                @include mobile {
-                    @include grid-self(1, 1, 20);
-                }
+                @include media-grid-self(3, 2, 1, 30, 20);
+                //@include grid-self(3, 1, 30);
+                //@include mobile {
+                //    @include grid-self(1, 1, 20);
+                //}
             }
         }
 
@@ -1412,8 +1417,9 @@
 }
 
 /** */
-.single-contactpage {
+.section.single-contactpage {
     @include media-pt(60, 50, 40);
+    padding-bottom: 0;
 
     .heading-title {
         @include fs-heading(h4);
@@ -1707,6 +1713,7 @@
                         padding: 30px;
                         position: relative;
                         min-height: 179px;
+                        gap: 0;
                         @include mobile {
                             padding: 20px 15px;
                         }
@@ -1720,9 +1727,9 @@
                         .glsr-review-title {
                             margin-top: 10px;
 
-                            h3 {
+                            .glsr-tag-value {
                                 margin-bottom: 0;
-                                font-size: 18px;
+                                @include fs-heading(h5);
                             }
                         }
 
@@ -1746,7 +1753,7 @@
                             font-size: 12px;
                             color: var(--medium-black);
                             @include desktop {
-                                flex-basis: calc(50% - 90px);
+                                flex-basis: calc(50% - 110px);
                             }
                         }
 
@@ -2271,6 +2278,7 @@ body.single-post, body.single-product {
                 opacity: 0;
                 transition: 0.3s;
                 color: #fff;
+                @include line-clamp(4);
             }
 
             h6 {

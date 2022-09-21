@@ -132,15 +132,15 @@
     &._button, &.e-button {
         .elementor-button-wrapper {
             .elementor-button-link {
-                background-color: $color1;
+                background-color: $color2;
                 transition: 0.3s;
                 padding: 0;
                 border-radius: fs(50);
                 @include _effect2(50);
 
-                &:hover {
-                    background-color: $color2;
-                }
+                //&:hover {
+                //    background-color: $color2;
+                //}
 
                 .elementor-button-content-wrapper {
                     @include flex-align-center;
@@ -165,7 +165,7 @@
                         border-radius: 50%;
                         background-color: #fff;
                         z-index: 10;
-                        color: $color1;
+                        color: $color2;
                         font-weight: 900;
                         transition: 0.3s;
                         margin: 4px;
@@ -177,7 +177,7 @@
 
                     &:hover {
                         &::after {
-                            color: $color2;
+                            color: $color1;
                         }
                     }
                 }
@@ -363,6 +363,17 @@
             @supports not (aspect-ratio: 1/1) {
                 height: 0;
                 padding-bottom: 100%;
+            }
+        }
+    }
+
+    /** */
+    &.e-scale {
+        .elementor-image-box-img {
+            overflow: hidden;
+
+            img {
+                @include responsive-scale();
             }
         }
     }

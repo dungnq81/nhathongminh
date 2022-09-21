@@ -28,6 +28,20 @@ if ( ! function_exists( '__register_sidebars' ) ) {
 			]
 		);
 
+        // trang gioi thieu
+        register_sidebar(
+            [
+                'container'     => false,
+                'id'            => 'w-about-us-sidebar',
+                'name'          => __( 'About Us', 'hd' ),
+                'description'   => __( 'Widgets added here will appear in about us.', 'hd' ),
+                'before_widget' => '<div class="%2$s">',
+                'after_widget'  => '</div>',
+                'before_title'  => '<span>',
+                'after_title'   => '</span>',
+            ]
+        );
+
         register_sidebar(
             [
                 'container'     => false,
