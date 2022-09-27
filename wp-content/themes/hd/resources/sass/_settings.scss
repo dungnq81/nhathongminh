@@ -21,11 +21,11 @@ $color2: #ff4e42;
 $color-red: #ff0000;
 
 /** */
-$scrollbar-with: rem-calc(4);
+$scrollbar-with: rem-calc(8);
 $scrollbar-height: rem-calc(4);
 
 /** */
-$global-screen-extra: rem-calc(1366);
+$global-screen-extra: rem-calc(1360);
 $global-screen: rem-calc(1200);
 $global-screen-medium: rem-calc(1140);
 $global-screen-small: rem-calc(960);
@@ -34,7 +34,7 @@ $global-screen-small: rem-calc(960);
 $mobile-width: rem-calc(640);
 $desktop-width: rem-calc(1024);
 $xdesktop-width: rem-calc(1200);
-$xxdesktop-width: rem-calc(1366);
+$xxdesktop-width: rem-calc(1440);
 
 $wp-mobile-width: rem-calc(782);
 $wp-mobile-width-small: rem-calc(600);

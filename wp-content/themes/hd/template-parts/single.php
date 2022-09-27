@@ -17,13 +17,12 @@ if (is_active_sidebar('w-news-sidebar') && !is_search()) $is_sidebar = TRUE;
 the_page_title_theme();
 
 ?>
-
 <section class="section single-post">
     <div class="grid-container width-extra">
         <?php get_template_part('template-parts/parts/sharing'); ?>
         <div class="single-content">
             <div class="col-content cell">
-                <span class="h2 single-title"><?php echo get_the_title($post); ?></span>
+                <h1 class="h4 single-title"><?php echo get_the_title($post); ?></h1>
                 <div class="meta">
                     <div class="time" data-glyph=""><?php echo humanize_time(); ?></div>
                     <?php echo post_terms($post->ID); ?>

@@ -8,7 +8,7 @@ if (!function_exists('get_field')) {
 
 global $product;
 
-$heading = apply_filters( 'woocommerce_product_specifications_heading', __( 'Specifications', 'hd' ) );
+$heading = apply_filters( 'woocommerce_product_specifications_heading', __( 'Thông số kỹ thuật', 'hd' ) );
 
 ?>
 <div class="product-specifications-inner">

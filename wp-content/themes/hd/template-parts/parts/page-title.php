@@ -32,7 +32,15 @@ if (is_search()) {
 <section class="section section-title<?= $_class ?>" tabindex="-1">
 	<div class="title-bg parallax-bg" data-parallax="{&quot;y&quot;: 50}"></div>
     <div class="grid-container title-inner">
-        <h1 class="title h3"><?php echo $title; ?></h1>
+        <?php
+        if (@is_single() ) {
+            //$h_tag = 'h2';
+            echo '<h2 class="title h3">' . $title . '</h2>';
+        } else {
+            //$h_tag = 'h1';
+            echo '<h1 class="title h3">' . $title . '</h1>';
+        }
+        ?>
     </div>
     <div class="breadcrumbs-container">
         <div class="grid-container">

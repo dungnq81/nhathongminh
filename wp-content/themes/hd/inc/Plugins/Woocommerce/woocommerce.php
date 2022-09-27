@@ -57,7 +57,7 @@ function woocommerce_default_product_tabs( $tabs = array() ) {
     // Description tab - shows product content.
     if ( $post->post_content ) {
         $tabs['description'] = array(
-            'title'    => __( 'Descriptions', 'hd' ),
+            'title'    => __( 'Tổng quan', 'hd' ),
             'priority' => 10,
             'callback' => 'woocommerce_product_description_tab',
         );
@@ -72,14 +72,14 @@ function woocommerce_default_product_tabs( $tabs = array() ) {
 //        );
 //    }
 
-    // Specifications
+    // After-Sales Policies
     if ( $product && function_exists('get_field')) {
-        $specifications = get_field('specifications', $product->get_id());
-        if (Str::stripSpace($specifications)) {
-            $tabs['specifications'] = [
-                'title'    => __( 'Specifications', 'hd' ),
-                'priority' => 20,
-                'callback' => 'woocommerce_product_specifications_tab',
+        $after_sales = get_field('after_sales', $product->get_id());
+        if (Str::stripSpace($after_sales)) {
+            $tabs['after_sales'] = [
+                'title'    => __( 'Thiết kế', 'hd' ),
+                'priority' => 30,
+                'callback' => 'woocommerce_product_after_sales_tab',
             ];
         }
     }
@@ -89,21 +89,21 @@ function woocommerce_default_product_tabs( $tabs = array() ) {
         $components = get_field('components', $product->get_id());
         if (Str::stripSpace($components)) {
             $tabs['components'] = [
-                'title'    => __( 'Components', 'hd' ),
-                'priority' => 30,
+                'title'    => __( 'Công năng', 'hd' ),
+                'priority' => 31,
                 'callback' => 'woocommerce_product_components_tab',
             ];
         }
     }
 
-    // After-Sales Policies
+    // Specifications
     if ( $product && function_exists('get_field')) {
-        $after_sales = get_field('after_sales', $product->get_id());
-        if (Str::stripSpace($after_sales)) {
-            $tabs['after_sales'] = [
-                'title'    => __( 'Chính sách hậu mãi', 'hd' ),
-                'priority' => 30,
-                'callback' => 'woocommerce_product_after_sales_tab',
+        $specifications = get_field('specifications', $product->get_id());
+        if (Str::stripSpace($specifications)) {
+            $tabs['specifications'] = [
+                'title'    => __( 'Thông số kỹ thuật', 'hd' ),
+                'priority' => 32,
+                'callback' => 'woocommerce_product_specifications_tab',
             ];
         }
     }
@@ -543,14 +543,19 @@ if ( ! function_exists( 'sale_flash_percent' ) ) {
      */
     function sale_flash_percent($product)
     {
-        $percent_off = 0;
+        global $product;
+        $percent_off = '';
+
         if ($product->is_on_sale()) {
-            $regular_price = wc_get_price_to_display($product, ['price' => $product->get_regular_price()]);
-            $sale_price = wc_get_price_to_display($product);
-            $percent_off = (($regular_price - $sale_price) / $regular_price) * 100;
+
+            if ($product->is_type('variable')) {
+                $percent_off = ceil(100 - ($product->get_variation_sale_price() / $product->get_variation_regular_price('min')) * 100);
+            } elseif ($product->get_regular_price() && !$product->is_type('grouped')) {
+                $percent_off = ceil(100 - ($product->get_sale_price() / $product->get_regular_price()) * 100);
+            }
         }
 
-        return round($percent_off);
+        return $percent_off;
     }
 }
 

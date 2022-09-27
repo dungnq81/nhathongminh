@@ -8,7 +8,7 @@ if (!function_exists('get_field')) {
 
 global $product;
 
-$heading = apply_filters( 'woocommerce_product_components_heading', __( 'Components', 'hd' ) );
+$heading = apply_filters( 'woocommerce_product_components_heading', __( 'Công năng', 'hd' ) );
 
 ?>
 <div class="product-components-inner">

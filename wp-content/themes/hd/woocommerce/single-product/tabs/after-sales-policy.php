@@ -8,7 +8,7 @@ if (!function_exists('get_field')) {
 
 global $product;
 
-$heading = apply_filters( 'woocommerce_product_after_sales_heading', __('Chính sách hậu mãi', 'hd') );
+$heading = apply_filters( 'woocommerce_product_after_sales_heading', __('Thiết kế', 'hd') );
 
 ?>
 <div class="product-after_sales-inner">

@@ -49,6 +49,12 @@ if ( ! class_exists( 'Shortcode' ) ) {
             $title_for = __('Search for', 'hd' );
             $placeholder_title = esc_attr(__('Search ...', 'hd' ));
 
+            if (class_exists( '\WooCommerce' )) :
+                $title = __('Tìm kiếm sản phẩm', 'hd' );
+                $title_for = __('Tìm kiếm sản phẩm', 'hd' );
+                $placeholder_title = esc_attr(__('Tìm kiếm sản phẩm', 'hd' ));
+            endif;
+
             ?>
             <div class="inside-search <?php echo $a['class']; ?>">
                 <form role="search" action="<?php echo Url::home(); ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide novalidate>

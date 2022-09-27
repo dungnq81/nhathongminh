@@ -376,7 +376,6 @@ add_filter('defer_style_loader_tag', function ($arr) {
         'wqv-style',
         'wqv-custom',
         'rank-math',
-        'fonts-style',
     ];
     return $arr;
 }, 10, 1);

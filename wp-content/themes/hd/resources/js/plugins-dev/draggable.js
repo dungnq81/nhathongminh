@@ -1,7 +1,7 @@
 /*! draggable - https://www.kirupa.com/html5/drag.htm */
 import {nanoid} from "nanoid";
 
-const draggable_container = [...document.querySelectorAll(".o_draggable")];
+const draggable_container = [...document.querySelectorAll(".o_draggable, #arcontactus")];
 draggable_container.forEach((el, index) => {
     const _rand = nanoid(6);
     el.classList.add('draggable-' + _rand);

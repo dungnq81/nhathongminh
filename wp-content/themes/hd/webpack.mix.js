@@ -55,9 +55,9 @@ mix.setPublicPath('assets')
     .sass('resources/sass/app.scss', 'css')
 
     // .js('resources/js/login.js', 'js')
-    // .js('resources/js/admin.js', 'js')
+    .js('resources/js/admin.js', 'js')
     //
-    // .js('resources/js/plugins-dev/draggable.js', 'js/plugins')
+    //.js('resources/js/plugins-dev/draggable.js', 'js/plugins')
     // .js('resources/js/plugins-dev/skip-link-focus-fix.js', 'js/plugins')
     // .js('resources/js/plugins-dev/flex-gap.js', 'js/plugins')
 

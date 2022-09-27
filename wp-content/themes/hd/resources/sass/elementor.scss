@@ -4,6 +4,141 @@
 .elementor-element {
 
     /** */
+    &.e-res {
+        .elementor-fit-aspect-ratio {
+            @include responsive-wrapper();
+            iframe, embed, object, video {
+                @include absolute-full;
+                border: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    /** */
+    &.e-ar-1, &.e-ar-1-1 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(1, 1);
+        }
+    }
+
+    &.e-ar-3-2 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(3, 2);
+        }
+    }
+
+    &.e-ar-2-3 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(2, 3);
+        }
+    }
+
+    &.e-ar-4-3 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(4, 3);
+        }
+    }
+
+    &.e-ar-3-4 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(3, 4);
+        }
+    }
+
+    &.e-ar-16-9 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(16, 9);
+        }
+    }
+
+    &.e-ar-21-9 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(21, 9);
+        }
+    }
+
+    &.e-ar-2-1 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(2, 1);
+        }
+    }
+
+    &.e-ar-3-1 {
+        .elementor-fit-aspect-ratio {
+            @include responsive-ratio(3, 1);
+        }
+    }
+
+    /** */
+    &.e-art-1, &.e-art-1-1 {
+        .elementor-fit-aspect-ratio {
+            @include not-desktop {
+                @include responsive-ratio(1, 1);
+            }
+        }
+    }
+
+    &.e-art-3-2 {
+        .elementor-fit-aspect-ratio {
+            @include not-desktop {
+                @include responsive-ratio(3, 2);
+            }
+        }
+    }
+
+    &.e-art-4-3 {
+        .elementor-fit-aspect-ratio {
+            @include not-desktop {
+                @include responsive-ratio(4, 3);
+            }
+        }
+    }
+
+    &.e-art-16-9 {
+        .elementor-fit-aspect-ratio {
+            @include not-desktop {
+                @include responsive-ratio(16, 9);
+            }
+        }
+    }
+
+    /** */
+    &.e-arm-1, &.e-arm-1-1 {
+        .elementor-fit-aspect-ratio {
+            @include mobile {
+                @include responsive-ratio(1, 1);
+            }
+        }
+    }
+
+    &.e-arm-3-2 {
+        .elementor-fit-aspect-ratio {
+            @include mobile {
+                @include responsive-ratio(3, 2);
+            }
+        }
+    }
+
+    &.e-arm-4-3 {
+        .elementor-fit-aspect-ratio {
+            @include mobile {
+                @include responsive-ratio(4, 3);
+            }
+        }
+    }
+
+    &.e-arm-16-9 {
+        .elementor-fit-aspect-ratio {
+            @include mobile {
+                @include responsive-ratio(16, 9);
+            }
+        }
+    }
+
+    /** */
     &.grid-container {
         @include position-screen(padding-left, 0, 0, false);
         @include position-screen(padding-right, 0, 0, false);
@@ -24,9 +159,14 @@
         @include position-screen(padding-left, 0, 0, false);
         @include position-screen(padding-right, 0, 0, false);
 
+        & > .elementor-element {
+            @include media-pl(15, false, 10);
+            @include media-pr(15, false, 10);
+        }
+
         &.no-padding {
-            @include position-screen(padding-left, 15, 10, false);
-            @include position-screen(padding-right, 15, 10, false);
+            @include position-screen(padding-left, 15, 0, false);
+            @include position-screen(padding-right, 15, 0, false);
 
             & > .elementor-element {
                 padding-left: 0;
@@ -39,14 +179,14 @@
             @include position-screen(padding-right, 0, 0, true);
 
             &.no-padding {
-                @include position-screen(padding-left, 15, 10, true);
-                @include position-screen(padding-right, 15, 10, true);
-            }
-        }
+                @include position-screen(padding-left, 15, 0, true);
+                @include position-screen(padding-right, 15, 0, true);
 
-        & > .elementor-element {
-            @include media-pl(15, false, 10);
-            @include media-pr(15, false, 10);
+                & > .elementor-element {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
         }
     }
 
@@ -132,10 +272,11 @@
     &._button, &.e-button {
         .elementor-button-wrapper {
             .elementor-button-link {
-                background-color: $color2;
+                //background-color: $color2;
+                @include linear-gradient(90deg, $color2);
                 transition: 0.3s;
                 padding: 0;
-                border-radius: fs(50);
+                //border-radius: fs(50);
                 @include _effect2(50);
 
                 //&:hover {
@@ -236,6 +377,9 @@
             padding: 40px;
             margin-bottom: 50px;
             margin-top: -80px;
+            @include mobile {
+                padding: 20px;
+            }
 
             .e-countdown {
                 background-color: #fff;
@@ -467,5 +611,12 @@
                 }
             }
         }
+    }
+}
+
+/** */
+body.elementor-page {
+    #ftwp-container {
+        display: none;
     }
 }

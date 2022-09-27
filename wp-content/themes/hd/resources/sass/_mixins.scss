@@ -291,15 +291,12 @@
     background-image: linear-gradient($angle, $c 0%, adjust-hue($c, $amount) 100%);
 }
 
-@mixin linear-gradient2($angle: 90deg, $c1: $color1, $c2: $color2) {
-    background-image: linear-gradient($angle, $c1 0%, $c2 100%);
-}
-
 @mixin gradient-text($angle: 135deg, $c: $color1, $amount: 12deg) {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
-    background-image: linear-gradient($angle, $c, adjust-hue($c, $amount));
+    @include linear-gradient($angle, $c, $amount);
+    //background-image: linear-gradient($angle, $c, adjust-hue($c, $amount));
     color: transparent;
     display: inline-block;
 }

@@ -30,6 +30,7 @@ if ( ! empty( $product_tabs ) ) :
 ?>
 <div class="woocommerce-tabs wc-tabs-wrapper tabs-wrapper">
 <!--    <div class="grid-container no-padding">-->
+    <div class="tabs-heading-wrapper">
         <ul class="tabs-heading" role="tablist">
             <?php foreach ( $product_tabs as $key => $product_tab ) : ?>
             <li class="tab-<?php echo esc_attr( $key ); ?>" id="tab-title-<?php echo esc_attr( $key ); ?>" role="tab" aria-controls="tab-<?php echo esc_attr( $key ); ?>">
@@ -39,32 +40,14 @@ if ( ! empty( $product_tabs ) ) :
             </li>
             <?php endforeach; ?>
         </ul>
-        <div class="tabs-content wc-tabs-content">
-            <div class="product-desc-inner desc-inner">
-                <?php
-                $_flag = false;
-                foreach ( $product_tabs as $key => $product_tab ) :
-                    if ('reviews' == $key) {
-
-                        // Product Descriptions Sidebar
-                        if (is_active_sidebar('w-product-desc-sidebar')) :
-                            echo '<div class="product-desc-after">';
-                            dynamic_sidebar('w-product-desc-sidebar');
-                            echo '</div>';
-                        endif;
-
-                        $_flag = true;
-                    }
-                ?>
-                <div class="woocommerce-tabs-panel woocommerce-tabs-panel--<?php echo esc_attr( $key ); ?>" id="wctab-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $key ); ?>">
-                    <?php
-                    if ( isset( $product_tab['callback'] ) ) :
-                        call_user_func( $product_tab['callback'], $key, $product_tab );
-                    endif;
-                    ?>
-                </div>
-                <?php endforeach;
-                if (!$_flag) {
+        <?php echo do_shortcode('[inline-search]'); ?>
+    </div>
+    <div class="tabs-content wc-tabs-content">
+        <div class="product-desc-inner desc-inner">
+            <?php
+            $_flag = false;
+            foreach ( $product_tabs as $key => $product_tab ) :
+                if ('reviews' == $key) {
 
                     // Product Descriptions Sidebar
                     if (is_active_sidebar('w-product-desc-sidebar')) :
@@ -72,11 +55,31 @@ if ( ! empty( $product_tabs ) ) :
                         dynamic_sidebar('w-product-desc-sidebar');
                         echo '</div>';
                     endif;
+
+                    $_flag = true;
                 }
+            ?>
+            <div class="woocommerce-tabs-panel woocommerce-tabs-panel--<?php echo esc_attr( $key ); ?>" id="wctab-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $key ); ?>">
+                <?php
+                if ( isset( $product_tab['callback'] ) ) :
+                    call_user_func( $product_tab['callback'], $key, $product_tab );
+                endif;
                 ?>
             </div>
+            <?php endforeach;
+            if (!$_flag) {
+
+                // Product Descriptions Sidebar
+                if (is_active_sidebar('w-product-desc-sidebar')) :
+                    echo '<div class="product-desc-after">';
+                    dynamic_sidebar('w-product-desc-sidebar');
+                    echo '</div>';
+                endif;
+            }
+            ?>
         </div>
-        <?php do_action( 'woocommerce_product_after_tabs' ); ?>
+    </div>
+    <?php do_action( 'woocommerce_product_after_tabs' ); ?>
 <!--    </div>-->
 </div>
 <?php endif;

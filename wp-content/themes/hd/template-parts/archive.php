@@ -51,7 +51,7 @@ if (function_exists('get_field') && $term) {
         elseif ( 'giai-phap' == $display_type ) :
             get_template_part( 'template-parts/posts/grid-giai-phap' );
         else :
-            get_template_part( 'template-parts/posts/grid' );
+            get_template_part( 'template-parts/posts/grid-news' );
         endif;
         ?>
     </div>

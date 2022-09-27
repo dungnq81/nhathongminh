@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $post;
 
-$heading = apply_filters( 'woocommerce_product_description_heading', __( 'Description', 'hd' ) );
+$heading = apply_filters( 'woocommerce_product_description_heading', __( 'Tổng quan', 'hd' ) );
 
 ?>
 <div class="product-description-inner">

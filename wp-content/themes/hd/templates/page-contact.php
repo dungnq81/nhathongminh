@@ -34,7 +34,15 @@ if (Str::stripSpace( $ACF->css_class ))
 ?>
 <section class="section single-post single-page single-contactpage<?=$css_class?>">
     <div class="grid-container width-extra">
-        <div class="col-content"><!---->
+        <div class="col-content">
+
+            <?php
+            $content = $post->post_content;
+            if (Str::stripSpace($content)) :
+                // post content
+                the_content();
+            endif;
+            ?>
             <?php if ( Str::stripSpace( $ACF->contact_title ) ) : ?>
             <h2 class="heading-title"><?php echo $ACF->contact_title?></h2>
             <?php endif; ?>

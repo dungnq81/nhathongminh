@@ -471,9 +471,9 @@ if ( ! function_exists( 'site_title_or_logo' ) ) {
 	function site_title_or_logo( bool $echo = true ) {
 		if ( function_exists( 'the_custom_logo' ) && has_custom_logo() ) {
 			$logo = get_custom_logo();
-			$html = ( is_home() || is_front_page() ) ? '<h1 class="logo">' . $logo . '</h1>' : $logo;
+			$html = ( is_home() || is_front_page() ) ? '<h2 class="logo">' . $logo . '</h2>' : $logo;
 		} else {
-			$tag  = is_home() ? 'h1' : 'div';
+			$tag  = is_home() ? 'h2' : 'div';
 			$html = '<' . esc_attr( $tag ) . ' class="site-title"><a title href="' . Url::home() . '" rel="home">' . esc_html( get_bloginfo( 'name' ) ) . '</a></' . esc_attr( $tag ) . '>';
 			if ( '' !== get_bloginfo( 'description' ) ) {
 				$html .= '<p class="site-description">' . esc_html( get_bloginfo( 'description', 'display' ) ) . '</p>';

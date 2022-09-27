@@ -23,6 +23,7 @@ if ( ! class_exists( 'Hook' ) ) {
 			// wp_footer actions
 			add_action( 'wp_footer', [ &$this, 'bubble_hotline' ], 97 );
 			add_action( 'wp_footer', [ &$this, 'back_to_top' ], 98 );
+			
 			add_action( 'wp_footer', [ &$this, 'footer_extra_script' ], 99 );
 
 			// wp_print_footer_scripts

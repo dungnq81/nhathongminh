@@ -23,12 +23,12 @@ global $post, $product;
 
 if ( $product->is_on_sale() ) :
 
-    if ( $product->is_type( 'simple' ) ) :
-        $sale_flash = sale_flash_percent($product);
+    $sale_flash = sale_flash_percent($product);
+    if ($sale_flash) {
         echo apply_filters( 'woocommerce_sale_flash', '<div class="saleoff onsale">-' . $sale_flash . '%</div>', $post, $product );
-    else :
+    } else {
         echo apply_filters( 'woocommerce_sale_flash', '<div class="saleoff onsale">' . esc_html__( 'Sale!', 'woocommerce' ) . '</div>', $post, $product );
-    endif;
+    }
 
 endif;
 
