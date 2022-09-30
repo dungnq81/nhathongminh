@@ -67,8 +67,5 @@ if (!function_exists('__register_widgets')) {
     }
 
     /** */
-    $widgets_block_editor_off = get_theme_mod_ssl('use_widgets_block_editor_setting');
-    if ($widgets_block_editor_off) {
-        add_action('widgets_init', '__register_widgets', 10);
-    }
+    add_action('widgets_init', '__register_widgets', 10);
 }
