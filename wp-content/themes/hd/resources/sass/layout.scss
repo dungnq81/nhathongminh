@@ -63,12 +63,12 @@ html {
     font-variant-ligatures: no-common-ligatures;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     -webkit-touch-callout: none;
 }
 
 body {
+    scroll-behavior: smooth;
     background: $body-background;
     font-size: $body-font-size;
     font-weight: 400;

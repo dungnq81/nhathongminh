@@ -138,7 +138,7 @@ if ( ! function_exists( 'query_by_term' ) ) {
      * @param array $orderby
      * @return bool|WP_Query
      */
-    function query_by_term($term, $post_type = 'any', bool $include_children = true, int $posts_per_page = 0, $paged = false, $orderby = [] ) {
+    function query_by_term($term, $post_type = 'any', bool $include_children = false, int $posts_per_page = 0, $paged = false, $orderby = [] ) {
         if (!$term || !$post_type) {
             return false;
         }
@@ -202,7 +202,7 @@ if ( ! function_exists( 'query_by_terms' ) ) {
      *
      * @return bool|WP_Query
      */
-    function query_by_terms($term_ids = [], $taxonomy = 'category', $post_type = 'any', bool $include_children = true, int $posts_per_page = 10)
+    function query_by_terms($term_ids = [], $taxonomy = 'category', $post_type = 'any', bool $include_children = false, int $posts_per_page = 10)
     {
         if (!$term_ids) {
             return false;
@@ -324,8 +324,8 @@ if ( ! function_exists( 'main_nav' ) ) {
 	 * @param string $menu_class
 	 * @param string $menu_id
 	 *
-	 * @return bool|false|string|void
-	 */
+	 * @return bool|string
+     */
 	function main_nav( string $location = 'main-nav', string $menu_class = 'desktop-menu', string $menu_id = 'main-menu' ) {
 		return horizontal_nav( [
 			'menu_id'        => $menu_id,
@@ -345,8 +345,8 @@ if ( ! function_exists( 'mobile_nav' ) ) {
 	 * @param string $menu_class
 	 * @param string $menu_id
 	 *
-	 * @return bool|false|string|void
-	 */
+	 * @return bool|string
+     */
 	function mobile_nav( string $location = 'mobile-nav', string $menu_class = 'mobile-menu', string $menu_id = 'mobile-menu' ) {
 		return vertical_nav( [
 			'menu_id'        => $menu_id,
@@ -365,8 +365,8 @@ if ( ! function_exists( 'term_nav' ) ) {
 	 * @param string $location
 	 * @param string $menu_class
 	 *
-	 * @return bool|false|string|void
-	 */
+	 * @return bool|string
+     */
 	function term_nav( string $location = 'policy-nav', string $menu_class = 'terms-menu' ) {
 		return wp_nav_menu( [
 			'container'      => false,
@@ -388,8 +388,8 @@ if ( ! function_exists( 'social_nav' ) ) {
 	 * @param string $location
 	 * @param string $menu_class
 	 *
-	 * @return bool|false|string|void
-	 */
+	 * @return bool|string
+     */
 	function social_nav( string $location = 'social-nav', string $menu_class = 'social-menu menu conn-lnk' ) {
 		return wp_nav_menu( [
 			'container'      => false,
