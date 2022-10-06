@@ -16,6 +16,9 @@ use Webhd\Helpers\Str;
 if ( ! class_exists( 'Theme' ) ) {
 	class Theme {
 		public function __construct() {
+
+            $this->_init();
+
 			add_action( 'after_setup_theme', [ &$this, 'after_setup_theme' ] );
 
 			add_action( 'wp_enqueue_scripts', [ &$this, 'enqueue_scripts' ], 10 );
@@ -33,16 +36,17 @@ if ( ! class_exists( 'Theme' ) ) {
 		 *
 		 * @return void
 		 */
-		public function init() {
-			( new Hook );
-			( new Customizer ); // Customizer additions.
-			( new Shortcode );
+		public function _init() : void
+        {
+			( new Hook() );
+			( new Customizer() ); // Customizer additions.
+			( new Shortcode() );
 
 			if ( is_admin() ) {
-				( new Admin );
+				( new Admin() );
 			} else {
-                ( new Fonts );
-				( new Defer );
+                ( new Fonts() );
+				( new Defer() );
 			}
 		}
 

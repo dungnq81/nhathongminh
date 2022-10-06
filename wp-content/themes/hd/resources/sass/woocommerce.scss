@@ -2172,8 +2172,8 @@ body.woocommerce-order-received {
                                 outline: none;
                                 padding: 0;
                                 line-height: 1.3;
-                                color: $medium-black;
                                 font-weight: 500;
+                                @include hover-color($medium-black, $color2);
                             }
                         }
 

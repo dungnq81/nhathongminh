@@ -28,4 +28,4 @@ if (!file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
 require $composer;
 
 // Initialize theme settings.
-( new Theme )->init();
+( new Theme() );
