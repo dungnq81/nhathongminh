@@ -198,14 +198,14 @@ if (empty($activeSubmit) && (isset($_GET['paged']) || isset($_GET['orderby']) ||
                                             <div class="ui inline dropdown button">
                                                 <div class="text">
                                                     <img class="ui image" src="<?php echo $languages[$defaultLang]['country_flag_url'] ?>">
-                                                    <?php echo $languages[$defaultLang]['code'] ?>
+                                                    <?php echo $languages[$defaultLang]['language_code'] ?>
                                                 </div>
                                                 <i class="dropdown icon"></i>
                                                 <div class="menu">
                                                 <?php foreach($languages as $k => $lang) {?>
                                                     <div class="item <?php echo ($k == $defaultLang)? 'active selected' : '' ?>" data-lang-code="<?php echo $lang['language_code'] ?>" onclick="arCU.switchLang('<?php echo $lang['language_code'] ?>');">
                                                         <img class="ui image" src="<?php echo $lang['country_flag_url'] ?>">
-                                                        <?php echo $lang['code'] ?>
+                                                        <?php echo $lang['language_code'] ?>
                                                     </div>
                                                 <?php } ?>
                                                 </div>

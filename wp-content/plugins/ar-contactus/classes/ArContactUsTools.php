@@ -27,15 +27,27 @@ class ArContactUsTools
         return $styles;
     }
     
+    public static function isMultilang()
+    {
+        return self::isWPML() || self::isPolylang();
+    }
+    
     public static function isWPML()
     {
         return is_plugin_active('sitepress-multilingual-cms/sitepress.php');
+    }
+    
+    public static function isPolylang()
+    {
+        return is_plugin_active('polylang/polylang.php') || is_plugin_active('polylang-pro/polylang.php');
     }
     
     public static function getLanguages()
     {
         if (self::isWPML()) {
             return apply_filters('wpml_active_languages', null, 'orderby=id&order=desc');
+        } elseif (self::isPolylang()) {
+            return icl_get_languages();
         } else {
             return array(
                 self::getDefaultLanguage() => array(
@@ -50,6 +62,8 @@ class ArContactUsTools
     {
         if (self::isWPML()) {
             return apply_filters('wpml_default_language', null);
+        } elseif(self::isPolylang()) {
+            return icl_get_default_language();
         } else {
             $locale = get_locale();
             $lang = null;
@@ -65,6 +79,8 @@ class ArContactUsTools
     {
         if (self::isWPML()) {
             return apply_filters('wpml_current_language', null);
+        } elseif (self::isPolylang()) {
+            return icl_get_current_language();
         } else {
             $locale = get_locale();
             $lang = null;
@@ -101,5 +117,16 @@ class ArContactUsTools
 	}
         
 	return apply_filters('wp_is_mobile', $is_mobile);
+    }
+    
+    public static function getCurrentUrl()
+    {
+        $host = parse_url(AR_CONTACTUS_PLUGIN_URL, PHP_URL_HOST);
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $scheme = 'http';
+        if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')) {
+            $scheme = 'https';
+        }
+        return $scheme . '://' . $host . $requestUri;
     }
 }

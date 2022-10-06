@@ -45,10 +45,16 @@
         }
     <?php } ?>
     #ar-fb-chat{
-        display: none;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
     }
     #ar-fb-chat.active{
         display: block;
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
     }
     @media (max-width: 480px){
         .fb-customerchat > span > iframe{

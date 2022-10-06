@@ -1044,6 +1044,14 @@
                 @include flex-align-center;
                 font-size: fs(12);
                 font-weight: 300;
+                flex-flow: row wrap;
+                margin-left: -5px;
+                margin-right: -5px;
+                .time, .terms {
+                    margin-left: 0;
+                    padding-right: 5px;
+                    padding-left: 5px;
+                }
             }
 
             .view-detail {
@@ -1412,6 +1420,10 @@
 
         .grid-container {
             position: relative;
+            @include mobile {
+                display: flex;
+                justify-content: center;
+            }
         }
 
         .breadcrumbs {
@@ -1450,6 +1462,10 @@
             color: #fff;
             margin-bottom: 30px;
             font-weight: 600;
+            @include mobile {
+                margin-bottom: 20px;
+                text-align: center;
+            }
         }
     }
 }
@@ -2217,6 +2233,11 @@ body.single-post, body.single-product {
     }
 
     .title-container {
+        @include mobile {
+            .heading-title {
+                text-align: center;
+            }
+        }
     }
 
     .swiper-container {
@@ -2401,5 +2422,12 @@ body.single-post, body.single-product {
 .search-dropdown--wrap .dropdown-pane .frm-container .btn-s {
     &:hover {
         background-color: $color2;
+    }
+}
+
+/** */
+.section .heading-title {
+    @include mobile {
+        text-align: center;
     }
 }

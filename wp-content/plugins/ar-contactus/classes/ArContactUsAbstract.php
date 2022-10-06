@@ -76,11 +76,7 @@ abstract class ArContactUsAbstract
     
     public function registerJs()
     {
-        if ($this->getGeneralConfig()->disable_jquery) {
-            $deps = array();
-        } else {
-            $deps = array('jquery');
-        }
+        $deps = array();
         
         foreach ($this->js() as $key => $file){
             if (is_array($file)) {

@@ -7,6 +7,7 @@ abstract class ArContactUsConfigButtonAbstract extends ArContactUsConfigModel
     public $button_icon_type;
     public $button_icon;
     public $button_icon_img;
+    public $online_badge;
     public $button_color;
     public $button_size;
     public $button_icon_size;
@@ -19,6 +20,9 @@ abstract class ArContactUsConfigButtonAbstract extends ArContactUsConfigModel
     public $icon_speed;
     public $icon_animation_pause;
     public $text;
+    public $title;
+    public $description;
+    public $label;
     public $drag;
     
     public function getFormTitle()
@@ -30,6 +34,7 @@ abstract class ArContactUsConfigButtonAbstract extends ArContactUsConfigModel
     {
         return array(
             'mode' => 'regular',
+            'online_badge' => 1,
             'button_icon_type' => 'built-in',
             'button_icon' => 'hangouts',
             'button_size' => 'large',
@@ -51,7 +56,10 @@ abstract class ArContactUsConfigButtonAbstract extends ArContactUsConfigModel
     public function multiLangFields()
     {
         return array(
-            'text' => true
+            'text' => true,
+            'title' => true,
+            'description' => true,
+            'label' => true
         );
     }
 }

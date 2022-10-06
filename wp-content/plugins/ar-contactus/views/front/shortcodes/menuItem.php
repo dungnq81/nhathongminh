@@ -10,10 +10,10 @@
         target="<?php echo $model->target == ArContactUsModel::TARGET_NEW_WINDOW? '_blank' : '_self' ?>"
     <?php }elseif($model->type == ArContactUsModel::TYPE_INTEGRATION || $model->type == ArContactUsModel::TYPE_JS){ ?>
         href="#" 
-        onclick="jQuery('#msg-item-<?php echo $model->id ?>').trigger('click'); return false"
+        onclick="contactUs.triggerItem('click', '<?php echo $model->id ?>'); return false"
     <?php }elseif($model->type == ArContactUsModel::TYPE_FORM){ ?>
         href="#"
-        onclick="jQuery('#arcontactus').contactUs('showForm', '<?php echo ArContactUsTools::escJsString($model->params->form) ?>'); return false;"
+        onclick="contactUs.showForm('<?php echo ArContactUsTools::escJsString($model->params->form) ?>'); return false;"
     <?php } ?>>
     <span class="arcu-menu-item-icon" style="color: #<?php echo $model->color ?>">
         <?php if (isset($model->params->icon_type) && $model->params->icon_type == 2 && isset($model->params->icon_img) && $model->params->icon_img){ ?>

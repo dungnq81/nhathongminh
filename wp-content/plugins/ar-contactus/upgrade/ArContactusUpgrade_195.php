@@ -26,7 +26,7 @@ class ArContactusUpgrade_195  extends ArContactusUpgradeAbstract
             if ($isWPML) {
                 foreach ($langs as $lang) {
                     $values = array(
-                        "'{$lang['code']}'",
+                        "'{$lang['language_code']}'",
                         $model->id,
                         "'{$model->message}'"
                     );
@@ -57,7 +57,7 @@ class ArContactusUpgrade_195  extends ArContactusUpgradeAbstract
             if ($isWPML) {
                 foreach ($langs as $lang) {
                     $values = array(
-                        "'{$lang['code']}'",
+                        "'{$lang['language_code']}'",
                         $model->id,
                         "'{$model->title}'",
                         "'{$model->subtitle}'",

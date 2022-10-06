@@ -6,7 +6,7 @@
 Plugin Name: Contact Us all-in-one button
 Plugin URI: https://plugins.areama.net/ar-contactus/docs/
 Description: Display contact us button with menu on every page. Callback request, reCaptcha V3 protection and many customizations!
-Version: 2.0.5
+Version: 2.2.6
 Author: Areama
 Author URI: https://plugins.areama.net/
 License: GPLv2 or later
@@ -28,7 +28,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-Copyright 2018-2019 Areama.
+Copyright 2018-2022 Areama.
 */
 
 // Make sure we don't expose any info if called directly
@@ -36,7 +36,7 @@ if (!function_exists('add_action')) {
     die("Hi there!  I'm just a plugin, not much I can do when called directly.");
 }
 
-define('AR_CONTACTUS_VERSION', '2.0.5');
+define('AR_CONTACTUS_VERSION', '2.2.6');
 define('AR_CONTACTUS_MINIMUM_WP_VERSION', '3.7');
 if (get_option('ARCU_DEBUG')) {
     define('AR_CONTACTUS_DEBUG', true);

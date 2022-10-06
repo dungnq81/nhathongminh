@@ -28,13 +28,13 @@ function arCuShowMessage(index){
         return false;
     }
     if (typeof arCuMessages[index] !== 'undefined'){
-        jQuery('#arcontactus').contactUs('showPromptTyping');
+        contactUs.showPromptTyping();
 
         _arCuTimeOut = setTimeout(function(){
             if (arCuPromptClosed){
                 return false;
             }
-            jQuery('#arcontactus').contactUs('showPrompt', {
+            contactUs.showPrompt({
                 content: arCuMessages[index]
             });
             index ++;
@@ -47,7 +47,7 @@ function arCuShowMessage(index){
         }, arCuTypingTime);
     }else{
         if (arCuCloseLastMessage){
-            jQuery('#arcontactus').contactUs('hidePrompt');
+            contactUs.hidePrompt();
         }
         if (arCuLoop){
             arCuShowMessage(0);
@@ -62,10 +62,10 @@ function arCuShowMessages(){
 }
 function arCuShowWelcomeMessage(index){
     if (typeof arWelcomeMessages[index] !== 'undefined'){
-        jQuery('#arcontactus').contactUs('showWellcomeTyping');
+        contactUs.showWellcomeTyping();
 
         _arCuWelcomeTimeOut = setTimeout(function(){
-            jQuery('#arcontactus').contactUs('showWellcomeMessage', {
+            contactUs.showWellcomeMessage({
                 content: arWelcomeMessages[index]
             });
             index ++;
@@ -84,60 +84,88 @@ function arCuShowWellcomeMessages(){
     }, arWelcomeDelayFirst);
 }
 window.addEventListener('load', function(){
-    jQuery('#arcontactus-storefront-btn').click(function(e){
-        e.preventDefault();
-        setTimeout(function(){
-            jQuery('#arcontactus').contactUs('openMenu');
-        }, 200);
-    });
-    jQuery('body').on('click', '.arcu-open-menu', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        jQuery('#arcontactus').contactUs('closeCallbackPopup');
-        jQuery('#arcontactus').contactUs('openMenu');
-        return false;
-    });
-    jQuery('body').on('click', '.arcu-toggle-menu', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        jQuery('#arcontactus').contactUs('toggleMenu');
-        return false;
-    });
-    jQuery('body').on('click', '.arcu-open-callback', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        arCuPromptClosed = true;
-        jQuery('#arcontactus').contactUs('hidePrompt');
-        jQuery('#arcontactus').contactUs('hideForm');
-        jQuery('#arcontactus').contactUs('closeMenu');
-        jQuery('#arcontactus').contactUs('showForm', 'callback');
-        return false;
-    });
-    jQuery('body').on('click', '.arcu-open-email', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        arCuPromptClosed = true;
-        jQuery('#arcontactus').contactUs('hidePrompt');
-        jQuery('#arcontactus').contactUs('hideForm');
-        jQuery('#arcontactus').contactUs('closeMenu');
-        jQuery('#arcontactus').contactUs('showForm', 'email');
-        return false;
-    });
-    jQuery('body').on('click', '.arcu-open-form', function(e){
-        var formId = jQuery(this).data('form-id');
-        e.preventDefault();
-        e.stopPropagation();
-        arCuPromptClosed = true;
-        jQuery('#arcontactus').contactUs('hidePrompt');
-        jQuery('#arcontactus').contactUs('hideForm');
-        jQuery('#arcontactus').contactUs('closeMenu');
-        jQuery('#arcontactus').contactUs('showForm', formId);
-        return false;
-    });
-    jQuery('body').on('click', '.arcu-close-callback,.arcu-close-email,.arcu-close-form', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        jQuery('#arcontactus').contactUs('hideForm');
-        return false;
+    if (document.getElementById('arcontactus-storefront-btn')) {
+        document.getElementById('arcontactus-storefront-btn').click(function(e){
+            e.preventDefault();
+            setTimeout(function(){
+                contactUs.openMenu();
+            }, 200);
+        });
+    }
+    document.addEventListener('click', function(e) {
+        if (!e.target) {
+            return false;
+        }
+        const target = e.target;
+        
+        if (target.classList.contains('arcu-open-menu') || target.closest('.arcu-open-menu')) {
+            e.preventDefault();
+            e.stopPropagation();
+            contactUs.hideForm();
+            setTimeout(function(){
+                contactUs.openMenu();
+            }, 200);
+            return false;
+        }
+        
+        if (target.classList.contains('arcu-toggle-menu') || target.closest('.arcu-toggle-menu')) {
+            e.preventDefault();
+            e.stopPropagation();
+            contactUs.hideForm();
+            setTimeout(function(){
+                contactUs.toggleMenu();
+            }, 200);
+            return false;
+        }
+        
+        if (target.classList.contains('arcu-open-callback') || target.closest('.arcu-open-callback')) {
+            e.preventDefault();
+            e.stopPropagation();
+            arCuPromptClosed = true;
+            contactUs.hidePrompt();
+            contactUs.hideForm();
+            contactUs.closeMenu();
+            setTimeout(function(){
+                contactUs.showForm('callback');
+            }, 200);
+            return false;
+        }
+        
+        if (target.classList.contains('arcu-open-email') || target.closest('.arcu-open-email')) {
+            e.preventDefault();
+            e.stopPropagation();
+            arCuPromptClosed = true;
+            contactUs.hidePrompt();
+            contactUs.hideForm();
+            contactUs.closeMenu();
+            setTimeout(function(){
+                contactUs.showForm('email');
+            }, 200);
+            return false;
+        }
+        
+        if (target.classList.contains('arcu-open-form') || target.closest('.arcu-open-form')) {
+            var formId = null;
+            if (target.classList.contains('arcu-open-form')) {
+                formId = target.getAttribute('data-form-id');
+            } else if (target.closest('.arcu-open-form')) {
+                formId = target.closest('.arcu-open-form').getAttribute('data-form-id');
+            }
+            
+            if (formId === null) {
+                return false;
+            }
+            
+            e.preventDefault();
+            e.stopPropagation();
+            arCuPromptClosed = true;
+            contactUs.hidePrompt();
+            contactUs.hideForm();
+            contactUs.closeMenu();
+            setTimeout(function(){
+                contactUs.showForm(formId);
+            }, 150);
+            return false;
+        }
     });
 });

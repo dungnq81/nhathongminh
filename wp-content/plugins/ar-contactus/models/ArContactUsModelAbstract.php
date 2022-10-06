@@ -191,8 +191,8 @@ abstract class ArContactUsModelAbstract
                 } else {
                     $langs = ArContactUsTools::getLanguages();
                     foreach ($langs as $lang) {
-                        $langData[$lang['code']][$attr] = $value;
-                        $langData[$lang['code']]['lang'] = $lang['code'];
+                        $langData[$lang['language_code']][$attr] = $value;
+                        $langData[$lang['language_code']]['lang'] = $lang['language_code'];
                     }
                     $data[$attr] = $value;
                 }

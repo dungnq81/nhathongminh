@@ -107,7 +107,7 @@ class ArContactUsRequestsController extends ArContractUsControllerAbstract
         $reCaptchaValid = $this->isValidRecaptcha();
         
         if ($form->validate($data) && $reCaptchaValid) {
-            $referer = $_SERVER['HTTP_REFERER'];
+            $referer = isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER'] : null;
             
             $email = $this->sendEmail($form, $data);
             $twilio = $this->sendTwilioSMS($form, $data);
@@ -187,10 +187,10 @@ class ArContactUsRequestsController extends ArContractUsControllerAbstract
         }
         if ($braces) {
             $res['{site}'] = parse_url(AR_CONTACTUS_PLUGIN_URL, PHP_URL_HOST);
-            $res['{referer}'] = $_SERVER['HTTP_REFERER'];
+            $res['{referer}'] = isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER'] : null;
         } else {
             $res['site'] = parse_url(AR_CONTACTUS_PLUGIN_URL, PHP_URL_HOST);
-            $res['referer'] = $_SERVER['HTTP_REFERER'];
+            $res['referer'] = isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER'] : null;
         }
         return $res;
     }
@@ -444,13 +444,37 @@ class ArContactUsRequestsController extends ArContractUsControllerAbstract
             add_filter('wp_mail_content_type', array($this, 'setMailContentType'));
             $emails = explode(PHP_EOL, $form->email_list);
             $res = true;
+            $headers = array();
+            
+            $replyTo = null;
+            $replyToName = null;
+            if (isset($data['email'])) {
+                $replyTo = $data['email'];
+            } elseif (isset($data['mail'])) {
+                $replyTo = $data['mail'];
+            } elseif (isset($data['from'])) {
+                $replyTo = $data['from'];
+            }
+            
+            if (isset($data['name'])) {
+                $replyToName = $data['name'];
+            }
+            
+            if (!empty($replyTo)) {
+                if (!empty($replyToName)) {
+                    $headers[] = 'Reply-To: ' . trim($replyToName) . ' <' . $replyTo . '>';
+                } else {
+                    $headers[] = 'Reply-To: <' . $replyTo . '>';
+                }
+            }
+            
             foreach ($emails as $email){
                 $res = wp_mail($email, $this->getEmailSubject($form, $data), self::render('mail/callback.php', array(
                     'content' => $this->getEmailBody($form, $data),
                     'emailsConfig' => $emailConfig,
                     'subject' => $this->getEmailSubject($form, $data),
                     'pluginUrl' => rtrim(plugin_dir_url( __DIR__ ), '/\\' )
-                ))) && $res;
+                )), $headers) && $res;
             }
             return $res;
         }

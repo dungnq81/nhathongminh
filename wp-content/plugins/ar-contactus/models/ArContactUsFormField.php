@@ -90,7 +90,7 @@ class ArContactUsFormField extends ArContactUsFormEntity
     public function validate($value)
     {
         if ($this->required && empty($value)) {
-            $this->addValidationError('Field is required!');
+            $this->addValidationError(__('Field is required!', 'ar-contactus'));
             return false;
         }
         if (!empty($this->validation) && $this->validation != 'advanced') {
@@ -100,7 +100,7 @@ class ArContactUsFormField extends ArContactUsFormEntity
                     return true;
                 }
                 if (!$this->$validation($value)) {
-                    $this->addValidationError('Value is not valid');
+                    $this->addValidationError(__('Value is not valid', 'ar-contactus'));
                     return false;
                 }
             }
@@ -108,7 +108,7 @@ class ArContactUsFormField extends ArContactUsFormEntity
         if (!empty($this->validation) && $this->validation == 'advanced') {
             $preg = '{' . $this->preg . '}is';
             if (!preg_match($preg, $value)) {
-                $this->addValidationError('Value is not valid');
+                $this->addValidationError(__('Value is not valid', 'ar-contactus'));
                 return false;
             }
         }
@@ -233,7 +233,7 @@ class ArContactUsFormField extends ArContactUsFormEntity
     {
         return strtr($value, array(
             '{site}' => parse_url(AR_CONTACTUS_PLUGIN_URL, PHP_URL_HOST),
-            '{url}' => $_SERVER['HTTP_REFERER']
+            '{url}' => ArContactUsTools::getCurrentUrl()
         ));
     }
 }

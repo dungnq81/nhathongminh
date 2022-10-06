@@ -605,7 +605,7 @@ abstract class ArContactUsConfigModelAbstract
     
     public function isWPML()
     {
-        return ArContactUsTools::isWPML();
+        return ArContactUsTools::isMultilang();
     }
     
     public function getLanguages()

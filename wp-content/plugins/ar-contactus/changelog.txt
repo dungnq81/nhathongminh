@@ -1,6 +1,112 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+#[2.2.6] - 2022-08-10
+### Added
+- Polylang Pro support
+- TimeZone settings
+
+### Fixed
+- Menu item dialog checkboxes
+
+#[2.2.5] - 2022-03-22
+### Fixed
+- Intstallation process issue
+- Menu item uploaded icon fix
+
+#[2.2.4] - 2022-02-23
+### Fixed
+- Intstallation process issue
+
+#[2.2.3] - 2022-02-16
+### Added
+- Button title field
+- Button description field
+- Button label field
+- Menu style-1
+- Popup no-background style
+- Large menu size
+- Menu backdrop
+
+### Fixed
+- Sidebar appearance bugs
+- Animation origins
+
+#[2.2.2] - 2021-12-18
+### Fixed
+- Tawk.to integration
+
+#[2.2.1] - 2021-11-24
+### Fixed
+- Fixed installation process
+
+#[2.2.0] - 2021-11-09
+### Added
+- Hide main widget button on page loads option
+
+### Fixed
+- Main button icons slider animation
+- custom forms (inserted by shortcodes)
+- admin performance (update check)
+- translation files updated
+
+##[2.1.9] - 2021-10-01
+### Fixed
+- Enabled and disabled pages functionality
+
+##[2.1.8] - 2021-08-30
+### Fixed
+- Facebook customer chat
+
+##[2.1.7] - 2021-08-25
+### Fixed
+- Callback list database request issue
+- Menu item edit failure
+
+##[2.1.6] - 2021-07-28
+### Fixed
+- Popup with iFrame issue
+- Minor configuration issue
+
+##[2.1.5] - 2021-07-22
+### Fixed
+- Multi-popup issue
+
+##[2.1.4] - 2021-07-21
+### Fixed
+- Uploaded menu header image issue
+- Compatibility problem with https://codecanyon.net/item/excited-testimonials-showcase-for-wordpress/13705636
+
+##[2.1.3] - 2021-07-09
+### Added 
+- Disable callback and email request functionality option
+
+### Fixed
+- Google reCaptcha bug
+
+##[2.1.2] - 2021-06-09
+### Fixed
+- Shortlinks hotfix
+
+##[2.1.1] - 2021-06-09
+### Fixed
+- Shortlinks
+
+##[2.1.0] - 2021-06-09
+### Added
+- Apple Business Chat support
+- Polylang Support
+- Online badge to main button
+
+### Fixed
+- HTTP_REFERER warning
+
+### New 
+- jquery plugin replaced by vanilla-js plugin
+
+##[2.0.6] - 2021-05-14
+### Fixed 
+- dynamic variable {url} value
 
 ##[2.0.5] - 2021-05-13
 ### Added

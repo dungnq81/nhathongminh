@@ -24,6 +24,7 @@ class ArContactUsConfigMobileButton extends ArContactUsConfigButtonAbstract
     {
         return array(
             'mode' => 'regular',
+            'online_badge' => 1,
             'button_icon_type' => 'built-in',
             'button_icon' => 'hangouts',
             'button_size' => 'small',
@@ -31,6 +32,7 @@ class ArContactUsConfigMobileButton extends ArContactUsConfigButtonAbstract
             'button_color' => '008749',
             'position' => 'right',
             'animation' => 'flipInY',
+            'storefront_pos' => 4,
             'x_offset' => '10',
             'y_offset' => '10',
             'pulsate_speed' => 2000,

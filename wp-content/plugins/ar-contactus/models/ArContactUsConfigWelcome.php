@@ -46,7 +46,7 @@ class ArContactUsConfigWelcome extends ArContactUsConfigModel
         if ($this->use_prompt) {
             return ArContactUsPromptModel::getMessages();
         }
-        if (ArContactUsTools::isWPML()) {
+        if (ArContactUsTools::isMultilang()) {
             return explode(PHP_EOL, $this->welcome_messages[$lang]);
         }
         return explode("\r\n", $this->welcome_messages);

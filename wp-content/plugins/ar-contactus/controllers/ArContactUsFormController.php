@@ -75,7 +75,7 @@ class ArContactUsFormController extends ArContractUsControllerAbstract
         $content = ArContactUsAdmin::render('admin/_forms.php', array(
             'activeSubmit' => 'ArContactUsConfigForms',
             'formsConfig' => $formsConfig,
-            'isWPML' => ArContactUsTools::isWPML(),
+            'isWPML' => ArContactUsTools::isMultilang(),
             'defaultLang' => ArContactUsTools::getDefaultLanguage(),
             'languages' => ArContactUsTools::getLanguages()
         ));

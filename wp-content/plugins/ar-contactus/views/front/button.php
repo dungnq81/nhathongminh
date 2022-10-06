@@ -1,3 +1,6 @@
+<?php if ($apple) { ?>
+    <script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"></script>
+<?php } ?>
 <?php if ($generalConfig->ga_account && $generalConfig->ga_script){ ?>
     <script async src="<?php echo esc_url('https://www.googletagmanager.com/gtag/js?id=' . $generalConfig->ga_account) ?>"></script>
     <script>
@@ -7,7 +10,6 @@
         gtag('config', '<?php echo esc_html($generalConfig->ga_account) ?>');
     </script>
 <?php } ?>
-
 <?php if ($phplive){ ?>
     <span style="color: #0000FF; text-decoration: underline; line-height: 0px !important; cursor: pointer; position: fixed; bottom: 0px; right: 20px; z-index: 20000000;" id="phplive_btn_1576807307"></span>
 <?php } ?>
@@ -21,7 +23,7 @@
 <?php } ?>
 
 <?php if ($popupConfig->maskedinput){?>
-    <script src="<?php echo AR_CONTACTUS_PLUGIN_URL ?>res/js/jquery.maskedinput.min.js?version=<?php echo AR_CONTACTUS_VERSION ?>"></script>
+    <script src="<?php echo AR_CONTACTUS_PLUGIN_URL ?>res/js/maskedinput.min.js?version=<?php echo AR_CONTACTUS_VERSION ?>"></script>
 <?php } ?>
 <?php if ($menuConfig->menu_popup_style == 'sidebar'){?>
     <script src="<?php echo AR_CONTACTUS_PLUGIN_URL ?>res/js/snap.svg-min.js?version=<?php echo AR_CONTACTUS_VERSION ?>"></script>
@@ -49,6 +51,14 @@
 <?php } ?>
 <?php if ($jivosite){?>
     <script src="//code.jivosite.com/widget.js" data-jv-id="<?php echo esc_html($liveChatsConfig->jivosite_id) ?>" async></script>
+    <style type="text/css">
+        #jivo-iframe-container + jdiv{
+            display: none;
+        }
+        #jivo-iframe-container + jdiv.active{
+            display: block;
+        }
+    </style>
 <?php } ?>
 <script type="text/javascript" id="arcu-main-js">
     <?php echo $mainJs ?>
@@ -64,11 +74,11 @@
                 zE('webWidget', 'hide');
             });
             zE('webWidget:on', 'open', function(){
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
             });
             zE('webWidget:on', 'close', function(){
                 zE('webWidget', 'hide');
-                jQuery('#arcontactus').contactUs('show');
+                contactUs.show();
             });
             zE('webWidget:on', 'chat:unreadMessages', function(msgs){
                 zE('webWidget', 'show');
@@ -97,7 +107,7 @@
                 <?php } ?>
                 $zopim.livechat.window.onHide(function(){
                     $zopim.livechat.hideAll();
-                    jQuery('#arcontactus').contactUs('show');
+                    contactUs.show();
                 });
             });
         </script>

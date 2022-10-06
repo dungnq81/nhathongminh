@@ -253,13 +253,13 @@ abstract class ArContactUsFormEntity
         foreach($fieldData as $key => $value) {
             if ($this->isAttributeSafe($key)) {
                 if ($this->isLangAttribute($key)) {
-                    if (ArContactUsTools::isWPML()) {
+                    if (ArContactUsTools::isMultilang()) {
                         if (is_object($value) || is_array($value)) {
                             $this->$key = $value;
                         } else {
                             $values = array();
                             foreach (ArContactUsTools::getLanguages() as $lang){
-                                $values[$lang['code']] = $value;
+                                $values[$lang['language_code']] = $value;
                             }
                             $this->$key = $values;
                         }

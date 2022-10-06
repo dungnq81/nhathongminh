@@ -57,7 +57,8 @@ class ArContactUsListTable extends WP_List_Table
         return $sortable_columns;
     }
     
-    public function prepare_items() {        
+    public function prepare_items() {
+        
         $columns  = $this->get_columns();
         $hidden   = array();
         $sortable = $this->get_sortable_columns();
@@ -71,9 +72,10 @@ class ArContactUsListTable extends WP_List_Table
         $q = ArContactUsCallbackModel::find();
         if (isset($_REQUEST['status'])){
             $q->where(array('status' => (int)$_REQUEST['status']));
+            $q->andWhere(array('type' => $this->type));
+        } else {
+            $q->where(array('type' => $this->type));
         }
-        $q->andWhere(array('type' => $this->type));
-        
         $total_items = $q->count();
         
         $this->items = $data;

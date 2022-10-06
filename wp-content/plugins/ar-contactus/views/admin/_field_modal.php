@@ -108,6 +108,9 @@
                         <div class="row" id="arcontactus_field_mask_on-group">
                             <div class="two wide column"></div>
                             <div class="twelve wide column">
+                                <div class="ui orange message">
+                                    <?php echo __('Mask functionality temporarily does not work. We are moving to non-jquery plugin, so <b>jquery.maskedinput</b> plugin does not meet our requirements anymore. We are working on new maskedinput plugin now.', 'ar-contactus') ?>
+                                </div>
                                 <?php echo ArContactUsFormField::renderConfigField('text', 'arcontactus_field', 'mask', array(
                                     'label' => __('Mask', 'ar-contactus'),
                                     'hint' => __('<b>X</b> means any number', 'ar-contactus'),

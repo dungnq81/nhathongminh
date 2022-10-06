@@ -47,9 +47,9 @@ class ArContactUsPromptController extends ArContractUsControllerAbstract
     {
         $this->assertAccess();
         
-        if (ArContactUsTools::isWPML()) {
+        if (ArContactUsTools::isMultilang()) {
             $lang = ArContactUsTools::getCurrentLanguage();
-            if ($lang == 'all') {
+            if ($lang == 'all' || $lang === false) {
                 $lang = ArContactUsTools::getDefaultLanguage();
             }
             $items = ArContactUsPromptModel::find()->join(ArContactUsPromptModel::langTableName() . ' `_lang`', 'id_item = id')->where(array('lang' => $lang))->orderBy('`position` ASC')->all();
@@ -100,7 +100,7 @@ class ArContactUsPromptController extends ArContractUsControllerAbstract
         
         $id = $_GET['id'];
         $model = ArContactUsPromptModel::find()->where(array('id' => $id))->one();
-        if (ArContactUsTools::isWPML()) {
+        if (ArContactUsTools::isMultilang()) {
             $model->loadLangData();
         }
         

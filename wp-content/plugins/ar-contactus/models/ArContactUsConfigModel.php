@@ -44,7 +44,7 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'comments-light' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M532 386.2c27.5-27.1 44-61.1 44-98.2 0-80-76.5-146.1-176.2-157.9C368.4 72.5 294.3 32 208 32 93.1 32 0 103.6 0 192c0 37 16.5 71 44 98.2-15.3 30.7-37.3 54.5-37.7 54.9-6.3 6.7-8.1 16.5-4.4 25 3.6 8.5 12 14 21.2 14 53.5 0 96.7-20.2 125.2-38.8 9.1 2.1 18.4 3.7 28 4.8 31.5 57.5 105.5 98 191.8 98 20.8 0 40.8-2.4 59.8-6.8 28.5 18.5 71.6 38.8 125.2 38.8 9.2 0 17.5-5.5 21.2-14 3.6-8.5 1.9-18.3-4.4-25-.5-.4-22.6-24.2-37.9-54.9zM142.2 311l-11.4 7.4c-20.1 13.1-50.5 28.2-87.7 32.5 8.8-11.3 20.2-27.6 29.5-46.4L83 283.7l-16.5-16.3C50.7 251.9 32 226.2 32 192c0-70.6 79-128 176-128s176 57.4 176 128-79 128-176 128c-17.7 0-35.4-2-52.6-6l-13.2-3zm303 103.4l-11.4-7.4-13.2 3.1c-17.2 4-34.9 6-52.6 6-65.1 0-122-25.9-152.4-64.3C326.9 348.6 416 278.4 416 192c0-9.5-1.3-18.7-3.3-27.7C488.1 178.8 544 228.7 544 288c0 34.2-18.7 59.9-34.5 75.4L493 379.7l10.3 20.7c9.4 18.9 20.8 35.2 29.5 46.4-37.1-4.2-67.5-19.4-87.6-32.4zm-37.8-267.7c.1.2.1.4.2.6-.1-.2-.1-.4-.2-.6z"></path></svg>',
             'comment-smile-solid' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32zm64 133.2c14.8 0 26.8 12 26.8 26.8s-12 26.8-26.8 26.8-26.8-12-26.8-26.8 12-26.8 26.8-26.8zm-128 0c14.8 0 26.8 12 26.8 26.8s-12 26.8-26.8 26.8-26.8-12-26.8-26.8 12-26.8 26.8-26.8zm164.2 140.9C331.3 335.3 294.8 352 256 352c-38.8 0-75.3-16.7-100.2-45.9-5.8-6.7-5-16.8 1.8-22.5 6.7-5.7 16.8-5 22.5 1.8 18.8 22 46.5 34.6 75.8 34.6 29.4 0 57-12.6 75.8-34.7 5.8-6.7 15.9-7.5 22.6-1.8 6.8 5.8 7.6 15.9 1.9 22.6z"></path></svg>',
             'comment-smile-light' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 32C114.6 32 0 125.1 0 240c0 47.6 19.9 91.2 52.9 126.3C38 405.7 7 439.1 6.5 439.5c-6.6 7-8.4 17.2-4.6 26S14.4 480 24 480c61.5 0 110-25.7 139.1-46.3C192 442.8 223.2 448 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zm0 384c-28.3 0-56.3-4.3-83.2-12.8l-15.2-4.8-13 9.2c-23 16.3-58.5 35.3-102.6 39.6 12-15.1 29.8-40.4 40.8-69.6l7.1-18.7-13.7-14.6C47.3 313.7 32 277.6 32 240c0-97 100.5-176 224-176s224 79 224 176-100.5 176-224 176zm75.8-130.7C313 307.4 285.4 320 256 320s-57-12.6-75.8-34.6c-5.7-6.7-15.8-7.4-22.5-1.8-6.8 5.8-7.5 15.8-1.8 22.6C180.7 335.3 217.2 352 256 352s75.3-16.7 100.2-45.9c5.8-6.7 4.9-16.8-1.8-22.6-6.7-5.7-16.8-4.9-22.6 1.8zM192 216c13.3 0 24-10.7 24-24s-10.7-24-24-24-24 10.7-24 24 10.7 24 24 24zm128 0c13.3 0 24-10.7 24-24s-10.7-24-24-24-24 10.7-24 24 10.7 24 24 24z"></path></svg>',
-            'hangouts' => '<svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Canvas" transform="translate(-825 -308)"><g id="Vector"><use xlink:href="#path0_fill0123" transform="translate(825 308)" fill="currentColor"></use></g></g><defs><path id="path0_fill0123" d="M 19 4L 17 4L 17 13L 4 13L 4 15C 4 15.55 4.45 16 5 16L 16 16L 20 20L 20 5C 20 4.45 19.55 4 19 4ZM 15 10L 15 1C 15 0.45 14.55 0 14 0L 1 0C 0.45 0 0 0.45 0 1L 0 15L 4 11L 14 11C 14.55 11 15 10.55 15 10Z"></path></defs></svg>',
+            'hangouts' => '<svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Canvas" transform="translate(-825 -308)"><g id="Vector"><use xlink:href="#path0_fill0123" transform="translate(825 308)" fill="currentColor"></use></g></g><defs><path fill="currentColor" id="path0_fill0123" d="M 19 4L 17 4L 17 13L 4 13L 4 15C 4 15.55 4.45 16 5 16L 16 16L 20 20L 20 5C 20 4.45 19.55 4 19 4ZM 15 10L 15 1C 15 0.45 14.55 0 14 0L 1 0C 0.45 0 0 0.45 0 1L 0 15L 4 11L 14 11C 14.55 11 15 10.55 15 10Z"></path></defs></svg>',
             'zalo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460.1 436.6"><path fill="currentColor" class="st0" d="M82.6 380.9c-1.8-.8-3.1-1.7-1-3.5 1.3-1 2.7-1.9 4.1-2.8 13.1-8.5 25.4-17.8 33.5-31.5 6.8-11.4 5.7-18.1-2.8-26.5C69 269.2 48.2 212.5 58.6 145.5 64.5 107.7 81.8 75 107 46.6c15.2-17.2 33.3-31.1 53.1-42.7 1.2-.7 2.9-.9 3.1-2.7-.4-1-1.1-.7-1.7-.7-33.7 0-67.4-.7-101 .2C28.3 1.7.5 26.6.6 62.3c.2 104.3 0 208.6 0 313 0 32.4 24.7 59.5 57 60.7 27.3 1.1 54.6.2 82 .1 2 .1 4 .2 6 .2H290c36 0 72 .2 108 0 33.4 0 60.5-27 60.5-60.3v-.6-58.5c0-1.4.5-2.9-.4-4.4-1.8.1-2.5 1.6-3.5 2.6-19.4 19.5-42.3 35.2-67.4 46.3-61.5 27.1-124.1 29-187.6 7.2-5.5-2-11.5-2.2-17.2-.8-8.4 2.1-16.7 4.6-25 7.1-24.4 7.6-49.3 11-74.8 6zm72.5-168.5c1.7-2.2 2.6-3.5 3.6-4.8 13.1-16.6 26.2-33.2 39.3-49.9 3.8-4.8 7.6-9.7 10-15.5 2.8-6.6-.2-12.8-7-15.2-3-.9-6.2-1.3-9.4-1.1-17.8-.1-35.7-.1-53.5 0-2.5 0-5 .3-7.4.9-5.6 1.4-9 7.1-7.6 12.8 1 3.8 4 6.8 7.8 7.7 2.4.6 4.9.9 7.4.8 10.8.1 21.7 0 32.5.1 1.2 0 2.7-.8 3.6 1-.9 1.2-1.8 2.4-2.7 3.5-15.5 19.6-30.9 39.3-46.4 58.9-3.8 4.9-5.8 10.3-3 16.3s8.5 7.1 14.3 7.5c4.6.3 9.3.1 14 .1 16.2 0 32.3.1 48.5-.1 8.6-.1 13.2-5.3 12.3-13.3-.7-6.3-5-9.6-13-9.7-14.1-.1-28.2 0-43.3 0zm116-52.6c-12.5-10.9-26.3-11.6-39.8-3.6-16.4 9.6-22.4 25.3-20.4 43.5 1.9 17 9.3 30.9 27.1 36.6 11.1 3.6 21.4 2.3 30.5-5.1 2.4-1.9 3.1-1.5 4.8.6 3.3 4.2 9 5.8 14 3.9 5-1.5 8.3-6.1 8.3-11.3.1-20 .2-40 0-60-.1-8-7.6-13.1-15.4-11.5-4.3.9-6.7 3.8-9.1 6.9zm69.3 37.1c-.4 25 20.3 43.9 46.3 41.3 23.9-2.4 39.4-20.3 38.6-45.6-.8-25-19.4-42.1-44.9-41.3-23.9.7-40.8 19.9-40 45.6zm-8.8-19.9c0-15.7.1-31.3 0-47 0-8-5.1-13-12.7-12.9-7.4.1-12.3 5.1-12.4 12.8-.1 4.7 0 9.3 0 14v79.5c0 6.2 3.8 11.6 8.8 12.9 6.9 1.9 14-2.2 15.8-9.1.3-1.2.5-2.4.4-3.7.2-15.5.1-31 .1-46.5z"/></svg>',
             'linked-in' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>',
             'linked-in2' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>',
@@ -58,12 +58,27 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
     
     public function getCurrentIP()
     {
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != '127.0.0.1') {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
-        if (isset($_SERVER['REMOTE_ADDR'])) {
+        if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
             return $_SERVER['REMOTE_ADDR'];
         }
+        if (isset($_SERVER['HTTP_X_REAL_IP']) && $_SERVER['HTTP_X_REAL_IP'] != '127.0.0.1') {
+            return $_SERVER['HTTP_X_REAL_IP'];
+        }
+    }
+    
+    public function timezoneSelectOptions()
+    {
+        $list = timezone_identifiers_list();
+        $res = array(
+            'auto' => 'AUTO'
+        );
+        foreach ($list as $tz) {
+            $res[$tz] = $tz;
+        }
+        return $res;
     }
     
     public function animationSelectOptions()
@@ -175,7 +190,8 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
     {
         return array(
             'popup' => __('Popup', 'ar-contactus'),
-            'sidebar' => __('Sidebar', 'ar-contactus')
+            'sidebar' => __('Sidebar', 'ar-contactus'),
+            'no-background' => __('No-background', 'ar-contactus')
         );
     }
     
@@ -200,8 +216,8 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
     public function menuStyleSelectOptions()
     {
         return array(
-            0 => __('Regular', 'ar-contactus'),
-            1 => __('Icons only', 'ar-contactus')
+            'regular' => __('Regular', 'ar-contactus'),
+            'style-1' => __('Style-1', 'ar-contactus')
         );
     }
     
@@ -270,6 +286,7 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
     public function menuSizeSelectOptions()
     {
         return array(
+            'normal' => __('Normal', 'ar-contactus'),
             'large' => __('Large', 'ar-contactus'),
             'small' => __('Small', 'ar-contactus')
         );
@@ -355,22 +372,27 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
                 array(
                     'mobile',
                     'allowed_pages',
+                    'timezone',
                     'pages',
                     'sandbox',
                     'allowed_ips',
                     'fa_css',
                     'minify',
                     'disable_init',
-                    'disable_jquery',
+                    'hide_on_load',
+                    //'disable_jquery',
                     'delay_init',
                     'ga_account',
                     'ga_script',
                     'ga_tracker',
+                    'disable_callback_menu',
+                    'disable_email_menu',
                     'callback_access',
                     'font',
                     'custom_css',
                     
                     'mode',
+                    'online_badge',
                     'button_icon_type',
                     'button_icon',
                     'button_icon_img',
@@ -386,6 +408,9 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
                     'icon_speed',
                     'icon_animation_pause',
                     'text',
+                    'title',
+                    'description',
+                    'label',
                     'drag',
                     
                     'menu_popup_style',
@@ -418,6 +443,7 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
                     'menu_hcolor',
                     'shadow_size',
                     'shadow_opacity',
+                    'backdrop',
                     'auto_open',
                     
                     'enable_prompt',
@@ -693,19 +719,24 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'pages' => __('Disable widget on pages', 'ar-contactus'),
             'sandbox' => __('Sandbox mode', 'ar-contactus'),
             'allowed_ips' => __('Allowed IPs', 'ar-contactus'),
+            'timezone' => __('Server TimeZone', 'ar-contactus'),
             'fa_css' => __('Include FontAwesome CSS file', 'ar-contactus'),
             'minify' => __('Minify plugin JS output', 'ar-contactus'),
             'disable_init' => __('Disable plugin initialization', 'ar-contactus'),
+            'hide_on_load' => __('Hide main widget button after page loads', 'ar-contactus'),
             'disable_jquery' => __('Disable jQuery initialization', 'ar-contactus'),
             'delay_init' => __('Delay plugin initialization', 'ar-contactus'),
             'ga_account' => __('Google Analytics account ID', 'ar-contactus'),
             'ga_script' => __('Include Google Analytics SDK script', 'ar-contactus'),
             'ga_tracker' => __('Create new Google Analytics tracker', 'ar-contactus'),
+            'disable_callback_menu' => __('Disable "Callback" admin menu item', 'ar-contactus'),
+            'disable_email_menu' => __('Disable "Email requests" admin menu item', 'ar-contactus'),
             'callback_access' => __('Access to callback list', 'ar-contactus'),
             'font' => __('Font', 'ar-contactus'),
             'custom_css' => __('Custom CSS rules', 'ar-contactus'),
             
             'mode' => __('Button mode', 'ar-contactus'),
+            'online_badge' => __('Show online badge', 'ar-contactus'),
             'button_icon_type' => __('Button icon type', 'ar-contactus'),
             'button_icon' => __('Button icon', 'ar-contactus'),
             'button_icon_img' => __('Button icon', 'ar-contactus'),
@@ -721,7 +752,10 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'pulsate_speed' => __('Pulsate speed', 'ar-contactus'),
             'icon_speed' => __('Icon slider speed', 'ar-contactus'),
             'icon_animation_pause' => __('Icon slider animation pause', 'ar-contactus'),
-            'text' => __('Text', 'ar-contactus'),
+            'text' => __('Icon text', 'ar-contactus'),
+            'title' => __('Button title', 'ar-contactus'),
+            'description' => __('Button description', 'ar-contactus'),
+            'label' => __('Button label', 'ar-contactus'),
             'drag' => __('Enable button drag', 'ar-contactus'),
 
             'enable_prompt' => __('Enable', 'ar-contactus'),
@@ -737,10 +771,10 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'use_prompt' => __('Use same settings as prompt messages', 'ar-contactus'),
             'welcome_messages' => __('Welcome messages', 'ar-contactus'),
             
-            'menu_popup_style' => __('Menu style', 'ar-contactus'),
+            'menu_popup_style' => __('Popup style', 'ar-contactus'),
             'popup_animation' => __('Popup animation', 'ar-contactus'),
             'sidebar_animation' => __('Sidebar animation', 'ar-contactus'),
-            'menu_style' => __('Menu background style', 'ar-contactus'),
+            'menu_style' => __('Menu style', 'ar-contactus'),
             'menu_layout' => __('Menu layout', 'ar-contactus'),
             'icons_title' => __('Icons block title', 'ar-contactus'),
             
@@ -758,6 +792,7 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'shadow_size' => __('Shadow size', 'ar-contactus'),
             'shadow_opacity' => __('Shadow opacity', 'ar-contactus'),
             'auto_open' => __('Open menu automatically', 'ar-contactus'),
+            'backdrop' => __('Backdrop', 'ar-contactus'),
             'menu_header_layout' => __('Header layout', 'ar-contactus'),
             'menu_header_icon_type' => __('Header icon type', 'ar-contactus'),
             'menu_header_icon_svg' => __('Header icon', 'ar-contactus'),
@@ -998,16 +1033,21 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'mobile' => 'switch',
             'sandbox' => 'switch',
             'allowed_ips' => 'textarea',
+            'timezone' => 'select',
             'fa_css' => 'switch',
             'minify' => 'switch',
             'disable_init' => 'switch',
+            'hide_on_load' => 'switch',
             'disable_jquery' => 'switch',
             'ga_script' => 'switch',
             'ga_tracker' => 'switch',
+            'disable_callback_menu' => 'switch',
+            'disable_email_menu' => 'switch',
             'callback_access' => 'select',
             'custom_css' => 'textarea',
             
             'mode' => 'select',
+            'online_badge' => 'switch',
             'button_icon_type' => 'select',
             'button_icon' => 'iconDropdown',
             'button_icon_img' => 'mediaImage',
@@ -1021,7 +1061,7 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'pulsate_speed' => 'text',
             'icon_speed' => 'text',
             'icon_animation_pause' => 'text',
-            'text' => 'textarea',
+            'text' => 'text',
             'drag' => 'switch',
             
             'enable_prompt' => 'switch',
@@ -1066,6 +1106,7 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'menu_color' => 'color',
             'menu_hbg' => 'color',
             'menu_hcolor' => 'color',
+            'backdrop' => 'switch',
             
             'email_img' => 'mediaImage',
             'callback_email_subject' => 'text',
@@ -1216,9 +1257,10 @@ abstract class ArContactUsConfigModel extends ArContactUsConfigModelAbstract
             'font' => __('Enter "inherit" to use theme font-family. Leave empty to use default font.', 'ar-contactus'),
             
             'allowed_ips' => sprintf(__('One IP address per line. Your current IP %s', 'ar-contactus'), $this->getCurrentIP()),
+            'timezone' => sprintf(__('Autodetected timezone: %s'), date_default_timezone_get()),
             'sandbox' => __('If enabled, module will be shown from allowed IPs only.', 'ar-contactus'),
             
-            'disable_init' => __('To initialize plugin manually please call following JavaScript code when you need to initilize plugin jQuery(\'#arcontactus\').contactUs(arcuOptions);', 'ar-contactus'),
+            'disable_init' => __('To initialize plugin manually please call following JavaScript code when you need to initilize plugin contactUs.init(arcuOptions);', 'ar-contactus'),
             'minify' => __('This is experemental feature!', 'ar-contactus'),
             'delay_init' => __('Type 0 to initialize plugin without delay', 'ar-contactus'),
             'disable_jquery' => __('Enable this option only if you have already included jQuery to your site', 'ar-contactus'),

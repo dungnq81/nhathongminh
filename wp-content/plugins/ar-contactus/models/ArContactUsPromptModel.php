@@ -124,7 +124,7 @@ class ArContactUsPromptModel extends ArContactUsModelAbstract
     public static function getMessages()
     {
         $res = array();
-        if (ArContactUsTools::isWPML()) {
+        if (ArContactUsTools::isMultilang()) {
             $models = self::find()
                 ->join(self::langTableName() . ' `_lang`', "`_lang`.id_item = id")
                 ->where(array('status' => 1))
@@ -144,13 +144,13 @@ class ArContactUsPromptModel extends ArContactUsModelAbstract
     
     public static function createDefaultItems()
     {
-        $isWPML = ArContactUsTools::isWPML();
+        $isWPML = ArContactUsTools::isMultilang();
         
         foreach (self::getDefaultItems() as $k => $item){
             if ($isWPML) {
                 $message = array();
                 foreach (ArContactUsTools::getLanguages() as $lang) {
-                    $message[$lang['code']] = $item['message'];
+                    $message[$lang['language_code']] = $item['message'];
                 }
             } else {
                 if ($currentLang = ArContactUsTools::getCurrentLanguage()){

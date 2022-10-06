@@ -67,7 +67,7 @@ var arCU = {
                         if (data[i] == "1" || data[i] == 1){
                             jQuery(fieldId).prop('checked', true);
                         } else {
-                            jQuery(fieldId).removeProp('checked');
+                            jQuery(fieldId).prop('checked', false);
                         }
                     } else {
                         jQuery(fieldId).val(data[i]);
@@ -953,13 +953,18 @@ var arCU = {
             arcontactusMobilePositionChange();
         });
         
-        jQuery('#ARCUM_MENU_STYLE').change(function(){
+        jQuery('#ARCUM_MENU_POPUP_STYLE').change(function(){
             arcontactusChangeMenuStyle();
+        });
+        
+        jQuery('#ARCUMM_MENU_POPUP_STYLE').change(function(){
+            arcontactusChangeMobileMenuStyle();
         });
         
         arcontactusMobilePositionChange();
         arcontactusChangeType();
         arcontactusChangeMenuStyle();
+        arcontactusChangeMobileMenuStyle();
         jQuery(".arcu-form-fields").sortable({	
             axis: "y",
             handle: ".arcu-move-handle",
@@ -1019,7 +1024,7 @@ var arCU = {
                             if (data[i][ii] == "1" || data[i][ii] == 1){
                                 jQuery(fieldId).prop('checked', true);
                             } else {
-                                jQuery(fieldId).removeProp('checked');
+                                jQuery(fieldId).prop('checked', false);
                             }
                         } else {
                             jQuery(fieldId).val(data[i][ii]);
@@ -1240,7 +1245,7 @@ var arCU = {
                     if (attr == '1') {
                         jQuery(this).prop('checked', true);
                     } else {
-                        jQuery(this).removeProp('checked');
+                        jQuery(this).prop('checked', false);
                     }
                 }
             } else {
@@ -1284,12 +1289,21 @@ function arcontactusChangeVisibilityType(){
 }
 
 function arcontactusChangeMenuStyle(){
-    if (jQuery('#ARCUM_MENU_STYLE').val() == '0'){
-        jQuery('#ArContactUsConfigMenu .field_item_border_style, #ArContactUsConfigMenu .field_item_border_color, #ArContactUsConfigMenu .field_menu_header_on, #ArContactUsConfigMenu .field_menu_header, #ArContactUsConfigMenu .field_header_close, #ArContactUsConfigMenu .field_header_close_bg, #ArContactUsConfigMenu .field_header_close_color').removeClass('hidden');
-        arContactUsSwitchFields();
-    }else{
+    if (jQuery('#ARCUM_MENU_POPUP_STYLE').val() == 'no-background'){
         jQuery('#ArContactUsConfigMenu .field_item_border_style, #ArContactUsConfigMenu .field_item_border_color, #ArContactUsConfigMenu .field_menu_header_on, #ArContactUsConfigMenu .field_menu_header, #ArContactUsConfigMenu .field_header_close, #ArContactUsConfigMenu .field_header_close_bg, #ArContactUsConfigMenu .field_header_close_color').addClass('hidden');
+    } else {
+        jQuery('#ArContactUsConfigMenu .field_item_border_style, #ArContactUsConfigMenu .field_item_border_color, #ArContactUsConfigMenu .field_menu_header_on, #ArContactUsConfigMenu .field_menu_header, #ArContactUsConfigMenu .field_header_close, #ArContactUsConfigMenu .field_header_close_bg, #ArContactUsConfigMenu .field_header_close_color').removeClass('hidden');
     }
+    arContactUsSwitchFields();
+}
+
+function arcontactusChangeMobileMenuStyle(){
+    if (jQuery('#ARCUMM_MENU_POPUP_STYLE').val() == 'no-background'){
+        jQuery('#ArContactUsConfigMobileMenu .field_item_border_style, #ArContactUsConfigMobileMenu .field_item_border_color, #ArContactUsConfigMobileMenu .field_menu_header_on, #ArContactUsConfigMobileMenu .field_menu_header, #ArContactUsConfigMobileMenu .field_header_close, #ArContactUsConfigMobileMenu .field_header_close_bg, #ArContactUsConfigMobileMenu .field_header_close_color').addClass('hidden');
+    } else {
+        jQuery('#ArContactUsConfigMobileMenu .field_item_border_style, #ArContactUsConfigMobileMenu .field_item_border_color, #ArContactUsConfigMobileMenu .field_menu_header_on, #ArContactUsConfigMobileMenu .field_menu_header, #ArContactUsConfigMobileMenu .field_header_close, #ArContactUsConfigMobileMenu .field_header_close_bg, #ArContactUsConfigMobileMenu .field_header_close_color').removeClass('hidden');
+    }
+    arContactUsSwitchFields();
 }
 
 function arcontactusMobilePositionChange(){
@@ -1551,7 +1565,7 @@ function arContactUsSwitchFields(){
         jQuery('.field_tg_token, .field_tg_chat_id, .field_tg_text').addClass('hidden');
     }
 
-    if (jQuery('#ARCUM_MENU_HEADER_ON').is(':checked')){
+    if (jQuery('#ARCUM_MENU_HEADER_ON').is(':checked') && jQuery('#ARCUM_MENU_POPUP_STYLE').val() != 'no-background'){
         jQuery('#ArContactUsConfigMenu .field_menu_header, #ArContactUsConfigMenu .field_menu_subheader, #ArContactUsConfigMenu .field_header_close, #ArContactUsConfigMenu .field_header_close_bg, #ArContactUsConfigMenu .field_header_close_color').removeClass('hidden');
         jQuery('#ArContactUsConfigMenu .field_menu_header_layout, #ArContactUsConfigMenu .field_menu_header_icon_type, #ArContactUsConfigMenu .field_menu_header_icon_svg, #ArContactUsConfigMenu .field_menu_header_icon_img').removeClass('hidden');
         desktopHeaderLayoutChanged();
@@ -1563,15 +1577,15 @@ function arContactUsSwitchFields(){
         jQuery('#ArContactUsConfigMenu .field_menu_header_layout, #ArContactUsConfigMenu .field_menu_header_icon_type, #ArContactUsConfigMenu .field_menu_header_icon_svg, #ArContactUsConfigMenu .field_menu_header_icon_img').addClass('hidden');
     }
     
-    if (jQuery('#ARCUMM_MENU_HEADER_ON').is(':checked')){
-        jQuery('#ArContactUsConfigMobileMenu .field_menu_header, #ArContactUsConfigMobileMenu .field_menu_subheader, #ArContactUsConfigMobileMenu .field_header_close, #ArContactUsConfigMobileMenu .field_header_close_bg, #ArContactUsConfigMobileMenu .field_header_close_color').removeClass('hidden');
+    if (jQuery('#ARCUMM_MENU_HEADER_ON').is(':checked') && jQuery('#ARCUMM_MENU_POPUP_STYLE').val() != 'no-background'){
+        jQuery('#ArContactUsConfigMobileMenu .field_menu_header, #ArContactUsConfigMobileMenu .field_menu_subheader, #ArContactUsConfigMobileMenu .field_header_close, #ArContactUsConfigMobileMenu .field_header_close_bg, #ArContactUsConfigMenu .field_header_close_color').removeClass('hidden');
         jQuery('#ArContactUsConfigMobileMenu .field_menu_header_layout, #ArContactUsConfigMobileMenu .field_menu_header_icon_type, #ArContactUsConfigMobileMenu .field_menu_header_icon_svg, #ArContactUsConfigMobileMenu .field_menu_header_icon_img').removeClass('hidden');
         mobileHeaderLayoutChanged();
         if (jQuery('#ARCUMM_MENU_HEADER_LAYOUT').val() != 'noicon') {
             mobileHeaderIconTypeChanged();
         }
     }else{
-        jQuery('#ArContactUsConfigMobileMenu .field_menu_header, #ArContactUsConfigMobileMenu .field_menu_subheader, #ArContactUsConfigMobileMenu .field_header_close, #ArContactUsConfigMobileMenu .field_header_close_bg, #ArContactUsConfigMobileMenu .field_header_close_color').addClass('hidden');
+        jQuery('#ArContactUsConfigMobileMenu .field_menu_header, #ArContactUsConfigMobileMenu .field_menu_subheader, #ArContactUsConfigMobileMenu .field_header_close, #ArContactUsConfigMobileMenu .field_header_close_bg, #ArContactUsConfigMenu .field_header_close_color').addClass('hidden');
         jQuery('#ArContactUsConfigMobileMenu .field_menu_header_layout, #ArContactUsConfigMobileMenu .field_menu_header_icon_type, #ArContactUsConfigMobileMenu .field_menu_header_icon_svg, #ArContactUsConfigMobileMenu .field_menu_header_icon_img').addClass('hidden');
     }
     

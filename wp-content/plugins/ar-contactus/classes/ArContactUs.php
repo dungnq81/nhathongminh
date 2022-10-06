@@ -13,7 +13,7 @@ class ArContactUs extends ArContactUsAbstract
     public function css()
     {
         $css = array(
-            'jquery.contactus.css' => 'res/css/jquery.contactus.min.css'
+            'contactus.css' => 'res/css/contactus.min.css'
         );
         if ($this->isMobile()) {
             if (is_writable(AR_CONTACTUS_PLUGIN_DIR . 'res/css/generated-mobile.css')) {
@@ -34,10 +34,10 @@ class ArContactUs extends ArContactUsAbstract
     {
         $js = array();
         if (!$this->getGeneralConfig()->disable_jquery) {
-            $js['jquery'] = null;
+            //$js['jquery'] = null;
         }
-        $js['jquery.contactus'] = array(
-            'src' => 'res/js/jquery.contactus.min.js',
+        $js['contactus'] = array(
+            'src' => AR_CONTACTUS_DEBUG? 'res/js/contactus.js' : 'res/js/contactus.min.js',
             'localization' => array(
                 'varName' => 'arCUVars',
                 'l10n' => array(
@@ -47,7 +47,7 @@ class ArContactUs extends ArContactUsAbstract
                 )
             )
         );
-        $js['jquery.contactus.scripts'] = 'res/js/scripts.js';
+        $js['contactus.scripts'] = 'res/js/scripts.js';
         return $js;
     }
     
@@ -60,6 +60,7 @@ class ArContactUs extends ArContactUsAbstract
         if ($this->getMobileButtonConfig()->position == 'storefront'){
             add_filter('storefront_handheld_footer_bar_links', array($this, 'storeFrontBottomButton'));
         }
+        ArContactUsTools::getDefaultLanguage();
     }
     
     public function registerAssets()
@@ -68,7 +69,7 @@ class ArContactUs extends ArContactUsAbstract
         $params = $this->getViewParams();
         if ($params) {
             $inlineCss = ArContactUsTools::minifyStyles(self::render('front/inline_styles.php', $params));
-            wp_add_inline_style('jquery.contactus.css', $inlineCss);
+            wp_add_inline_style('contactus.css', $inlineCss);
         }
         $this->registerJs();
     }
@@ -140,7 +141,18 @@ class ArContactUs extends ArContactUsAbstract
         if ((isset($params->always) && $params->always == 1) || !isset($params->always)) {
             return true;
         }
-        $day = strtolower(date('D'));
+        
+        if ($this->getGeneralConfig()->timezone == 'auto' || empty($this->getGeneralConfig()->timezone)) {
+            $tz = date_default_timezone_get();
+        } else {
+            $tz = $this->getGeneralConfig()->timezone;
+        }
+        
+        $ts = time();
+        $d = new DateTime("now", new DateTimeZone($tz));
+        $d->setTimestamp($ts);
+        
+        $day = strtolower($d->format('D'));
         if (isset($params->$day) && $params->$day == 0){
             return false;
         }
@@ -150,7 +162,7 @@ class ArContactUs extends ArContactUsAbstract
         $timeFrom = explode(':', $params->$tf);
         $timeTo = explode(':', $params->$tt);
         
-        $currentTime = explode(':', date('G:i'));
+        $currentTime = explode(':', $d->format('G:i'));
         
         $timeFromValue = ((int)$timeFrom[0] * 60) + (int)$timeFrom[1];
         $timeToValue = ((int)$timeTo[0] * 60) + (int)$timeTo[1];
@@ -173,9 +185,9 @@ class ArContactUs extends ArContactUsAbstract
         if (strpos($page, 'r::') === 0) {
             $page = str_replace('r::', '', $page);
         } else {
-            $page = str_replace('*', '.*', $page) . '$';
+            $page = str_replace('*', '.+', $page) . '$';
         }
-        return str_replace(array("\n\r", "\r\n", "\r", "\n"), '', $page);
+        return '^' . str_replace(array("\n\r", "\r\n", "\r", "\n"), '', $page);
     }
     
     public function getExcludePages()
@@ -291,7 +303,7 @@ class ArContactUs extends ArContactUsAbstract
 
             $langs = array();
             $defaultLang = null;
-            $isWPML = ArContactUsTools::isWPML();
+            $isWPML = ArContactUsTools::isMultilang();
             $currentLang = ArContactUsTools::getCurrentLanguage();
 
             if ($isWPML) {
@@ -314,11 +326,7 @@ class ArContactUs extends ArContactUsAbstract
                     ->all();
             }
             if ($popupConfig->recaptcha && $popupConfig->key && $popupConfig->recaptcha_init){
-                if ($this->getGeneralConfig()->disable_jquery) {
-                    $deps = array();
-                } else {
-                    $deps = array('jquery');
-                }
+                $deps = array();
                 wp_register_script('arcontactus-google-recaptcha-v3', 'https://www.google.com/recaptcha/api.js?render=' . $popupConfig->key, $deps, AR_CONTACTUS_VERSION);
                 wp_enqueue_script('arcontactus-google-recaptcha-v3');
             }
@@ -328,7 +336,7 @@ class ArContactUs extends ArContactUsAbstract
                 //wp_enqueue_script('arcontactus-masked-input');
             }
             if ($buttonConfig->drag){
-                wp_enqueue_script('jquery-ui-draggable');
+                //wp_enqueue_script('jquery-ui-draggable');
             }
             $items = array();
             $tawkTo = false;
@@ -350,6 +358,7 @@ class ArContactUs extends ArContactUsAbstract
             $freshChat = false;
             $phplive = false;
             $paldesk = false;
+            $apple = false;
 
             foreach ($models as $model){
                 $params = json_decode($model->params);
@@ -370,6 +379,9 @@ class ArContactUs extends ArContactUsAbstract
                         'params' => $params,
                         'online' => isset($params->online_badge) && $params->online_badge? 1 : null
                     );
+                    if ((strpos($item['href'], '//bcrw.apple.com/') !== false) && $item['type'] == ArContactUsModel::TYPE_LINK) {
+                        $apple = true;
+                    }
                     if (!$this->isNeedToDispay($item)){
                         if ($params->inactive == 1) {
                             continue;
@@ -488,6 +500,7 @@ class ArContactUs extends ArContactUsAbstract
                 'freshChat' => $liveChatsConfig->isFreshChatIntegrated() && $freshChat,
                 'phplive' => $liveChatsConfig->isPhpLiveIntegrated() && $phplive,
                 'paldesk' => $liveChatsConfig->isPaldeskIntegrated() && $paldesk,
+                'apple' => $apple,
                 'user' => wp_get_current_user(),
                 'messages' => $promptConfig->enable_prompt? ArContactUsPromptModel::getMessages() : array(),
                 'items' => $items,

@@ -38,6 +38,7 @@ class ArContactUsConfigMenuAbstract extends ArContactUsConfigModel
     public $menu_subtitle_hcolor;
     public $shadow_size;
     public $shadow_opacity;
+    public $backdrop;
     public $auto_open;
     
     public function getHeaderIcon()
@@ -72,12 +73,12 @@ class ArContactUsConfigMenuAbstract extends ArContactUsConfigModel
     public function attributeDefaults()
     {
         return array(
-            'menu_size' => 'large',
+            'menu_size' => 'normal',
             'menu_width' => '300',
             'menu_layout' => 'default',
             'icons_title' => 'Start chat with:',
             'item_style' => 'rounded',
-            'menu_style' => 0,
+            'menu_style' => 'regular',
             'menu_popup_style' => 'popup',
             'popup_animation' => 'fadeindown',
             'sidebar_animation' => 'elastic',
@@ -99,7 +100,8 @@ class ArContactUsConfigMenuAbstract extends ArContactUsConfigModel
             'menu_hcolor' => '3b3b3b',
             'shadow_size' => '30',
             'shadow_opacity' => '0.2',
-            'auto_open' => 0
+            'auto_open' => 0,
+            'backdrop' => 1
         );
     }
 }

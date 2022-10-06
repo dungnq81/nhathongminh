@@ -4,7 +4,7 @@ Donate link: https://ko-fi.com/pryley
 Tags: reviews, ratings, testimonials, woocommerce, product reviews, business reviews, stars, star ratings, elementor
 Tested up to: 6.0
 Requires at least: 5.8
-Stable tag: 6.0.5
+Stable tag: 6.0.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -155,6 +155,17 @@ All documentation can be found in the "Help" page of the plugin. If your questio
 This update requires a minimum of PHP 7.2 and WordPress 5.8. There are also a few potentially breaking changes, so please make sure to read the plugin changelog and Upgrade Guide after upgrading.
 
 == Changelog ==
+
+= 6.0.7 (2022-09-26) =
+
+- Updated the Upgrade Guide (please make sure to read this if you updated from Site Reviews v5 or lower. You can find the Upgrade guide on the Help page.)
+
+= 6.0.6 (2022-09-25) =
+
+- Fixed integration with Polylang's String Translations
+- Fixed the Reset Permissions tool
+- Fixed the Slack integration [@andersk](https://github.com/andersk)
+- Updated the [Action Scheduler](https://github.com/woocommerce/action-scheduler/) library to v3.5.2
 
 = 6.0.5 (2022-09-16) =
 

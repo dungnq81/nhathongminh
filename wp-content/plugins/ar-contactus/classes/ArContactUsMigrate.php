@@ -58,7 +58,7 @@ class ArContactUsMigrate
             if ($isWPML) {
                 foreach ($langs as $lang) {
                     $values = array(
-                        "'{$lang['code']}'",
+                        "'{$lang['language_code']}'",
                         $model->id,
                         "'{$model->title}'",
                         "'{$model->subtitle}'",
@@ -87,7 +87,7 @@ class ArContactUsMigrate
             if ($isWPML) {
                 foreach ($langs as $lang) {
                     $values = array(
-                        "'{$lang['code']}'",
+                        "'{$lang['language_code']}'",
                         $model->id,
                         "'{$model->message}'"
                     );

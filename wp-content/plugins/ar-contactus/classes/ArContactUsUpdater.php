@@ -116,8 +116,6 @@ class ArContactUsUpdater
     
     public function activate($activate = true)
     {
-        return [ 'success' => 1 ];
-
         $url = $this->getActivationUrl($activate);
         $response = wp_remote_get($url);
         
@@ -149,8 +147,14 @@ class ArContactUsUpdater
         );
     }
     
+    public function autoCheckUpdate($get_plugins)
+    {
+        $this->checkUpdate();
+        return $get_plugins;
+    }
+    
     public function checkUpdate($cleanUp = false) {
-	$this_file = AR_CONTACTUS_PLUGIN_FILE;
+        $this_file = AR_CONTACTUS_PLUGIN_FILE;
 	$update_check = $this->getUpdateUrl();
         $plugin_folder = plugin_basename(dirname($this_file));
 	$plugin_file = basename(($this_file));
@@ -158,7 +162,6 @@ class ArContactUsUpdater
             return false;
         }
 	$response = wp_remote_get($update_check);
-        
         if (($response instanceof WP_Error) || (is_array($response) && isset($response['response']) && isset($response['response']['code']) && $response['response']['code'] != 200)) {
             return false;
         }
@@ -245,14 +248,14 @@ class ArContactUsUpdater
     protected function getFileHandle()
     {
         if ($this->f === null) {
-            $this->f = fopen(AR_CONTACTUS_PLUGIN_DIR . 'upgrade.log', 'a+');
+            $this->f = @fopen(AR_CONTACTUS_PLUGIN_DIR . 'upgrade.log', 'a+');
         }
         return $this->f;
     }
 
     protected function closeFile()
     {
-        if ($this->f !== null) {
+        if ($this->f !== null && $this->f !== false) {
             fclose($this->f);
             $this->f = null;
         }
@@ -260,8 +263,11 @@ class ArContactUsUpdater
 
     public function log($message)
     {
-        $line = '[' . date('Y-m-d H:i:s') . ']  ' . $message;
-        fwrite($this->getFileHandle(), $line);
+        $f = $this->getFileHandle();
+        if ($f) {
+            $line = '[' . date('Y-m-d H:i:s') . ']  ' . $message;
+            fwrite($f, $line);
+        }
     }
     
     public function getOldVersion()

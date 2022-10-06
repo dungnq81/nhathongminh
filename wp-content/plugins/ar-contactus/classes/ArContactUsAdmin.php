@@ -13,32 +13,32 @@ ArContactUsLoader::loadController('ArContactUsFormController');
 class ArContactUsAdmin extends ArContactUsAbstract
 {
     const NONCE = 'arcontactus-update-key';
-
+    
     private static $initiated = false;
 
     protected $errors = array();
     protected $success = null;
 
     protected $importSuccess = 0;
-
+    
     public $generalConfig = null;
     public $buttonConfig = null;
     public $mobileButtonConfig = null;
     public $menuConfig = null;
     public $mobileMenuConfig = null;
     public $popupConfig = null;
-
+    
     public $promptConfig = null;
     public $mobilePromptConfig = null;
     public $welcomeConfig = null;
     public $liveChatsConfig = null;
 
     public $formsConfig = null;
-
+    
     public $emailConfig = null;
 
     protected $json;
-
+    
     public function init()
     {
         if (isset($_GET['debug'])) {
@@ -57,33 +57,33 @@ class ArContactUsAdmin extends ArContactUsAbstract
         $this->liveChatsConfig = new ArContactUsConfigLiveChat('arcul_');
         $this->formsConfig = new ArContactUsConfigForms();
         $this->emailConfig = new ArContactUsConfigEmails('arcue_');
-
+        
         if (get_option('arcu_recompile_css')) {
             $this->compileCSS();
             $this->compileCSS(true);
             update_option('arcu_recompile_css', 0);
         }
-
+        
         if (!self::$initiated){
             $this->initHooks();
         }
     }
-
+    
     public function migrateSettingsSubmitted()
     {
         return self::isSubmit('migrateSettingsSubmit');
     }
-
+    
     public function importSubmitted()
     {
         return self::isSubmit('importDataSubmit');
     }
-
+    
     public function channelSubmitted()
     {
         return self::isSubmit('arcu_channel');
     }
-
+    
     public function validate()
     {
         $nonce = $_REQUEST['_wpnonce'];
@@ -103,7 +103,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             }
         }
     }
-
+    
     public function getSubmit()
     {
         foreach ($this->getForms() as $model) {
@@ -114,12 +114,12 @@ class ArContactUsAdmin extends ArContactUsAbstract
         if (self::isSubmit('importDataSubmit')){
             return 'importDataSubmit';
         }
-
+        
         if (self::isSubmit('migrateSettingsSubmit')){
             return 'migrateSettingsSubmit';
         }
     }
-
+    
     public function isSubmitted()
     {
         foreach ($this->getAllowedSubmits() as $submit) {
@@ -128,7 +128,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             }
         }
     }
-
+    
     public function getAllowedSubmits()
     {
         $submits = array();
@@ -137,7 +137,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
         }
         return $submits;
     }
-
+    
     public function getForms()
     {
         return array(
@@ -154,7 +154,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             $this->emailConfig
         );
     }
-
+    
     public function save()
     {
         if (!wp_verify_nonce($_POST['_wpnonce'], self::NONCE)){
@@ -175,7 +175,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
         }
         return false;
     }
-
+    
     public function compileCSS($mobile = false)
     {
         if ($mobile) {
@@ -205,7 +205,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             'buttonConfig' => $mobile? $this->mobileButtonConfig : $this->buttonConfig,
             'formsConfig' => $this->formsConfig,
             'generalConfig' => $this->generalConfig,
-            'isMobile' => false
+            'isMobile' => $mobile
         ));
         $content = ArContactUsTools::minifyStyles($content);
         if ($mobile) {
@@ -218,7 +218,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             update_option('arcu_css_generated', time());
         }
     }
-
+    
     public function initHooks()
     {
         self::$initiated = true;
@@ -228,21 +228,21 @@ class ArContactUsAdmin extends ArContactUsAbstract
         add_action('admin_enqueue_scripts', array($this, 'loadResources'));
         add_filter('plugin_action_links', array($this, 'adminPluginSettings'), 10, 2);
         add_action('admin_head', array($this, 'renderOnesignal'));
-        //$updater->checkUpdate();
+        add_filter('all_plugins', array($updater, 'autoCheckUpdate'));
         add_action('upgrader_process_complete', array($updater, 'migrate'), 9, 0);
         $promptController = new ArContactUsPromptController();
         $promptController->init($this);
-
+        
         $menuController = new ArContactUsMenuController();
         $menuController->init($this);
-
+        
         $requestsController = new ArContactUsRequestsController();
         $requestsController->init($this);
-
+        
         $formController = new ArContactUsFormController();
         $formController->init($this);
     }
-
+    
     public function renderOnesignal()
     {
         if (!$this->popupConfig->isLoaded()){
@@ -259,7 +259,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             'scheme' => parse_url(AR_CONTACTUS_PLUGIN_URL, PHP_URL_SCHEME),
         ));
     }
-
+    
     public function adminPluginSettings($links, $file)
     {
         if ($file == plugin_basename(AR_CONTACTUS_PLUGIN_DIR . '/ar-contactus.php')){
@@ -268,14 +268,14 @@ class ArContactUsAdmin extends ArContactUsAbstract
 
         return $links;
     }
-
+            
     public function callbackRequests(){
         echo self::render('/admin/callback-requests.php', array(
             'callbackList' => new ArContactUsListTable(),
             'activeSubmit' => 'arcontactus-requests'
         ));
     }
-
+    
     public function emailRequests(){
         $list = new ArContactUsListTable();
         $list->setType(ArContactUsCallbackModel::TYPE_EMAIL);
@@ -284,12 +284,12 @@ class ArContactUsAdmin extends ArContactUsAbstract
             'activeSubmit' => 'arcontactus-email-requests'
         ));
     }
-
+    
     public function getErrors()
     {
         return $this->errors;
     }
-
+    
     public function adminInit() {
         load_plugin_textdomain('ar-contactus', false, basename(AR_CONTACTUS_PLUGIN_DIR) . '/languages');
         if ($this->isSubmitted()){
@@ -301,7 +301,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
         }elseif($this->channelSubmitted()){
             update_option('ARCU_CHANNEL', $_POST['arcu_channel']);
             $updater = new ArContactUsUpdater($this);
-            //$updater->checkUpdate(true);
+            $updater->checkUpdate(true);
         }elseif($this->importSubmitted()){
             $import = new ArContactUsImport($this);
             if ($import->import()){
@@ -323,7 +323,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
     public function adminMenu() {
         $this->loadMenu();
     }
-
+    
     public function loadMenu() {
         $user = wp_get_current_user();
         $roles = (array) $user->roles;
@@ -331,7 +331,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
         if (!$this->generalConfig->isLoaded()) {
             $this->generalConfig->loadFromConfig();
         }
-
+        
         $hook = add_options_page(__('Contact-us button', 'ar-contactus'), __('Contact-us button', 'ar-contactus'), 'manage_options', 'ar-contactus-key-config', array($this, 'displayConfig'));
         $menuLabel = __('Callbacks', 'ar-contactus');
         $emailMenuLabel = __('Email requests', 'ar-contactus');
@@ -340,11 +340,15 @@ class ArContactUsAdmin extends ArContactUsAbstract
         $menuLabel .= " <span class='update-plugins count-1' " . ($count? '' : 'style="display: none"') . "' id='arcontactus-cb-count'><span class='update-count'>" . $count . "</span></span>";
         $emailMenuLabel .= " <span class='update-plugins count-1' " . ($countEmail? '' : 'style="display: none"') . "' id='arcontactus-email-count'><span class='update-count'>" . $countEmail . "</span></span>";
         if (is_array($this->generalConfig->callback_access) && in_array($role, $this->generalConfig->callback_access)) {
-            add_menu_page(__('Callbacks', 'ar-contactus'), $menuLabel, $role, 'ar-contactus-key-requests', array($this,'callbackRequests'), 'dashicons-phone');
-            add_menu_page(__('Callbacks', 'ar-contactus'), $emailMenuLabel, $role, 'ar-contactus-email-requests', array($this,'emailRequests'), 'dashicons-email');
+            if (!$this->generalConfig->disable_callback_menu) {
+                add_menu_page(__('Callbacks', 'ar-contactus'), $menuLabel, $role, 'ar-contactus-key-requests', array($this,'callbackRequests'), 'dashicons-phone');
+            }
+            if (!$this->generalConfig->disable_email_menu) {
+                add_menu_page(__('Callbacks', 'ar-contactus'), $emailMenuLabel, $role, 'ar-contactus-email-requests', array($this,'emailRequests'), 'dashicons-email');
+            }
         }
     }
-
+    
     public function displayConfig()
     {
         if (!$this->generalConfig->isLoaded()){
@@ -380,12 +384,12 @@ class ArContactUsAdmin extends ArContactUsAbstract
         if (!$this->welcomeConfig->isLoaded()) {
             $this->welcomeConfig->loadFromConfig();
         }
-
+        
         $updater = new ArContactUsUpdater();
-
-        if (ArContactUsTools::isWPML()) {
+        
+        if (ArContactUsTools::isMultilang()) {
             $lang = ArContactUsTools::getCurrentLanguage();
-            if ($lang == 'all') {
+            if ($lang == 'all' || $lang === false) {
                 $lang = ArContactUsTools::getDefaultLanguage();
             }
             $promptItems = ArContactUsPromptModel::find()->join(ArContactUsPromptModel::langTableName() . ' `_lang`', 'id_item = id')->where(array('lang' => $lang))->orderBy('`position` ASC')->all();
@@ -394,11 +398,21 @@ class ArContactUsAdmin extends ArContactUsAbstract
             $promptItems = ArContactUsPromptModel::find()->orderBy('`position` ASC')->all();
             $items = ArContactUsModel::find()->orderBy('`position` ASC')->all();
         }
-
+        
         foreach ($items as $item) {
             $item->params = json_decode($item->params);
         }
-
+        
+        if ($this->getGeneralConfig()->timezone == 'auto' || empty($this->getGeneralConfig()->timezone)) {
+            $tz = date_default_timezone_get();
+        } else {
+            $tz = $this->getGeneralConfig()->timezone;
+        }
+        
+        $ts = time();
+        $d = new DateTime("now", new DateTimeZone($tz));
+        $d->setTimestamp($ts);
+        
         echo self::render('/admin/config.php', array(
             'generalConfig' => $this->generalConfig,
             'activated' => $updater->isActivated(),
@@ -422,11 +436,11 @@ class ArContactUsAdmin extends ArContactUsAbstract
             'promptItems' => $promptItems,
             'activeSubmit' => $this->getSubmit(),
             'brandColors' => $this->getBrandColors(),
-            'isWPML' => ArContactUsTools::isWPML(),
+            'isWPML' => ArContactUsTools::isMultilang(),
             'languages' => ArContactUsTools::getLanguages(),
             'defaultLang' => ArContactUsTools::getDefaultLanguage(),
             'currentLang' => ArContactUsTools::getCurrentLanguage(),
-            'currentTime' => date('H:i:s'),
+            'currentTime' => $d->format('H:i:s'), // date('H:i:s'),
             'arcu_channel' => get_option('ARCU_CHANNEL', 'prod'),
             'scheduleDays' => array(
                 'Mon',
@@ -439,7 +453,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             )
         ));
     }
-
+    
     public function getBrandColors()
     {
         return array(
@@ -455,13 +469,13 @@ class ArContactUsAdmin extends ArContactUsAbstract
             'Twitter' => '1da1f2'
         );
     }
-
+    
     public function registerJs()
     {
         wp_enqueue_media();
         return parent::registerJs();
     }
-
+    
     public function js()
     {
         return array(
@@ -474,7 +488,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             'admin.js' => 'res/js/admin.js'
         );
     }
-
+    
     public function css()
     {
         return array(
@@ -482,7 +496,7 @@ class ArContactUsAdmin extends ArContactUsAbstract
             'arcontactus-admin.css' => 'res/css/admin.css'
         );
     }
-
+    
     public function loadResources()
     {
         global $hook_suffix;

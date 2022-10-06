@@ -130,7 +130,7 @@ class ArContactUsMenuController extends ArContractUsControllerAbstract
         }
         if ($params['menu']){
             $menuItems = ArContactUsModel::find()->all();
-            if (ArContactUsTools::isWPML()) {
+            if (ArContactUsTools::isMultilang()) {
                 foreach ($menuItems as $k => $item) {
                     $menuItems[$k]->loadLangData();
                 }
@@ -139,7 +139,7 @@ class ArContactUsMenuController extends ArContractUsControllerAbstract
         }
         if ($params['prompts']){
             $promptItems = ArContactUsPromptModel::find()->all();
-            if (ArContactUsTools::isWPML()) {
+            if (ArContactUsTools::isMultilang()) {
                 foreach ($promptItems as $k => $item) {
                     $promptItems[$k]->loadLangData();
                 }
@@ -191,10 +191,10 @@ class ArContactUsMenuController extends ArContractUsControllerAbstract
         $model->load($data);
 
         $model->validate();
-        if (ArContactUsTools::isWPML()){
+        if (ArContactUsTools::isMultilang()){
             foreach (ArContactUsTools::getLanguages() as $lang){
-                $model->content[$lang['code']] = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $model->content[$lang['code']]);
-                $model->content[$lang['code']] = trim($model->content[$lang['code']]);
+                $model->content[$lang['language_code']] = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $model->content[$lang['language_code']]);
+                $model->content[$lang['language_code']] = trim($model->content[$lang['language_code']]);
             }
         } else {
             $model->content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $model->content);
@@ -264,9 +264,9 @@ class ArContactUsMenuController extends ArContractUsControllerAbstract
     {
         $this->assertAccess();
         
-        if (ArContactUsTools::isWPML()) {
+        if (ArContactUsTools::isMultilang()) {
             $lang = ArContactUsTools::getCurrentLanguage();
-            if ($lang == 'all') {
+            if ($lang == 'all' || $lang === false) {
                 $lang = ArContactUsTools::getDefaultLanguage();
             }
             $items = ArContactUsModel::find()->join(ArContactUsModel::langTableName() . ' `_lang`', 'id_item = id')->where(array('lang' => $lang))->orderBy('`position` ASC')->all();
@@ -283,7 +283,7 @@ class ArContactUsMenuController extends ArContractUsControllerAbstract
             'success' => 1,
             'content' => $this->render('/admin/_items_table.php', array(
                 'items' => $items,
-                'isWPML' => ArContactUsTools::isWPML()
+                'isWPML' => ArContactUsTools::isMultilang()
             ))
         )));
     }
@@ -325,12 +325,14 @@ class ArContactUsMenuController extends ArContractUsControllerAbstract
         $model = ArContactUsModel::find()->where(array('id' => $id))->one();
         $model->shortcode = $model->getShortcode();
         $model->params = json_decode($model->params);
-        if (isset($model->params->icon_type) && $model->params->icon_type == 2 && !empty($model->params->icon_img)) {
-            $model->params->image_preview = wp_get_attachment_image($model->params->icon_img, 'full', false);
-        } else {
-            $model->params->image_preview = '';
+        if (is_object($model->params)) {
+            if (isset($model->params->icon_type) && $model->params->icon_type == 2 && !empty($model->params->icon_img)) {
+                $model->params->image_preview = wp_get_attachment_image($model->params->icon_img, 'full', false);
+            } else {
+                $model->params->image_preview = '';
+            }
         }
-        if (ArContactUsTools::isWPML()) {
+        if (ArContactUsTools::isMultilang()) {
             $model->loadLangData();
         }
         if ($model->isFontAwesome()) {

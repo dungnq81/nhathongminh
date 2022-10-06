@@ -1,3 +1,4 @@
+var $arcuWidget;
 var zaloWidgetInterval;
 var tawkToInterval;
 var tawkToHideInterval;
@@ -12,6 +13,8 @@ var _arCuTimeOut = null;
 var arCuPromptClosed = false;
 var _arCuWelcomeTimeOut = null;
 var arCuMenuOpenedOnce = false;
+var arcuAppleItem = null;
+
 <?php if ($promptConfig->enable_prompt && $messages){?>
     var arCuMessages = <?php echo json_encode($messages) ?>;
     var arCuLoop = <?php echo $promptConfig->loop? 'true' : 'false' ?>;;
@@ -32,59 +35,72 @@ var arcItems = [];
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 <?php } ?>
 window.addEventListener('load', function(){
-    jQuery('#arcontactus').remove();
-    var $arcuWidget = jQuery('<div>', {
-        id: 'arcontactus'
-    });
-    jQuery('body').append($arcuWidget);
+    $arcuWidget = document.createElement('div');
+    var body = document.getElementsByTagName('body')[0];
+    $arcuWidget.id = 'arcontactus';
+    
+    if (document.getElementById('arcontactus')) {
+        document.getElementById('arcontactus').parentElement.removeChild(document.getElementById('arcontactus'));
+    }
+    
+    body.appendChild($arcuWidget);
+    
     <?php if ($promptConfig->show_after_close != '-1'){?>
         arCuClosedCookie = arCuGetCookie('arcu-closed');
     <?php } ?>
-    jQuery('#arcontactus').on('arcontactus.init', function(){
-        jQuery('#arcontactus').addClass('arcuAnimated').addClass('<?php echo ArContactUsTools::escJsString($buttonConfig->animation) ?>');
+    $arcuWidget.addEventListener('arcontactus.init', function(){
+        $arcuWidget.classList.add('arcuAnimated');
+        $arcuWidget.classList.add('<?php echo ArContactUsTools::escJsString($buttonConfig->animation) ?>');
 
         setTimeout(function(){
-            jQuery('#arcontactus').removeClass('<?php echo ArContactUsTools::escJsString($buttonConfig->animation) ?>');
+            $arcuWidget.classList.remove('<?php echo ArContactUsTools::escJsString($buttonConfig->animation) ?>');
         }, 1000);
-        <?php if ($menuConfig->menu_style == '1'){?>
-            jQuery('#arcontactus').addClass('no-bg');
+        
+        <?php if ($apple) {?>
+            if(!window.appleBusinessChat.isSupported() && arcuAppleItem) {
+                if (document.getElementById(arcuAppleItem)) {
+                    const appleElement = document.getElementById(arcuAppleItem).parentNode;
+                    $arcuWidget.querySelector('.messangers-list').removeChild(appleElement);
+                    console.log('Apple business chat is not supported on this device');
+                }
+            }
         <?php } ?>
-        if (jQuery.mask && jQuery.mask.definitions) {
-            jQuery.mask.definitions['#'] = "[0-9]";
-        }
+            
         <?php foreach($formsConfig->getForms() as $form) { ?>
-            jQuery('#arcu-form-<?php echo $form->id ?> form').append(arCUVars._wpnonce);
+            if (document.querySelector('#arcu-form-<?php echo $form->id ?> form')) {
+                document.querySelector('#arcu-form-<?php echo $form->id ?> form').append(contactUs.utils.DOMElementFromHTML(arCUVars._wpnonce));
+            }
             <?php foreach ($form->fields as $field) { ?>
                 <?php if ($field->mask_on && $field->mask) { ?>
-                    jQuery('#arcontactus #arcu-form-<?php echo $form->id ?> .arcu-form-group-<?php echo $field->id ?> input').arCuMask('<?php echo esc_html($field->getLangValue('mask', $currentLang)) ?>');
+                    console.log('Mask is not supported yet.')
                 <?php } ?> 
             <?php } ?>
             <?php if ($popupConfig->recaptcha) { ?>
-                var $gToken = jQuery('<input>', {
+                var $gToken = contactUs.utils.createElement('input', {
                     type: 'hidden',
                     name: 'gtoken',
-                    class: 'ar-g-token'
+                    classes: ['ar-g-token']
                 });
-                jQuery('#arcu-form-<?php echo $form->id ?> form').append($gToken);
+                $arcuWidget.querySelector('#arcu-form-<?php echo $form->id ?> form').append($gToken);
             <?php } ?>
         <?php } ?>
         <?php foreach($formsConfig->getForms() as $form) { ?>
-            jQuery('#arcontactus').on('arcontactus.successSendFormData', function(event, data){
+            $arcuWidget.addEventListener('arcontactus.successSendFormData', function(event){
                 <?php if ($form->autoClose) {?>
-                    if (data.form.data('id') == '<?php echo $form->id ?>') {
+                    if (event.detail.form.getAttribute('data-id') == '<?php echo $form->id ?>') {
                         closePopupTimeout = setTimeout(function(){
-                            jQuery('#arcontactus').contactUs('hideForm');
+                            contactUs.hideForm();
                         }, <?php echo (int)$form->autoClose * 1000 ?>);
                     }
                 <?php } ?>
             });
         <?php } ?>
-        jQuery('#arcontactus').on('arcontactus.errorSendFormData', function(event, data){
-            if (data.data && data.data.message) {
-                alert(data.data.message);
+        $arcuWidget.addEventListener('arcontactus.errorSendFormData', function(event){
+            if (event.detail.data && event.detail.data.message) {
+                alert(event.detail.data.message);
             }
         });
-        jQuery('#arcontactus').on('arcontactus.hideFrom', function(){
+        $arcuWidget.addEventListener('arcontactus.hideFrom', function(){
             clearTimeout(closePopupTimeout);
         });
         <?php if ($promptConfig->enable_prompt && $messages){ ?>
@@ -99,20 +115,20 @@ window.addEventListener('load', function(){
         <?php if ($menuConfig->auto_open){ ?>
             setTimeout(function(){
                 if (arCuGetCookie('arcumenu-closed') == 0){
-                    jQuery('#arcontactus').contactUs('openMenu');
+                    contactUs.openMenu();
                 }
             }, <?php echo (int)$menuConfig->auto_open ?>);
         <?php } ?>
     });
-    jQuery('#arcontactus').on('arcontactus.closeMenu', function(){
+    $arcuWidget.addEventListener('arcontactus.closeMenu', function(){
         arCuCreateCookie('arcumenu-closed', 1, 1);
     });
     <?php if (($promptConfig->enable_prompt && $messages) || ($menuConfig->menu_layout == 'personal' && $welcomeConfig && $welcomeConfig->show_type == 'menu_open')){ ?>
-        jQuery('#arcontactus').on('arcontactus.openMenu', function(){
+        $arcuWidget.addEventListener('arcontactus.openMenu', function(){
             clearTimeout(_arCuTimeOut);
             if (!arCuPromptClosed){
                 arCuPromptClosed = true;
-                jQuery('#arcontactus').contactUs('hidePrompt');
+                contactUs.hidePrompt();
             }
             <?php if ($menuConfig->menu_layout == 'personal' && $welcomeConfig && $welcomeConfig->show_type == 'menu_open') { ?>
                 if (!arCuMenuOpenedOnce) {
@@ -121,11 +137,11 @@ window.addEventListener('load', function(){
                 }
             <?php } ?> 
         });
-        jQuery('#arcontactus').on('arcontactus.showFrom', function(){
+        $arcuWidget.addEventListener('arcontactus.showFrom', function(){
             clearTimeout(_arCuTimeOut);
             if (!arCuPromptClosed){
                 arCuPromptClosed = true;
-                jQuery('#arcontactus').contactUs('hidePrompt');
+                contactUs.hidePrompt();
             }
             <?php if ($menuConfig->menu_layout == 'personal' && $welcomeConfig && $welcomeConfig->show_type == 'menu_open') { ?>
                 if (!arCuMenuOpenedOnce) {
@@ -134,15 +150,15 @@ window.addEventListener('load', function(){
                 }
             <?php } ?> 
         });
-        jQuery('#arcontactus').on('arcontactus.showForm', function(){
+        $arcuWidget.addEventListener('arcontactus.showForm', function(){
             clearTimeout(_arCuTimeOut);
             if (!arCuPromptClosed){
                 arCuPromptClosed = true;
-                jQuery('#arcontactus').contactUs('hidePrompt');
+                contactUs.hidePrompt();
             }
         });
 
-        jQuery('#arcontactus').on('arcontactus.hidePrompt', function(){
+        $arcuWidget.addEventListener('arcontactus.hidePrompt', function(){
             clearTimeout(_arCuTimeOut);
             if (arCuClosedCookie != "1"){
                 arCuClosedCookie = "1";
@@ -161,8 +177,8 @@ window.addEventListener('load', function(){
         $params = $item['params'];
         ?>
         <?php if ($item['js'] && $item['type'] == ArContactUsModel::TYPE_FORM){ ?>
-            jQuery('#arcontactus').on('arcontactus.successSendFormData', function(event, data){
-                if (data.form.data('id') == '<?php echo $params->form ?>'){
+            $arcuWidget.addEventListener('arcontactus.successSendFormData', function(event){
+                if (event.detail.form.getAttribute('data-id') == '<?php echo $params->form ?>'){
                     <?php echo $item['js'] ?>
                 }
             });
@@ -177,25 +193,22 @@ window.addEventListener('load', function(){
         <?php if ($item['type'] == ArContactUsModel::TYPE_INTEGRATION){ ?>
             arcItem.onClick = function(e){
                 e.preventDefault();
-                jQuery('#arcontactus').contactUs('closeMenu');
+                e.stopPropagation();
+                contactUs.closeMenu();
             <?php if ($item['integration'] == 'tawkto'){ ?>
                 if (typeof Tawk_API == 'undefined'){
                     console.error('Tawk.to integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
-                clearInterval(tawkToHideInterval);
+                contactUs.hide();
                 Tawk_API.showWidget();
                 Tawk_API.maximize();
-                tawkToInterval = setInterval(function(){
-                    checkTawkIsOpened();
-                }, 100);
             <?php }elseif($item['integration'] == 'crisp'){ ?>
                 if (typeof $crisp == 'undefined'){
                     console.error('Crisp integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 $crisp.push(["do", "chat:show"]);
                 $crisp.push(["do", "chat:open"]);
             <?php }elseif ($item['integration'] == 'intercom'){ ?>
@@ -203,18 +216,20 @@ window.addEventListener('load', function(){
                     console.error('Intercom integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 Intercom('show');
             <?php }elseif ($item['integration'] == 'facebook'){ ?>
                 if (typeof FB == 'undefined' || typeof FB.CustomerChat == 'undefined'){
                     console.error('Facebook customer chat integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
-                jQuery('#ar-fb-chat').addClass('active');
+                contactUs.hide();
+                document.getElementById('ar-fb-chat').classList.add('active');
                 clearInterval(hideCustomerChatInterval);
-                FB.CustomerChat.show(true);
-                FB.CustomerChat.showDialog();
+                setTimeout(function(){
+                    FB.CustomerChat.show(true);
+                    FB.CustomerChat.showDialog();
+                }, 500);
             <?php }elseif ($item['integration'] == 'vk'){ ?>
                 if (typeof vkMessagesWidget == 'undefined'){
                     console.error('VK chat integration is disabled in module configuration');
@@ -236,45 +251,32 @@ window.addEventListener('load', function(){
                     }
                     $zopim.livechat.window.show();
                 <?php } ?>
-                jQuery('#arcontactus').contactUs('hide');
-            <?php }elseif ($item['integration'] == 'skype'){ ?>
-                e.preventDefault();
-                jQuery('#arcontactus').contactUs('closeMenu');
-                jQuery('#arcontactus-skype').show().addClass('active');
-                SkypeWebControl.SDK.Chat.showChat();
-                SkypeWebControl.SDK.Chat.startChat({
-                    ConversationId: '<?php echo ArContactUsTools::escJsString($liveChatsConfig->skype_id) ?>',
-                    ConversationType: 'agent'
-                });
-                skypeWidgetInterval = setInterval(function(){
-                    checkSkypeIsOpened();
-                }, 100);
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
             <?php }elseif ($item['integration'] == 'zalo'){ ?>
                 if (typeof ZaloSocialSDK == 'undefined'){
                     console.error('Zalo integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#ar-zalo-chat-widget').addClass('active');
+                document.getElementById('ar-zalo-chat-widget').classList.add('active');
                 ZaloSocialSDK.openChatWidget();
                 zaloWidgetInterval = setInterval(function(){
                     checkZaloIsOpened();
                 }, 100);
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
             <?php }elseif ($item['integration'] == 'lhc'){ ?>
                 if (typeof lh_inst == 'undefined'){
                     console.error('Live Helper Chat integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 lh_inst.lh_openchatWindow();
             <?php }elseif ($item['integration'] == 'smartsupp'){ ?>
                 if (typeof smartsupp == 'undefined'){
                     console.error('Smartsupp chat integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
-                jQuery('#chat-application').addClass('active');
+                contactUs.hide();
+                document.getElementById('chat-application').classList.add('active');
                 smartsupp('chat:open');
                 ssInterval = setInterval(function(){
                     checkSSIsOpened();
@@ -284,7 +286,7 @@ window.addEventListener('load', function(){
                     console.error('Live Chat integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 LC_API.open_chat_window();
             <?php }elseif ($item['integration'] == 'livechatpro'){?>
                 if (typeof phpLiveChat == 'undefined'){
@@ -292,9 +294,9 @@ window.addEventListener('load', function(){
                     return false;
                 }
                 <?php if (!$isMobile) {?>
-                    jQuery('#arcontactus').contactUs('hide');
+                    contactUs.hide();
                 <?php } ?>
-                jQuery('#customer-chat-iframe').addClass('active');
+                document.getElementById('customer-chat-iframe').classList.add('active');
                 setTimeout(function(){
                     lcpWidgetInterval = setInterval(function(){
                         checkLCPIsOpened();
@@ -306,8 +308,7 @@ window.addEventListener('load', function(){
                     console.error('Live Zilla integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
-                jQuery('#lz_overlay_wm').addClass('active');
+                document.getElementById('lz_overlay_wm').classList.add('active');
                 OverlayChatWidgetV2.Show();
                 lzWidgetInterval = setInterval(function(){
                     checkLZIsOpened();
@@ -317,7 +318,7 @@ window.addEventListener('load', function(){
                     console.error('Tidio integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 tidioChatApi.show();
                 tidioChatApi.open();
             <?php }elseif ($item['integration'] == 'jivosite'){?>
@@ -325,29 +326,29 @@ window.addEventListener('load', function(){
                     console.error('Jivosite integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 jivo_api.open();
             <?php }elseif ($item['integration'] == 'zoho'){?>
                 if (typeof $zoho == 'undefined'){
                     console.error('Zoho SalesIQ integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 $zoho.salesiq.floatwindow.visible('show');
             <?php }elseif ($item['integration'] == 'fc'){?>
                 if (typeof fcWidget == 'undefined'){
                     console.error('FreshChat integration is disabled in module configuration');
                     return false;
                 }
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 window.fcWidget.show();
                 window.fcWidget.open();
             <?php }elseif ($item['integration'] == 'phplive'){?>
                 phplive_launch_chat_1();
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
             <?php }elseif ($item['integration'] == 'paldesk'){?>
                 window.BeeBeeate.widget.openChatWindow();
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 paldeskInterval = setInterval(function(){
                     checkPaldeskIsOpened();
                 }, 100);
@@ -361,14 +362,14 @@ window.addEventListener('load', function(){
         <?php }elseif ($item['type'] == ArContactUsModel::TYPE_FORM){ ?>
             arcItem.onClick = function(e){
                 e.preventDefault();
-                jQuery('#arcontactus').contactUs('closeMenu');
-                jQuery('#arcontactus').contactUs('showForm', '<?php echo ArContactUsTools::escJsString($params->form) ?>');
+                contactUs.closeMenu();
+                contactUs.showForm('<?php echo ArContactUsTools::escJsString($params->form) ?>');
                 return false;
             }
         <?php }elseif ($item['type'] == ArContactUsModel::TYPE_CONTENT){ ?>
             arcItem.href = '_popup';
-            arcItem.popupContent = jQuery('#arcu-popup-content-<?php echo (int)$item['id'] ?>').html();
-            jQuery('#arcu-popup-content-<?php echo (int)$item['id'] ?>').remove();
+            arcItem.popupContent = document.getElementById('arcu-popup-content-<?php echo (int)$item['id'] ?>').innerHTML;
+            document.getElementById('arcu-popup-content-<?php echo (int)$item['id'] ?>').remove();
         <?php }elseif ($item['js']){ ?>
             arcItem.onClick = function(e){
                 <?php if ($item['type'] == ArContactUsModel::TYPE_JS){ ?>
@@ -394,7 +395,10 @@ window.addEventListener('load', function(){
             arcItem.includeIconToSlider = true;
         <?php } ?> 
         <?php if ($item['type'] == ArContactUsModel::TYPE_LINK){ ?>
-            arcItem.href = '<?php echo ArContactUsTools::escJsString($item['href']) ?>';
+            arcItem.href = '<?php echo $item['href'] ?>';
+            <?php if (strpos($item['href'], '//bcrw.apple.com/')) { ?>
+                arcuAppleItem = '<?php echo $item['id'] ?>';
+            <?php } ?> 
         <?php }elseif($item['type'] == ArContactUsModel::TYPE_FORM){ ?>
             arcItem.href = null;
         <?php } ?>
@@ -405,7 +409,11 @@ window.addEventListener('load', function(){
         arcItems.push(arcItem);
     <?php } ?>
     arcuOptions = {
+        rootElementId: 'arcontactus',
+        credits: false,
+        visible: <?php echo $generalConfig->hide_on_load? 'false' : 'true' ?>,
         wordpressPluginVersion: '<?php echo ArContactUsTools::escJsString(AR_CONTACTUS_VERSION) ?>',
+        online: <?php echo $buttonConfig->online_badge? 'true' : 'null' ?>,
         <?php if ($buttonConfig->button_icon_type == 'built-in' || empty($buttonConfig->button_icon_type)){ ?>
             <?php if ($buttonIcon){ ?>
                 buttonIcon: '<?php echo $buttonIcon ?>',
@@ -420,6 +428,7 @@ window.addEventListener('load', function(){
             <?php } else { ?>
                 itemsHeader: '<?php echo ArContactUsTools::escJsString($menuConfig->icons_title) ?>',        
             <?php } ?>
+            style: 'popup',
         <?php } ?>
         drag: <?php echo $buttonConfig->drag? 'true' : 'false' ?>,
         mode: '<?php echo $buttonConfig->mode? ArContactUsTools::escJsString($buttonConfig->mode) : 'regular' ?>',
@@ -466,6 +475,27 @@ window.addEventListener('load', function(){
         <?php }else{ ?>
             buttonText: false,
         <?php } ?>
+        <?php if ($buttonConfig->title){ ?>
+            <?php if ($wpml){ ?>
+                buttonTitle: '<?php echo ArContactUsTools::escJsString($buttonConfig->getLangValue('title', $currentLang)); ?>',
+            <?php } else { ?>
+                buttonTitle: '<?php echo ArContactUsTools::escJsString($buttonConfig->title); ?>',
+            <?php } ?>
+        <?php } ?>
+        <?php if ($buttonConfig->description){ ?>
+            <?php if ($wpml){ ?>
+                buttonDescription: '<?php echo ArContactUsTools::escJsString($buttonConfig->getLangValue('description', $currentLang)); ?>',
+            <?php } else { ?>
+                buttonDescription: '<?php echo ArContactUsTools::escJsString($buttonConfig->description); ?>',
+            <?php } ?>
+        <?php } ?>
+        <?php if ($buttonConfig->label){ ?>
+            <?php if ($wpml){ ?>
+                buttonLabel: '<?php echo ArContactUsTools::escJsString($buttonConfig->getLangValue('label', $currentLang)); ?>',
+            <?php } else { ?>
+                buttonLabel: '<?php echo ArContactUsTools::escJsString($buttonConfig->label); ?>',
+            <?php } ?>
+        <?php } ?>
         buttonSize: '<?php echo ArContactUsTools::escJsString($buttonConfig->button_size) ?>',
         <?php if ((int)$buttonConfig->button_icon_size){?>
             buttonIconSize: <?php echo (int)$buttonConfig->button_icon_size ?>,
@@ -495,6 +525,11 @@ window.addEventListener('load', function(){
         <?php } ?>
         <?php if ($menuConfig->menu_popup_style == 'sidebar'){?>
             style: '<?php echo ArContactUsTools::escJsString($menuConfig->sidebar_animation) ?>',
+        <?php } elseif ($menuConfig->menu_popup_style == 'no-background' && $menuConfig->menu_layout != 'personal') {?>
+            style: 'no-background',
+            <?php if ($menuConfig->popup_animation){?>
+                popupAnimation: '<?php echo ArContactUsTools::escJsString($menuConfig->popup_animation) ?>',
+            <?php } ?>
         <?php }else{ ?>
             <?php if ($menuConfig->popup_animation){?>
                 popupAnimation: '<?php echo ArContactUsTools::escJsString($menuConfig->popup_animation) ?>',
@@ -504,14 +539,18 @@ window.addEventListener('load', function(){
         <?php if ($menuConfig->items_animation && ($menuConfig->items_animation != '-')){?>
             itemsAnimation: '<?php echo ArContactUsTools::escJsString($menuConfig->items_animation) ?>',
         <?php } ?>
+        <?php if ($menuConfig->menu_style && $menuConfig->menu_popup_style != 'no-background') { ?>
+            menuStyle: '<?php echo ArContactUsTools::escJsString($menuConfig->menu_style) ?>',
+        <?php } ?>
+        backdrop: <?php echo $menuConfig->backdrop? 'true' : 'false' ?>,
         forms: {
             <?php foreach ($formsConfig->getForms() as $form) { ?>
                 <?php echo $form->id ?>: {
                     id: '<?php echo $form->id ?>',
                     <?php if ($form->layout != '1'){ ?>
                         header: {
-                            content: '<?php echo ArContactUsTools::escJsString($form->getLangValue('header', $currentLang)) ?>',
-                            layout: '<?php echo ArContactUsTools::escJsString($form->getLayout()) ?>',
+                            content: "<?php echo ArContactUsTools::escJsString($form->getLangValue('header', $currentLang)) ?>",
+                            layout: "<?php echo ArContactUsTools::escJsString($form->getLayout()) ?>",
                             <?php if (in_array($form->layout, array(3, 4))) { ?>
                                 icon: '<?php echo $form->getIcon() ?>'
                             <?php } ?>
@@ -520,15 +559,15 @@ window.addEventListener('load', function(){
                     <?php if ($form->button_icon_type){ ?>
                         icon: '<?php echo $form->getButtonIcon() ?>',
                     <?php } ?>
-                    success: '<?php echo ArContactUsTools::escJsString($form->getLangValue('successContent', $currentLang)) ?>',
-                    error: '<?php echo ArContactUsTools::escJsString($form->getLangValue('failContent', $currentLang)) ?>',
+                    success: "<?php echo ArContactUsTools::escJsString($form->getLangValue('successContent', $currentLang)) ?>",
+                    error: "<?php echo ArContactUsTools::escJsString($form->getLangValue('failContent', $currentLang)) ?>",
                     action: '<?php echo admin_url('admin-ajax.php') ?>',
                     buttons: [
                         <?php foreach ($form->buttons as $button){ ?>
                             {
-                                name: '<?php echo ArContactUsTools::escJsString($button->id) ?>',
-                                label: '<?php echo ArContactUsTools::escJsString($button->getLangValue('label', $currentLang)) ?>',
-                                type: '<?php echo $button->type == 'link'? 'a' : $button->type ?>',
+                                name: "<?php echo ArContactUsTools::escJsString($button->id) ?>",
+                                label: "<?php echo ArContactUsTools::escJsString($button->getLangValue('label', $currentLang)) ?>",
+                                type: "<?php echo $button->type == 'link'? 'a' : $button->type ?>",
                                 <?php if (!empty($button->class_name)){?>
                                     class: '<?php echo ArContactUsTools::escJsString($button->class_name) ?>',
                                 <?php } ?>
@@ -552,12 +591,12 @@ window.addEventListener('load', function(){
                         },
                         <?php foreach ($form->fields as $field){ ?>
                             <?php echo ArContactUsTools::escJsString($field->id) ?>: {
-                                name: '<?php echo ArContactUsTools::escJsString($field->id) ?>',
+                                name: "<?php echo ArContactUsTools::escJsString($field->id) ?>",
                                 enabled: true,
                                 required: <?php echo $field->required? 'true' : 'false' ?>,
-                                type: '<?php echo $field->type == 'select'? 'dropdown' : ArContactUsTools::escJsString($field->type) ?>',
-                                label: '<?php echo $field->getLangValue('label', $currentLang) ?>',
-                                placeholder: '<?php echo ArContactUsTools::escJsString($field->getLangValue('placeholder', $currentLang)) ?>',
+                                type: "<?php echo $field->type == 'select'? 'dropdown' : ArContactUsTools::escJsString($field->type) ?>",
+                                label: "<?php echo $field->getLangValue('label', $currentLang) ?>",
+                                placeholder: "<?php echo ArContactUsTools::escJsString($field->getLangValue('placeholder', $currentLang)) ?>",
                                 <?php if ($field->values) { ?>
                                     values: <?php echo json_encode($field->getValues($currentLang)) ?>,
                                 <?php } ?>
@@ -574,10 +613,10 @@ window.addEventListener('load', function(){
     <?php if (!$generalConfig->disable_init){?>
         <?php if ($generalConfig->delay_init){?>
             setTimeout(function(){
-                jQuery('#arcontactus').contactUs(arcuOptions);
+                contactUs.init(arcuOptions);
             }, <?php echo (int)$generalConfig->delay_init ?>);
         <?php } else { ?>
-            jQuery('#arcontactus').contactUs(arcuOptions);
+            contactUs.init(arcuOptions);
         <?php } ?>
     <?php } ?>
     <?php if ($liveChatsConfig->isTawkToIntegrated() && $tawkTo) {?>
@@ -585,7 +624,7 @@ window.addEventListener('load', function(){
             if(!Tawk_API.isChatOngoing()){
                 Tawk_API.hideWidget();
             }else{
-                jQuery('#arcontactus').contactUs('hide');
+                contactUs.hide();
                 clearInterval(tawkToHideInterval);
                 tawkToInterval = setInterval(function(){
                     checkTawkIsOpened();
@@ -597,24 +636,28 @@ window.addEventListener('load', function(){
             setTimeout(function(){
                 Tawk_API.hideWidget();
             }, 100);
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
         };
         Tawk_API.onChatEnded = function(){
             Tawk_API.hideWidget();
             setTimeout(function(){
                 Tawk_API.hideWidget();
             }, 100);
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
         };
         Tawk_API.onChatStarted = function(){
-            jQuery('#arcontactus').contactUs('hide');
-            clearInterval(tawkToHideInterval);
+            contactUs.hide();
             Tawk_API.showWidget();
             Tawk_API.maximize();
-            tawkToInterval = setInterval(function(){
-                checkTawkIsOpened();
-            }, 100);
         };
+        window.addEventListener('tawkChatMessageAgent', (e) => {
+            contactUs.hide();
+            Tawk_API.showWidget();
+            Tawk_API.maximize();
+        });
+        window.addEventListener('tawkChatMessageSystem', (e) => {
+            console.log('tawkChatMessageSystem');
+        });
         <?php if ($liveChatsConfig->tawk_to_userinfo && $user->ID) { ?>
             Tawk_API.visitor = {
                 name : "<?php echo ArContactUsTools::escJsString($user->user_firstname) . ' ' . ArContactUsTools::escJsString($user->user_lastname) ?>",
@@ -631,31 +674,22 @@ window.addEventListener('load', function(){
         })();
     <?php } ?>
     <?php if ($liveChatsConfig->isFacebookChatIntegrated() && $facebook) {?>
+        if (localStorage.getItem('__fb_chat_plugin') === null){
+            localStorage.setItem('__fb_chat_plugin', '{"v":0,"chatState":1,"visibility":"hidden"}');
+        }
         FB.Event.subscribe('customerchat.dialogHide', function(){
-            jQuery('#ar-fb-chat').removeClass('active');
-            jQuery('#arcontactus').contactUs('show');
+            document.getElementById('ar-fb-chat').classList.remove('active');
+            contactUs.show();
             FB.CustomerChat.hide();
-        });
-        FB.Event.subscribe('customerchat.dialogShow', function(){
-            jQuery('#ar-fb-chat').addClass('active');
-            jQuery('#arcontactus').contactUs('hide');
-        });
-        FB.Event.subscribe('customerchat.load', function(){
-            /*hideCustomerChatInterval = setInterval(function(){
-                if (jQuery('.fb_dialog').is(':visible')) {
-                    FB.CustomerChat.hide();
-                    clearInterval(hideCustomerChatInterval);
-                }
-            }, 100);*/
         });
     <?php } ?>
     <?php if ($liveChatsConfig->isLhcIntegrated() && $lhc){?>
         lh_inst.chatClosedCallback = function(){
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
             clearInterval(LHCInterval);
         };
         lh_inst.chatOpenedCallback = function(){
-            jQuery('#arcontactus').contactUs('hide');
+            contactUs.hide();
             LHCInterval = setInterval(function(){
                 checkLHCisOpened();
             }, 100);
@@ -667,7 +701,7 @@ window.addEventListener('load', function(){
         }
         function onTidioChatClose(){
             window.tidioChatApi.hide();
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
         }
         if (window.tidioChatApi) {
             window.tidioChatApi.on("ready", onTidioChatApiReady);
@@ -682,7 +716,7 @@ window.addEventListener('load', function(){
     <?php } ?>
     <?php if ($paldesk) {?>
         window.BeeBeeate.widget.closeChatWindow(function(){
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
         }, function(error) {
 
         });
@@ -697,11 +731,11 @@ window.addEventListener('load', function(){
     }]);
     $crisp.push(["on", "chat:closed", function(){
         $crisp.push(["do", "chat:hide"]);
-        jQuery('#arcontactus').contactUs('show');
+        contactUs.show();
     }]);
     $crisp.push(["on", "message:received", function(){
         $crisp.push(["do", "chat:show"]);
-        jQuery('#arcontactus').contactUs('hide');
+        contactUs.hide();
     }]);
 <?php } ?>
 <?php if ($liveChatsConfig->isIntercomIntegrated() && $intercom) {?>
@@ -744,7 +778,7 @@ window.addEventListener('load', function(){
         }
     })();
     Intercom('onHide', function(){
-        jQuery('#arcontactus').contactUs('show');
+        contactUs.show();
     });
 <?php } ?>
 <?php if ($vkChat) {?>
@@ -756,49 +790,23 @@ window.addEventListener('load', function(){
         widgetPosition: '<?php echo ArContactUsTools::escJsString($buttonConfig->position) ?>'
     });
 <?php } ?>
-<?php if ($skype){?>
-    function checkSkypeIsOpened(){
-        if (jQuery('#arcontactus-skype iframe').hasClass('close-chat')){ 
-            jQuery('#arcontactus').contactUs('show');
-            jQuery('#arcontactus-skype').hide().removeClass('active');
-            clearInterval(skypeWidgetInterval);
-        }
-    }
-<?php } ?>
 <?php if ($lcp) {?>
     function checkLCPIsOpened(){
-        if (parseInt(jQuery('#customer-chat-iframe').css('bottom')) < -300){ 
-            jQuery('#arcontactus').contactUs('show');
-            jQuery('#customer-chat-iframe').removeClass('active');
+        if (parseInt(document.getElementById('customer-chat-iframe').style.bottom) < -300){ 
+            contactUs.show();
+            document.getElementById('customer-chat-iframe').classList.remove('active');
             clearInterval(lcpWidgetInterval);
         }
     }
 <?php } ?>
 <?php if ($zalo) {?>
     function checkZaloIsOpened(){
-        if (jQuery('#ar-zalo-chat-widget>div').height() < 100){ 
-            jQuery('#ar-zalo-chat-widget').removeClass('active');
-            jQuery('#arcontactus').contactUs('show');
+        if (document.querySelector('#ar-zalo-chat-widget > div').offsetHeight < 100){ 
+            document.getElementById('ar-zalo-chat-widget').classList.remove('active');
+            contactUs.show();
             clearInterval(zaloWidgetInterval);
         }
     }
-<?php } ?>
-<?php if ($tawkTo) {?>
-    function checkTawkIsOpened(){
-        if (Tawk_API.isChatMinimized()){ 
-            Tawk_API.hideWidget();
-            jQuery('#arcontactus').contactUs('show');
-            clearInterval(tawkToInterval);
-        }
-    }
-    function tawkToHide(){
-        tawkToHideInterval = setInterval(function(){
-            if (typeof Tawk_API.hideWidget != 'undefined'){
-                Tawk_API.hideWidget();
-            }
-        }, 100);
-    }
-    tawkToHide();
 <?php } ?>
 <?php if ($lhc){ ?>
     var LHCChatOptions = {};
@@ -811,16 +819,16 @@ window.addEventListener('load', function(){
         popup_width: <?php echo (int)$liveChatsConfig->lhc_popup_width ?>
     };
     (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    var refferer = (document.referrer) ? encodeURIComponent(document.referrer.substr(document.referrer.indexOf('://')+1)) : '';
-    var location  = (document.location) ? encodeURIComponent(window.location.href.substring(window.location.protocol.length)) : '';
-    po.src = '<?php echo ArContactUsTools::escJsString($liveChatsConfig->lhc_uri) ?>/chat/getstatus/(click)/internal/(ma)/br/(position)/bottom_right/(check_operator_messages)/true/(top)/350/(units)/pixels?r='+refferer+'&l='+location;
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        var refferer = (document.referrer) ? encodeURIComponent(document.referrer.substr(document.referrer.indexOf('://')+1)) : '';
+        var location  = (document.location) ? encodeURIComponent(window.location.href.substring(window.location.protocol.length)) : '';
+        po.src = '<?php echo ArContactUsTools::escJsString($liveChatsConfig->lhc_uri) ?>/chat/getstatus/(click)/internal/(ma)/br/(position)/bottom_right/(check_operator_messages)/true/(top)/350/(units)/pixels?r='+refferer+'&l='+location;
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
     })();
 
     function checkLHCisOpened(){
         if (lh_inst.isMinimized){ 
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
             lh_inst.isMinimized = false;
             clearInterval(LHCInterval);
         }
@@ -848,18 +856,18 @@ window.addEventListener('load', function(){
     var ssInterval;
 
     function checkSSIsOpened(){
-        if (jQuery('#chat-application').height() < 300){ 
+        if (document.getElementById('chat-application').offsetHeight < 300){ 
             smartsupp('chat:close');
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
             clearInterval(ssInterval);
-            jQuery('#chat-application').removeClass('active');
+            document.getElementById('chat-application').classList.remove('active');
         }
     }
     smartsupp('on', 'message', function(model, message) {
         if (message.type == 'agent') {
-            jQuery('#chat-application').addClass('active');
+            document.getElementById('chat-application').classList.add('active');
             smartsupp('chat:open');
-            jQuery('#arcontactus').contactUs('hide');
+            contactUs.hide();
             setTimeout(function(){
                 ssInterval = setInterval(function(){
                     checkSSIsOpened();
@@ -891,11 +899,11 @@ window.addEventListener('load', function(){
     };
     LC_API.on_chat_window_minimized = function(){
         LC_API.hide_chat_window();
-        jQuery('#arcontactus').contactUs('show');
+        contactUs.show();
     };
     LC_API.on_message = function(data) {
         LC_API.open_chat_window();
-        jQuery('#arcontactus').contactUs('hide');
+        contactUs.hide();
     };
     LC_API.on_chat_started = function() {
         livechat_chat_started = true;
@@ -903,9 +911,9 @@ window.addEventListener('load', function(){
 <?php } ?>
 <?php if ($liveZilla) {?>
     function checkLZIsOpened(){
-        if (!jQuery('#lz_overlay_chat').is(':visible')){ 
-            jQuery('#arcontactus').contactUs('show');
-            jQuery('#lz_overlay_wm').removeClass('active');
+        if (!document.getElementsById('lz_overlay_chat').is(':visible')){ 
+            contactUs.show();
+            document.getElementsById('#lz_overlay_wm').classList.remove('active');
             clearInterval(lzWidgetInterval);
         }
     }
@@ -924,16 +932,16 @@ window.addEventListener('load', function(){
     <?php } ?>
     function jivo_onChangeState(state) {
         if (state == 'chat' || state == 'offline' || state == 'introduce') {
-            jQuery('.globalClass_ET').addClass('active');
-            jQuery('#arcontactus').contactUs('hide');
+            document.querySelector('#jivo-iframe-container + jdiv').classList.add('active');
+            contactUs.hide();
         }
         if (state == 'call' || state == 'chat/call') {
-            jQuery('.globalClass_ET').addClass('active');
-            jQuery('#arcontactus').contactUs('hide');
+            document.querySelector('#jivo-iframe-container + jdiv').classList.add('active');
+            contactUs.hide();
         }
         if (state == 'label' || state == 'chat/min'){
-            jQuery('.globalClass_ET').removeClass('active');
-            jQuery('#arcontactus').contactUs('show');
+            document.querySelector('#jivo-iframe-container + jdiv').classList.remove('active');
+            contactUs.show();
         }
     } 
 <?php } ?>
@@ -942,10 +950,10 @@ window.addEventListener('load', function(){
     $zoho.salesiq.ready=function(){
         $zoho.salesiq.floatbutton.visible("hide");
         $zoho.salesiq.floatwindow.minimize(function(){
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
         });
         $zoho.salesiq.floatwindow.close(function(){
-            jQuery('#arcontactus').contactUs('show');
+            contactUs.show();
         });
     }
 <?php } ?>
@@ -953,7 +961,7 @@ window.addEventListener('load', function(){
     function initFreshChat() {
         setTimeout(function(){
             window.fcWidget.on("widget:closed", function(resp) {
-                jQuery('#arcontactus').contactUs('show');
+                contactUs.show();
             });
         }, 500);
         window.fcWidget.init({
@@ -987,11 +995,11 @@ window.addEventListener('load', function(){
         if ( [].filter ) { document.getElementById("phplive_btn_1576807307").addEventListener( "click", function(){ phplive_launch_chat_1() } ) ; } else { document.getElementById("phplive_btn_1576807307").attachEvent( "onclick", function(){ phplive_launch_chat_1() } ) ; }
     })() ;
     function phplive_callback_minimize() {
-        jQuery('#arcontactus').contactUs('show');
+        contactUs.show();
         phplive_embed_window_close(1);
     }
     function phplive_callback_close() {
-        jQuery('#arcontactus').contactUs('show');
+        contactUs.show();
     }
 <?php } ?>
 <?php if ($paldesk) {?>
@@ -1014,8 +1022,8 @@ window.addEventListener('load', function(){
     }
 
     function checkPaldeskIsOpened() {
-        if (jQuery('#paldesk-widget-mainframe').height() < 100){ 
-            jQuery('#arcontactus').contactUs('show');
+        if (document.getElementById('paldesk-widget-mainframe').offsetHeight < 100){ 
+            contactUs.show();
             clearInterval(paldeskInterval);
         }
     }

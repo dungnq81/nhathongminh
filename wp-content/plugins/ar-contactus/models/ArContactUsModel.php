@@ -58,10 +58,14 @@ class ArContactUsModel extends ArContactUsModelAbstract
             ),
             array(
                 array(
-                    'icon',
                     'color',
                     'title'
                 ), 'validateRequired'
+            ),
+            array(
+                array(
+                    'icon',
+                ), 'validateRequired', 'on' => (isset($_POST['data']) && isset($_POST['data']['params.icon_type']) && $_POST['data']['params.icon_type'] == 0)
             )
         );
     }
@@ -100,9 +104,11 @@ class ArContactUsModel extends ArContactUsModelAbstract
     
     public function getLink()
     {
+        $host = parse_url(AR_CONTACTUS_PLUGIN_URL, PHP_URL_HOST);
+        
         return strtr($this->link, array(
-            '{site}' => urlencode(parse_url(AR_CONTACTUS_PLUGIN_URL, PHP_URL_HOST)),
-            '{url}' => urlencode($_SERVER['HTTP_REFERER'])
+            '{site}' => urlencode($host),
+            '{url}' => urlencode(ArContactUsTools::getCurrentUrl())
         ));
     }
     
@@ -291,13 +297,13 @@ class ArContactUsModel extends ArContactUsModelAbstract
     
     public static function createDefaultMenuItems()
     {
-        $isWPML = ArContactUsTools::isWPML();
+        $isWPML = ArContactUsTools::isMultilang();
         
         foreach (self::getDefaultMenuItems() as $k => $item){
             if ($isWPML) {
                 $title = array();
                 foreach (ArContactUsTools::getLanguages() as $lang) {
-                    $title[$lang['code']] = $item['title'];
+                    $title[$lang['language_code']] = $item['title'];
                 }
             } else {
                 if ($currentLang = ArContactUsTools::getCurrentLanguage()) {
