@@ -138,6 +138,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     position: absolute;
 }
 
+video {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -webkit-transform-style: preserve-3d;
+}
+
 button[type="submit"], button[type="reset"], button[type="button"] {
     cursor: pointer;
 }
@@ -1257,15 +1263,11 @@ figure.wp-caption, figure.caption {
 
 .js-off-canvas-overlay {
     background-color: transparentize($black, 0.6);
-    @include fixed-full;
-    opacity: 0;
-    overflow: hidden;
     transition: opacity 0.2s ease-in-out, z-index 0.2s ease-in-out;
-    visibility: hidden;
-    z-index: 0;
 
     &.is-visible {
-        z-index: 9998;
+        z-index: 10000 !important;
+        transform: translate3d(0,0,0);
     }
 }
 
@@ -1336,18 +1338,33 @@ figure.wp-caption, figure.caption {
 
 /** */
 .off-canvas {
-    background-color: transparentize($color1, 0.1);
-    box-shadow: -3px 0 3px transparentize($medium-black, 0.9);
-    padding: 0;
-    text-align: left;
-    transition: transform 0.6s ease-in-out;
-    backdrop-filter: blur(1px);
+    background: none;
+
+    &.is-open {
+        transform: translate(0) translateZ(1px);
+        -webkit-transform: translate(0) translateZ(1px);
+    }
+
+    ul.vertical.menu {
+        position: relative;
+        z-index: 9998;
+        height: 100%;
+        overflow: hidden;
+        background-color: transparentize($black, 0.2);
+        transform: translateZ(1px);
+        -webkit-transform: translateZ(1px);
+    }
 
     &.is-transition-overlap {
-        z-index: 1000001;
+        z-index: 1000001 !important;
+
+        &.is-closed {
+            visibility: hidden;
+        }
 
         &.is-open {
-            box-shadow: -3px 0 3px transparentize($medium-black, 0.8);
+            visibility: visible;
+            box-shadow: -3px 0 3px transparentize($medium-black, 0.9);
         }
     }
 
@@ -1376,6 +1393,7 @@ figure.wp-caption, figure.caption {
             border-radius: 0;
             transition: .6s 0.5s ease-in-out;
             transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
             width: 28px;
         }
     }
@@ -1383,20 +1401,25 @@ figure.wp-caption, figure.caption {
     &.is-open {
         .menu-lines {
             opacity: 1;
+            transform: translateZ(1px);
+            -webkit-transform: translateZ(1px);
 
             .line-1 {
                 transform: rotate(135deg);
+                -webkit-transform: rotate(135deg);
             }
 
             .line-2 {
                 transform: rotate(-135deg);
+                -webkit-transform: rotate(-135deg);
             }
         }
     }
 
     &.position-top, &.position-bottom {
         &.is-open {
-            transform: translateY(0);
+            transform: translateY(0) translateZ(1px);
+            -webkit-transform: translateY(0) translateZ(1px);
         }
     }
 
@@ -1681,6 +1704,9 @@ figure.wp-caption, figure.caption {
                         right: 15px;
                         transform: rotate(45deg) translateY(-2px);
                         width: 6px;
+                        @include not-xxdesktop {
+                            right: 18px;
+                        }
                     }
                 }
             }
@@ -1741,7 +1767,7 @@ figure.wp-caption, figure.caption {
                 .menu {
                     &.is-dropdown-submenu {
                         opacity: 1;
-                     /*   transition: all 0.2s ease 0s;*/
+                        /*   transition: all 0.2s ease 0s;*/
                         visibility: visible;
                     }
                 }
@@ -1978,8 +2004,7 @@ figure.wp-caption, figure.caption {
             position: relative;
             transition: all 0.25s ease;
             @include not-xxdesktop {
-                padding-top: 5px;
-                padding-bottom: 5px;
+                padding: 5px 8px;
             }
 
             &::before {
@@ -3578,21 +3603,25 @@ figure.wp-caption, figure.caption {
                 font-weight: 600;
                 margin-bottom: 15px;
             }
+
             ul.menu {
                 @include grid-y;
                 background-color: #f7f7f7;
+
                 & > li {
                     & > a {
                         font-size: fs(15);
                         line-height: normal;
                         padding: 12px 20px;
                     }
+
                     &.active, &:hover {
                         & > a {
                             background: none;
                             color: $color2;
                         }
                     }
+
                     &:not(:last-child) {
                         border-bottom: 1px solid #fff;
                     }
@@ -3604,18 +3633,21 @@ figure.wp-caption, figure.caption {
                     margin: 0 0 0 10px;
                     @include grid-y;
                     background-color: #f7f7f7;
+
                     & > li {
                         & > a {
                             font-size: fs(15);
                             line-height: normal;
                             padding: 10px 20px;
                         }
+
                         &.active, &:hover {
                             & > a {
                                 background: none;
                                 color: $color2;
                             }
                         }
+
                         &:not(:last-child) {
                             border-bottom: 1px solid #fff;
                         }

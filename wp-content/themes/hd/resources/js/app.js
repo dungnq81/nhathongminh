@@ -34,6 +34,11 @@ Fancybox.bind(".fcy-popup, .fcy-video", {});
 /** jquery */
 $(() => {
 
+    // right click on image
+    $('body').find('img').bind("contextmenu", function(e) {
+        e.preventDefault();
+    });
+
     /**review custom*/
     let glsr_review_author = $('.glsr-review-author');
     glsr_review_author.each(function (index, value) {
@@ -200,8 +205,22 @@ document.addEventListener( 'DOMContentLoaded', () => {
         el.removeAttribute('target');
         el.setAttribute('target', '_blank');
         if (!1 === el.hasAttribute('rel')) {
-            el.setAttribute('rel', 'noopener noreferrer nofollow');
+            el.setAttribute('rel', 'nofollow');
         }
+    });
+
+    // javascript disable right click
+    //document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener("contextmenu", function(e){
+        if (e.target.nodeName === "IMG") {
+            e.preventDefault();
+        }
+    }, false);
+
+    /**remove style img tag*/
+    const _img = document.querySelectorAll('img');
+    Array.prototype.forEach.call(_img, (el) => {
+        el.removeAttribute('style');
     });
 });
 

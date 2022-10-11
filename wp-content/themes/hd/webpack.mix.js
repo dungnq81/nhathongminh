@@ -27,8 +27,7 @@ mix.disableNotifications()
         processCssUrls: false,
         postCss: [
             require('autoprefixer')({
-                // Browserslist’s default browsers (> 0.5%, last 2 versions, Firefox ESR, not dead).
-                //browsers: ['defaults'],
+                browsers: ['last 40 versions', 'iOS >= 9', 'not dead'],
                 grid: true
             })
         ]

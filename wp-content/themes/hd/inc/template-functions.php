@@ -158,7 +158,6 @@ if ( ! function_exists( 'query_by_term' ) ) {
             'no_found_rows' => true,
             'post_status' => 'publish',
             'tax_query' => $tax_query,
-            'nopaging' => true,
         ];
 
         if (is_array($orderby)) {
@@ -179,7 +178,6 @@ if ( ! function_exists( 'query_by_term' ) ) {
 
         if ($paged !== false && Cast::toInt($paged) >= 0) {
             $_args['paged'] = $paged;
-            $_args['nopaging'] = false;
         }
 
         $_query = new \WP_Query($_args);
@@ -226,7 +224,6 @@ if ( ! function_exists( 'query_by_terms' ) ) {
             'post_status' => 'publish',
             'orderby' => ['date' => 'DESC'],
             'tax_query' => $tax_query,
-            'nopaging' => true,
             'no_found_rows' => true,
             'ignore_sticky_posts' => true,
         ];

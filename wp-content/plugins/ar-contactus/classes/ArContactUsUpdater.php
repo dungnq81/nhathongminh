@@ -5,7 +5,7 @@ class ArContactUsUpdater
     const ACTIVATION_URL = 'https://api.areama.net/plugins/activate';
     const UPDATE_CHECK_URL = 'https://api.areama.net/plugins/update';
     const DEACTIVATE_URL = 'https://api.areama.net/plugins/deactivate';
-    
+
     private $f = null;
     private $owner = null;
 
@@ -15,7 +15,7 @@ class ArContactUsUpdater
         $this->owner = $owner;
         add_filter('http_request_args', array($this, 'updatesExclude'), 5, 2);
     }
-    
+
     public function updatesExclude($r, $url)
     {
         if (0 !== strpos($url, 'http://api.wordpress.org/plugins/update-check')){
@@ -27,7 +27,7 @@ class ArContactUsUpdater
 	$r['body']['plugins'] = serialize($plugins);
 	return $r;
     }
-    
+
     //Returns current plugin info.
     function getPluginInfo($i) {
         $this_file = AR_CONTACTUS_PLUGIN_FILE;
@@ -36,10 +36,10 @@ class ArContactUsUpdater
         }
         $plugin_folder = get_plugins( '/' . plugin_basename(dirname($this_file)));
         $plugin_file = basename(($this_file));
-        
+
         return $plugin_folder[$plugin_file][$i];
     }
-    
+
     public function getActivationUrl($activate = true)
     {
         $params = http_build_query(array(
@@ -52,7 +52,7 @@ class ArContactUsUpdater
         ));
         return self::ACTIVATION_URL . '?' . $params;
     }
-    
+
     public function getUpdateUrl()
     {
         $params = http_build_query(array(
@@ -64,7 +64,7 @@ class ArContactUsUpdater
         ));
         return self::UPDATE_CHECK_URL . '?' . $params;
     }
-    
+
     public function getDeactivateUrl()
     {
         $params = http_build_query(array(
@@ -75,12 +75,12 @@ class ArContactUsUpdater
         ));
         return self::DEACTIVATE_URL . '?' . $params;
     }
-    
+
     public function deactivate()
     {
         $url = $this->getDeactivateUrl();
         $response = wp_remote_get($url);
-        
+
         if (($response instanceof WP_Error) || (is_array($response) && isset($response['response']) && isset($response['response']['code']) && $response['response']['code'] != 200)) {
             return array(
                 'success' => 0,
@@ -108,17 +108,17 @@ class ArContactUsUpdater
             'res' => $response
         );
     }
-    
+
     public function isActivated()
     {
         return $this->activate(false);
     }
-    
+
     public function activate($activate = true)
     {
         $url = $this->getActivationUrl($activate);
         $response = wp_remote_get($url);
-        
+
         if (($response instanceof WP_Error) || (is_array($response) && isset($response['response']) && isset($response['response']['code']) && $response['response']['code'] != 200)) {
             return array(
                 'success' => 0,
@@ -146,13 +146,13 @@ class ArContactUsUpdater
             'res' => $response
         );
     }
-    
+
     public function autoCheckUpdate($get_plugins)
     {
-        $this->checkUpdate();
+        //$this->checkUpdate();
         return $get_plugins;
     }
-    
+
     public function checkUpdate($cleanUp = false) {
         $this_file = AR_CONTACTUS_PLUGIN_FILE;
 	$update_check = $this->getUpdateUrl();
@@ -196,7 +196,7 @@ class ArContactUsUpdater
             set_site_transient('update_plugins', $plugin_transient);
         }
     }
-    
+
     public function migrate()
     {
         $oldVersion = $this->getOldVersion();
@@ -206,7 +206,7 @@ class ArContactUsUpdater
             $this->updateVersion(AR_CONTACTUS_VERSION);
             return false;
         }
-        
+
         $d = opendir(AR_CONTACTUS_PLUGIN_DIR . 'upgrade');
         $files = array();
         while ($file = readdir($d)) {
@@ -214,7 +214,7 @@ class ArContactUsUpdater
                 $files[] = $file;
             }
         }
-        
+
         if ($files) {
             sort($files);
             $this->log('Migrations found: ' . PHP_EOL);
@@ -244,7 +244,7 @@ class ArContactUsUpdater
         $this->log('----- END -----' . PHP_EOL . PHP_EOL);
         $this->closeFile();
     }
-    
+
     protected function getFileHandle()
     {
         if ($this->f === null) {
@@ -269,12 +269,12 @@ class ArContactUsUpdater
             fwrite($f, $line);
         }
     }
-    
+
     public function getOldVersion()
     {
         return get_option('arcu_version', null);
     }
-    
+
     public function updateVersion($version)
     {
         update_option('arcu_version', $version);

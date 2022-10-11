@@ -134,6 +134,7 @@
             max-width: 100%;
             padding-right: 0;
             padding-left: 0;
+
         }
     }
 
@@ -145,6 +146,10 @@
         height: 100%;
         position: relative;
         overflow: hidden;
+
+        @include not-xxdesktop {
+            padding-left: 0;
+        }
 
         &::after {
             content: "";
@@ -173,9 +178,10 @@
         height: 100%;
         background-color: $color1;
         @include position-screen(padding-right, 0, 0, true);
-        padding-left: 15px;
+        @include media-css(padding-left, 15, 10, 0);
+
         @include not-xxdesktop {
-            padding-left: 10px;
+            padding-right: 0;
         }
 
         @include not-desktop {
@@ -354,6 +360,7 @@
 /** */
 .site-header {
     position: relative;
+    z-index: 9996;
 
     &::before {
         position: absolute;
@@ -894,8 +901,8 @@
             flex: 1 1 0;
             min-width: 0;
             //@include desktop {
-                //padding-left: fs(30);
-           // }
+            //padding-left: fs(30);
+            // }
 
             .single-title {
                 padding-top: 20px;
@@ -1047,6 +1054,7 @@
                 flex-flow: row wrap;
                 margin-left: -5px;
                 margin-right: -5px;
+
                 .time, .terms {
                     margin-left: 0;
                     padding-right: 5px;
@@ -1220,7 +1228,8 @@
             /*border-radius: 10px;*/
             overflow: hidden;
 
-            .cover-content {}
+            .cover-content {
+            }
 
             .meta {
                 @include grid-x;
@@ -1286,7 +1295,9 @@
         &.grid-cong-trinh {
             @include grid-flex(2, 2, 1, 30, 20);
 
-            & > .cell:nth-child(5n-2), & > .cell:nth-child(5n-1), & > .cell:nth-child(5n) {
+            & > .cell:nth-child(5n-2),
+            & > .cell:nth-child(5n-1),
+            & > .cell:nth-child(5n) {
                 @include media-grid-self(3, 2, 1, 30, 20);
                 //@include grid-self(3, 1, 30);
                 //@include mobile {
@@ -1313,14 +1324,17 @@
                     @include fs-heading(h6);
                     font-weight: 500;
                 }
+
                 .meta {
                     padding-top: 0;
                     padding-bottom: 10px;
                 }
+
                 .cover-content {
                     .excerpt {
                         @include line-clamp(3);
                     }
+
                     .view-detail {
                         transition: 0.3s;
                         border: 1px solid rgb(0 0 0 / 15%);
@@ -1328,6 +1342,7 @@
                         text-transform: uppercase;
                         padding: 5px 10px;
                         align-items: center;
+
                         &:hover {
                             background-color: $color1;
                             border-color: $color1;
@@ -1420,10 +1435,8 @@
 
         .grid-container {
             position: relative;
-            @include mobile {
-                display: flex;
-                justify-content: center;
-            }
+            display: flex;
+            justify-content: center;
         }
 
         .breadcrumbs {
@@ -1462,9 +1475,9 @@
             color: #fff;
             margin-bottom: 30px;
             font-weight: 600;
+            text-align: center;
             @include mobile {
                 margin-bottom: 20px;
-                text-align: center;
             }
         }
     }
@@ -1828,6 +1841,7 @@
                             overflow: hidden;
                             border: 1px solid #eee;
                             box-shadow: inset 0 0 0 1px rgb(255 255 255 / 50%);
+                            flex: inherit;
                             @include desktop {
                                 position: absolute;
                                 top: 30px;
@@ -1838,12 +1852,15 @@
 
                         .glsr-review-author {
                             order: -3;
-                            margin-bottom: 15px;
                             font-size: 15px;
                             font-weight: 400;
                             color: var(--medium-black);
                             flex-basis: calc(100% - 120px);
                             flex-grow: 1;
+                            @include not-desktop {
+                                padding-left: 10px;
+                                margin-bottom: 15px;
+                            }
 
                             & > span {
                                 & > span {
@@ -1871,7 +1888,7 @@
                                     & > span {
                                         display: block;
                                         font-size: 13px;
-                                        margin-top: 4px;
+                                        //margin-top: 4px;
                                         color: var(--color1);
                                         font-weight: 500;
                                         font-style: normal;
@@ -1882,7 +1899,7 @@
                             @include desktop {
                                 position: absolute;
                                 left: 30px;
-                                top: 85px;
+                                top: 100px;
                                 margin-left: 0;
                                 max-width: calc(25% - 30px);
                                 span {
@@ -2303,7 +2320,8 @@ body.single-post, body.single-product {
             .swiper.swiper-initialized ~ .swiper-controls {
                 .swiper-button-next {
                     @include position-screen(right, 15, 10, true);
-                    @include not-xdesktop {}
+                    @include not-xdesktop {
+                    }
                 }
             }
         }
@@ -2405,6 +2423,7 @@ body.single-post, body.single-product {
             }
         }
     }
+
     .col-content {
         flex: 1 1 0;
         min-width: 0;
@@ -2412,9 +2431,9 @@ body.single-post, body.single-product {
 }
 
 /** */
-.mobile-menu.menu .submenu > .active>a,
+.mobile-menu.menu .submenu > .active > a,
 .mobile-menu.menu .submenu > li > a:hover,
-.mobile-menu.menu .active>a,
+.mobile-menu.menu .active > a,
 .mobile-menu.menu a:hover {
     color: $color2;
 }
@@ -2429,5 +2448,13 @@ body.single-post, body.single-product {
 .section .heading-title {
     @include mobile {
         text-align: center;
+    }
+}
+
+.glsr-default .glsr-review-avatar img {
+    display: block;
+    @include box(60);
+    @include not-desktop {
+        @include box(40);
     }
 }

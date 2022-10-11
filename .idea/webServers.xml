@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="70603f8d-5ad4-4691-9ba7-507ebee32f55" name="nhathongminh" url="http://nethost-3711.000nethost.com">
-        <fileTransfer rootFolder="/public_html/nhathongminh" host="nethost-3711.000nethost.com" port="21">
+        <fileTransfer rootFolder="/public_html" host="nethost-3711.000nethost.com" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
