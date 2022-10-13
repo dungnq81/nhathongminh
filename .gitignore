@@ -180,3 +180,5 @@ fabric.properties
 /wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/blocks/stock-filter/preview.js
 /wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/utils/attributes.js
 /wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/utils/attributes-query.js
+/node_modules/
+/yarn.lock

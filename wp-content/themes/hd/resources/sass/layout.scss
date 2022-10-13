@@ -1378,6 +1378,8 @@ figure.wp-caption, figure.caption {
         height: 30px;
         opacity: 0;
         transition: .6s 0.5s ease-in-out;
+        transform: translateZ(2px);
+        -webkit-transform: translateZ(2px);
 
         .menu-txt {
             color: currentColor;
@@ -2982,6 +2984,17 @@ figure.wp-caption, figure.caption {
 }
 
 /** */
+.wpcf7-form-control-wrap {
+    position: relative;
+    .wpcf7-not-valid-tip {
+        position: absolute;
+        font-size: fs(12);
+        top: 2px;
+        right: 10px;
+    }
+}
+
+/** */
 .contact-form {
     background-color: transparentize($color1, 0.2);
     backdrop-filter: blur(4px);
@@ -2989,8 +3002,6 @@ figure.wp-caption, figure.caption {
     @include media-padding(40, 20);
 
     .wpcf7-form-control-wrap {
-        position: relative;
-
         input {
             outline: none;
             box-shadow: none;
@@ -3010,13 +3021,6 @@ figure.wp-caption, figure.caption {
             border: 1px solid rgb(0 0 0 / 30%);
             line-height: normal;
             @include media-mb(30, 15);
-        }
-
-        .wpcf7-not-valid-tip {
-            position: absolute;
-            font-size: fs(12);
-            top: 2px;
-            right: 10px;
         }
     }
 
