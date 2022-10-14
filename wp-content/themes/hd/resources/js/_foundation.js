@@ -1,5 +1,7 @@
 /*jshint esversion: 6 */
-const $ = jQuery;
+import $ from 'jquery';
+
+//const $ = jQuery;
 window.$ = jQuery;
 window.jQuery = jQuery;
 
@@ -20,6 +22,7 @@ Foundation.GetYoDigits = CoreUtils.GetYoDigits;
 Foundation.transitionend = CoreUtils.transitionend;
 Foundation.RegExpEscape = CoreUtils.RegExpEscape;
 Foundation.onLoad = CoreUtils.onLoad;
+Foundation.ignoreMousedisappear = CoreUtils.ignoreMousedisappear;
 
 Foundation.onImagesLoaded = onImagesLoaded;
 Foundation.MediaQuery = MediaQuery;

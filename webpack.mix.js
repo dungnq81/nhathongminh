@@ -2,7 +2,8 @@ let mix = require('laravel-mix');
 let glob = require('glob');
 
 mix
-    //.sourceMaps()
+    .sourceMaps()
+    .webpackConfig({ devtool: 'source-map' })
     .options({
         processCssUrls: false,
         clearConsole: true,
@@ -16,6 +17,9 @@ mix
             })
         ]
     });
+
+// Run only for a plugin.
+//equire('./wp-content/plugins/ehd-core/webpack.mix.js');
 
 // Run only for themes.
 glob.sync('./wp-content/themes/**/webpack.mix.js').forEach(item => require(item));
