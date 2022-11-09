@@ -99,6 +99,19 @@ $(() => {
         }
     });
 
+    /** */
+    let html = $('html');
+    //let off_canvas = $('.off-canvas');
+    let menu_lines = $('.menu-lines');
+
+    menu_lines.on('click', function(e) {
+        if ( $( this ).closest('body').find('.off-canvas').is(".is-open") ) {
+            html.removeClass('o-hidden');
+        } else {
+            html.addClass('o-hidden');
+        }
+    });
+
     /** Remove empty P tags created by WP inside of Accordion and Orbit */
     $('.accordion p:empty, .orbit p:empty').remove();
 
