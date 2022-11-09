@@ -7,13 +7,6 @@ if (is_active_sidebar('w-news-sidebar') && !is_search()) $is_sidebar = TRUE;
 
 ?>
 <div class="grid-news-outer grid-padding-x grid-x">
-    <?php if (TRUE === $is_sidebar) : ?>
-    <div class="col-sidebar cell">
-        <div class="sidebar--wrap">
-            <?php dynamic_sidebar('w-news-sidebar'); ?>
-        </div>
-    </div>
-    <?php endif; ?>
     <div class="col-content cell">
         <?php if ( have_posts() ) : ?>
         <div class="section grid-posts grid-x">
@@ -39,4 +32,11 @@ if (is_active_sidebar('w-news-sidebar') && !is_search()) $is_sidebar = TRUE;
         endif;
         ?>
     </div>
+    <?php if (TRUE === $is_sidebar) : ?>
+        <div class="col-sidebar cell">
+            <div class="sidebar--wrap">
+                <?php dynamic_sidebar('w-news-sidebar'); ?>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>

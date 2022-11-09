@@ -59,13 +59,6 @@ endif;
         do_action('woocommerce_before_archive');
         ?>
         <div class="grid-x grid-padding-x">
-            <?php if (TRUE === $is_sidebar) : ?>
-            <div class="cell sidebar-col medium-12 large-3">
-                <div class="sidebar--wrap">
-                    <?php dynamic_sidebar('w-product-sidebar'); ?>
-                </div>
-            </div>
-            <?php endif; ?>
             <div class="archive-products-inner cell<?php if (TRUE === $is_sidebar) echo ' medium-12 large-9 has-sidebar'; ?>">
                 <?php
                 if (woocommerce_product_loop()) :
@@ -157,6 +150,13 @@ endif;
                 endif;
                 ?>
             </div>
+            <?php if (TRUE === $is_sidebar) : ?>
+                <div class="cell sidebar-col medium-12 large-3">
+                    <div class="sidebar--wrap">
+                        <?php dynamic_sidebar('w-product-sidebar'); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
     <?php

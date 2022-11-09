@@ -1346,13 +1346,15 @@ figure.wp-caption, figure.caption {
     }
 
     ul.vertical.menu {
-        position: relative;
-        z-index: 9998;
-        height: 100%;
-        overflow: hidden;
-        background-color: transparentize($black, 0.2);
-        transform: translateZ(1px);
-        -webkit-transform: translateZ(1px);
+        &:not(.nested) {
+            position: relative;
+            z-index: 9998;
+            min-height: 100%;
+            overflow: hidden;
+            background-color: transparentize($black, 0.2);
+            transform: translateZ(1px);
+            -webkit-transform: translateZ(1px);
+        }
     }
 
     &.is-transition-overlap {
@@ -1696,7 +1698,7 @@ figure.wp-caption, figure.caption {
 
             &.is-dropdown-submenu-parent {
                 & > a {
-                    padding-right: 30px;
+                    padding-right: 25px;
 
                     &::after {
                         border: solid currentColor;
@@ -1936,7 +1938,7 @@ figure.wp-caption, figure.caption {
 
             &.active {
                 a {
-                    color: #ccc;
+                    color: $color2;
                 }
             }
         }
@@ -2675,8 +2677,13 @@ figure.wp-caption, figure.caption {
 
         .swiper {
             padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
 
             &.swiper-initialized {
+                opacity: 1;
+                transition: opacity 0.3s;
+
                 & ~ .swiper-controls {
                     .swiper-button {
                         filter: drop-shadow(1px 1px 12px #ccc);

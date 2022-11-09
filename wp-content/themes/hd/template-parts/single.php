@@ -22,17 +22,17 @@ the_page_title_theme();
         <?php get_template_part('template-parts/parts/sharing'); ?>
         <div class="single-content">
             <div class="col-content cell">
-                <h1 class="h4 single-title"><?php echo get_the_title($post); ?></h1>
+                <h1 class="h2 single-title"><?php echo get_the_title($post); ?></h1>
                 <div class="meta">
                     <div class="time" data-glyph=""><?php echo humanize_time(); ?></div>
                     <?php echo post_terms($post->ID); ?>
                 </div>
                 <?php if ( has_post_thumbnail($post) ) : ?>
-                <div class="single-thumbnail">
+                <div class="single-thumbnail hide">
                     <?php echo get_the_post_thumbnail($post, 'post-thumbnail')?>
                 </div>
                 <?php endif; ?>
-                <?php get_template_part('template-parts/parts/inline-share'); ?>
+                <?php //get_template_part('template-parts/parts/inline-share'); ?>
                 <?php echo post_excerpt($post, 'excerpt', true); ?>
                 <?php get_template_part('template-parts/parts/upseo'); ?>
                 <div class="content clearfix">

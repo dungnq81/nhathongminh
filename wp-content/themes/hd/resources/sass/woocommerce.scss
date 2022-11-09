@@ -145,6 +145,11 @@
         display: flex;
         flex-direction: column;
 
+        .woocommerce-no-products-found {
+            margin-top: 40px;
+        }
+
+
         .grid-products {
             @include grid-flex(5, 4, 2, 20, 10);
             /*justify-content: center;*/

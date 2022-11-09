@@ -14,7 +14,7 @@ if (isset($args['css_class']) ) {
 }
 
 $title = '';
-if (function_exists('is_shop') && is_shop()) {
+if (function_exists('is_shop') && @is_shop()) {
     $title = get_the_title( get_option( 'woocommerce_shop_page_id' ) );
 } else {
     $object = get_queried_object();

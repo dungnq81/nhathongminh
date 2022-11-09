@@ -2,8 +2,8 @@ let mix = require('laravel-mix');
 let glob = require('glob');
 
 mix
-    .sourceMaps()
-    .webpackConfig({ devtool: 'source-map' })
+    //.sourceMaps()
+    //.webpackConfig({ devtool: 'source-map' })
     .options({
         processCssUrls: false,
         clearConsole: true,

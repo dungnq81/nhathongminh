@@ -18,7 +18,7 @@ mix
     .sass(dir + '/resources/sass/admin.scss', assets + '/css')
     .sass(dir + '/resources/sass/editor-style.scss', assets + '/css')
 
-    .sass(dir + '/resources/sass/plugins.scss', assets + '/css')
+    //.sass(dir + '/resources/sass/plugins.scss', assets + '/css')
     .sass(dir + '/resources/sass/layout.scss', assets + '/css')
     .sass(dir + '/resources/sass/woocommerce.scss', assets + '/css')
     .sass(dir + '/resources/sass/elementor.scss', assets + '/css')

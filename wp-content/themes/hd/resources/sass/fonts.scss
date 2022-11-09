@@ -12,7 +12,7 @@
         font-family: quote($font-family);
         font-style: $font-style;
         font-weight: $font-weight;
-        font-display: swap;
+        font-display: block;
         src: url("#{$base}/EOT/#{$file_name}.eot?v=#{$unique_id}");
         src: url("#{$base}/EOT/#{$file_name}.eot?v=#{$unique_id}#iefix") format("embedded-opentype"),
         url("#{$base}/WOFF2/#{$file_name}.woff2?v=#{$unique_id}") format("woff2"),

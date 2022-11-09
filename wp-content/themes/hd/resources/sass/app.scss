@@ -141,8 +141,8 @@
     .site-logo {
         flex: 0 0 auto;
         min-width: auto;
-        padding: 0;
-        @include position-screen(padding-left, 0, 0, true);
+        padding-left: 3%;
+        //@include position-screen(padding-left, 0, 0, true);
         height: 100%;
         position: relative;
         overflow: hidden;
@@ -154,7 +154,7 @@
         &::after {
             content: "";
             border-top: 70px solid transparent;
-            border-right: 35px solid $color1;
+            border-right: 30px solid $color1;
             margin-left: 30px;
             @include not-xxdesktop {
                 margin-left: 15px;
@@ -177,8 +177,9 @@
         justify-content: space-between;
         height: 100%;
         background-color: $color1;
-        @include position-screen(padding-right, 0, 0, true);
+        //@include position-screen(padding-right, 0, 0, true);
         @include media-css(padding-left, 15, 10, 0);
+        padding-right: 3%;
 
         @include not-xxdesktop {
             padding-right: 0;
@@ -207,6 +208,8 @@
 
         nav.navigation {
             @include flex-align-center;
+            height: 100%;
+
             @include mq-max(991px) {
                 display: none;
             }
@@ -895,7 +898,7 @@
         flex: 1 1 0;
         min-width: 0;
         display: flex;
-        flex-flow: row-reverse wrap;
+        flex-flow: row wrap;
 
         .col-content {
             flex: 1 1 0;
@@ -942,6 +945,10 @@
 
             .content {
                 margin-bottom: fs(50);
+
+                a {
+                    @include hover-color($color1, $color2);
+                }
             }
         }
 
@@ -1417,7 +1424,7 @@
 
         &::after {
             content: '';
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0);
             @include absolute-full;
         }
     }
@@ -2297,6 +2304,7 @@ body.single-post, body.single-product {
                         left: 0;
                         right: 0;
                         @include media-padding(30, 20, 15);
+                        pointer-events: none;
 
                         h6 {
                             padding: 0;
